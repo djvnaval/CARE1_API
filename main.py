@@ -32,6 +32,8 @@ def remove_client():
         if n > len(clients_list)-1 or n < 0:
             print("Invalid input!\n")
             remove_client()
+        else:
+            
     else:
         print("Invalid input!\n")
         remove_client()
