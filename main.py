@@ -33,6 +33,11 @@ def remove_client():
             print("Invalid input!\n")
             remove_client()
         else:
+            clients_list.pop(n)
+            cli = open(clients, 'w')
+            for i in clients_list:
+                cli.write(i + '\n') # change format / way of writing based on clients_list format / type
+            cli.close()
             
     else:
         print("Invalid input!\n")
