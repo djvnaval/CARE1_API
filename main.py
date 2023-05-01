@@ -111,3 +111,20 @@ def start():
 
 
 start()
+
+'''
+Next steps
+
+- Register publishing clients (HTTP, MQTT)
+    - Ask for device (collection) name
+    - Create 1 collection per client
+- Create insert_docs function
+- Parallelized:
+    - Subscribe/get requests from clients in realtime (loop)
+    - While on loop, run insert_docs
+
+- Register subscribing clients (HTTP, MQTT)
+- Create get_docs function
+- Parallelized:
+    - Retrieve documents from collections and publish to clients
+'''
