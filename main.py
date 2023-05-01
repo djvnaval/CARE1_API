@@ -21,6 +21,7 @@ def add_client():
     print("HERE")
 
 
+
 def remove_client():
     print_clients()
     global clients_list
@@ -33,6 +34,11 @@ def remove_client():
             print("Invalid input!\n")
             remove_client()
         else:
+            clients_list.pop(n)
+            cli = open(clients, 'w')
+            for i in clients_list:
+                cli.write(i + '\n') # change format / way of writing based on clients_list format / type
+            cli.close()
             
     else:
         print("Invalid input!\n")
@@ -75,28 +81,29 @@ def print_clients():
 
 def install_dependencies():
     print("Installing dependencies.")
-    dep = subprocess.run('pip install requests', shell=True, capture_output=True)
-    print(dep.stdout.decode())
-    
+    commands = ['pip install requests',
+                'pip install pymongo',
+                'pip install python-dotenv']
+    for item in commands:
+        dep = subprocess.run(item, shell=True, capture_output=True)
+        print(dep.stdout.decode())
 
+    
 def start():
     # Install dependencies
-    if exists(runs):
-        run = open(runs, "r")
-        n = int(run.read())
-        run.close()
+    install_dependencies()
 
-        run = open(runs, "w")
-        run.write(str(n+1))
-        run.close()
 
-        print("Runs:", str(n), '\n')
-    else:
-        # Initialize counter for runs
-        run = open(runs, "w")
-        run.write("1")
-        run.close()
-        install_dependencies()
+    # MongoDB configuration
+    from dotenv import load_dotenv, find_dotenv
+    import os
+    import pprint
+    from pymongo import MongoClient
+    load_dotenv(find_dotenv())
+    password = os.environ.get("MONGODB_PW")
+    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(connection_string)
+        
         
     # Print clients
     print_clients()
