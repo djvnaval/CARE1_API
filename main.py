@@ -12,14 +12,51 @@ from os.path import exists
 
 
 # Global variables
-clients = "logs/clients.txt"
-runs = "logs/runs.txt"
+clients = "src/clients.txt"
+terms = "src/TERMS_AND_CONDITIONS.txt"
 clients_list = []
+
+def client_adder_MQTTp():
+    print("HERE")
+
+
+    print("Client successfully added.")
+    client_menu()
+
+
+def client_adder_MQTTs():
+    print("HERE")
+
+
+def client_adder_HTTPp():
+    print("HERE")
+
+
+def client_adder_HTTPs():
+    print("HERE")
 
 
 def add_client():
-    print("HERE")
-
+    print_clients()
+    print("ADD CLIENTS - Actions:")
+    print("[1] Add MQTT Publisher (sensor IPEs)")
+    print("[2] Add MQTT Subscriber (actuator IPEs, MQTT GUI)")
+    print("[3] Add HTTP Posting Client (sensor IPEs)")
+    print("[4] Add HTTP Requesting Client (actuator IPEs, HTTP GUI)")
+    print('')
+    action = input("Enter: ")
+    print('')
+    if action == '1':
+        client_adder_MQTTp()
+    elif action == '2':
+        client_adder_MQTTs()
+    elif action == '3':
+        client_adder_HTTPp()
+    elif action == '4':
+        client_adder_HTTPs()
+    else:
+        print("Invalid input!\n")
+        add_client()
 
 
 def remove_client():
@@ -39,7 +76,7 @@ def remove_client():
             for i in clients_list:
                 cli.write(i + '\n') # change format / way of writing based on clients_list format / type
             cli.close()
-            
+            client_menu()
     else:
         print("Invalid input!\n")
         remove_client()
@@ -69,7 +106,7 @@ def print_clients():
         cli = open(clients, "r")
         ctr = 0
         for line in cli:
-            print('[', str(ctr), '] ', line.strip('\n'), sep = '')
+            print(str(ctr), ': ', line.strip('\n'), sep = '')
             clients_list.append(line.strip('\n'))
             ctr = ctr + 1
         print('')
@@ -90,6 +127,13 @@ def install_dependencies():
 
     
 def start():
+    # Terms and Conditions
+    tnc = open(terms, "r")
+    for line in tnc:
+        print(line.strip('\n'))
+    tnc.close()
+
+
     # Install dependencies
     install_dependencies()
 
