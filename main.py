@@ -17,8 +17,22 @@ terms = "src/TERMS_AND_CONDITIONS.txt"
 clients_list = []
 
 def client_adder_MQTTp():
-    print("HERE")
+    print("ADD MQTT PUBLISHING CLIENT")
+    broker = input("\nBroker: ")
+    port = input("\nBroker number: ")
+    username = ""
+    username = input("\nUsername (press ENTER if no password): ")
+    password = ""
+    password = input("\nPassword (press ENTER if no password): ")
 
+    n_topics = 0
+    n_topics = input("\nNumber of topics: ")
+    topic_str = ""
+    topic_str = input("Topic string")
+    qos = 0
+
+
+    import paho.mqtt.client as mqtt
 
     print("Client successfully added.")
     client_menu()
@@ -120,7 +134,8 @@ def install_dependencies():
     print("Installing dependencies.")
     commands = ['pip install requests',
                 'pip install pymongo',
-                'pip install python-dotenv']
+                'pip install python-dotenv',
+                'pip install paho-mqtt']
     for item in commands:
         dep = subprocess.run(item, shell=True, capture_output=True)
         print(dep.stdout.decode())
