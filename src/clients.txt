@@ -1,2 +1,3 @@
-asdasd
-asdasd
+mosquitto.org:8883<Care1project!@care1>PM1, 2
+mosquitto.org:8883<Care1project!@care1>PM2.5, 2
+mosquitto.org:8883<Care1project!@care1>PM0.1, 2
