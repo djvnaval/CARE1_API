@@ -1,3 +1,6 @@
 mosquitto.org:8883<Care1project!@care1>PM1, 2
 mosquitto.org:8883<Care1project!@care1>PM2.5, 2
 mosquitto.org:8883<Care1project!@care1>PM0.1, 2
+eclipse-mqtt.org:8883<Care1project!@CARE1_API>SO2, 1
+eclipse-mqtt.org:8883<Care1project!@CARE1_API>temp, 1
+eclipse-mqtt.org:8883<Care1project!@CARE1_API>humidity, 1
