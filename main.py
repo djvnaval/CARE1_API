@@ -91,8 +91,6 @@ def add_client():
 def remove_client():
     print_clients()
     global clients_list
-    print(clients_list)
-    print(len(clients_list))
     remove = input("Remove: ")
     if remove.isnumeric():
         n = int(remove)
@@ -147,7 +145,7 @@ def print_clients():
 
 
 def install_dependencies():
-    print("Installing dependencies.")
+    print("Installing dependencies...")
     commands = ['pip install requests',
                 'pip install pymongo',
                 'pip install python-dotenv',
@@ -179,9 +177,6 @@ def start():
     connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(connection_string)
         
-        
-    # Print clients
-    print_clients()
     client_menu()
 
 
