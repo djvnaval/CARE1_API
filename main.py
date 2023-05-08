@@ -15,6 +15,7 @@ from os.path import exists
 clients = "src/clients.txt"
 terms = "src/TERMS_AND_CONDITIONS.txt"
 MQTTp = "src/MQTTp_note.txt"
+MQTTs = "src/MQTTs_note.txt"
 clients_list = []
 
 def client_adder_MQTTp():
@@ -45,7 +46,7 @@ def client_adder_MQTTp():
     # For modeling purpose only:
     f = open(clients, "a")
     for i in range(n_topics):
-        arg = broker + ':' + port + '<' + password + '@' + username + '>' + str(topic_str[i]) + ', ' + str(qos[i]) + '\n'
+        arg = "[PUB]" + broker + ':' + port + '<' + "{PASSWORD}" + '@' + username + '>' + str(topic_str[i]) + ', ' + str(qos[i]) + '\n'
         f.write(arg)
     f.close()
 
@@ -54,7 +55,39 @@ def client_adder_MQTTp():
 
 
 def client_adder_MQTTs():
-    print("HERE")
+    print("ADD MQTT SUBSCRIBING CLIENT")
+    mq = open(MQTTs, 'r')
+    for line in mq:
+        print(line.strip('\n'))
+    mq.close()
+
+    broker = input("Broker URL: ")
+    port = input("Port number: ")
+    username = ""
+    username = input("Username (press ENTER if no username): ")
+    password = ""
+    password = input("Password (press ENTER if no password): ")
+    n_topics = 0
+    n_topics = int(input("Number of topics: "))
+    topic_str = []
+    qos = []
+    for i in range(n_topics):
+        arg = "Topic String " + str(i+1) + ": "
+        topic_str.append(input(arg))
+        qos.append(int(input("Quality of Service (QOS): ")))
+
+    import paho.mqtt.client as mqtt
+    # ADD to clients collection in MongoDB
+
+    # For modeling purpose only:
+    f = open(clients, "a")
+    for i in range(n_topics):
+        arg = "[SUB]" + broker + ':' + port + '<' + "{PASSWORD}" + '@' + username + '>' + str(topic_str[i]) + ', ' + str(qos[i]) + '\n'
+        f.write(arg)
+    f.close()
+
+    print("\nClient successfully added.")
+    client_menu()
 
 
 def client_adder_HTTPp():
