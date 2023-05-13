@@ -25,12 +25,14 @@ def client_adder_MQTTp():
         print(line.strip('\n'))
     mq.close()
 
+    care1_device_id = ""
+    care1_device_id = input("CARE1 Device ID (press ENTER if no ID): ")
     broker = input("Broker URL: ")
     port = input("Port number: ")
     username = ""
     username = input("Username (press ENTER if no username): ")
-    password = ""
-    password = input("Password (press ENTER if no password): ")
+    pw = ""
+    pw = input("Password (press ENTER if no password): ")
     n_topics = 0
     n_topics = int(input("Number of topics: "))
     topic_str = []
@@ -40,54 +42,41 @@ def client_adder_MQTTp():
         topic_str.append(input(arg))
         qos.append(int(input("Quality of Service (QOS): ")))
 
-    import paho.mqtt.client as mqtt
     # ADD to clients collection in MongoDB
+    # MongoDB configuration
+    from dotenv import load_dotenv, find_dotenv
+    import os
+    import pprint
+    from pymongo import MongoClient
+    load_dotenv(find_dotenv())
+    password = os.environ.get("MONGODB_PW")
+    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(connection_string)
+    db = client.CARE1
+    collection = db.clients
 
-    # For modeling purpose only:
-    f = open(clients, "a")
+    topics = []
     for i in range(n_topics):
-        arg = "[PUB]" + broker + ':' + port + '<' + "{PASSWORD}" + '@' + username + '>' + str(topic_str[i]) + ', ' + str(qos[i]) + '\n'
-        f.write(arg)
-    f.close()
+        topics.append([topic_str[i], qos[i]])
 
-    print("\nClient successfully added.")
+    post = {
+        "care1_device_id" : care1_device_id,
+        "broker" : broker,
+        "port" : port,
+        "username" : username,
+        "password" : pw,
+        "type" : "PUB",
+        "topics" : topics
+    }
+
+    post_id = collection.insert_one(post).inserted_id
+    response = "\nClient " + str(post_id) + " successfully added."
+    print(response)
     client_menu()
 
 
 def client_adder_MQTTs():
-    print("ADD MQTT SUBSCRIBING CLIENT")
-    mq = open(MQTTs, 'r')
-    for line in mq:
-        print(line.strip('\n'))
-    mq.close()
-
-    broker = input("Broker URL: ")
-    port = input("Port number: ")
-    username = ""
-    username = input("Username (press ENTER if no username): ")
-    password = ""
-    password = input("Password (press ENTER if no password): ")
-    n_topics = 0
-    n_topics = int(input("Number of topics: "))
-    topic_str = []
-    qos = []
-    for i in range(n_topics):
-        arg = "Topic String " + str(i+1) + ": "
-        topic_str.append(input(arg))
-        qos.append(int(input("Quality of Service (QOS): ")))
-
-    import paho.mqtt.client as mqtt
-    # ADD to clients collection in MongoDB
-
-    # For modeling purpose only:
-    f = open(clients, "a")
-    for i in range(n_topics):
-        arg = "[SUB]" + broker + ':' + port + '<' + "{PASSWORD}" + '@' + username + '>' + str(topic_str[i]) + ', ' + str(qos[i]) + '\n'
-        f.write(arg)
-    f.close()
-
-    print("\nClient successfully added.")
-    client_menu()
+    print("HERE")
 
 
 def client_adder_HTTPp():
@@ -131,11 +120,25 @@ def remove_client():
             print("Invalid input!\n")
             remove_client()
         else:
-            clients_list.pop(n)
-            cli = open(clients, 'w')
-            for i in clients_list:
-                cli.write(i + '\n') # change format / way of writing based on clients_list format / type
-            cli.close()
+            c = clients_list.pop(n)
+
+            # MongoDB configuration
+            from dotenv import load_dotenv, find_dotenv
+            import os
+            import pprint
+            from pymongo import MongoClient
+            load_dotenv(find_dotenv())
+            password = os.environ.get("MONGODB_PW")
+            connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+            client = MongoClient(connection_string)
+            db = client.CARE1
+
+            if c[0] == 1:
+                collection = db.mqtt_clients
+            elif c[0] == 2:
+                collection = db.http_clients
+
+            collection.delete_one({"_id" : c})
             client_menu()
     else:
         print("Invalid input!\n")
@@ -160,21 +163,34 @@ def client_menu():
 
 
 def print_clients():
-    if exists(clients):
-        print("Existing clients:")
-        global clients_list
-        clients_list.clear()
-        cli = open(clients, "r")
-        ctr = 0
-        for line in cli:
-            print(str(ctr), ': ', line.strip('\n'), sep = '')
-            clients_list.append(line.strip('\n'))
-            ctr = ctr + 1
-        print('')
-        cli.close()
-    else:
-        cli = open(clients, "w")
-        cli.close()
+
+    # MongoDB configuration
+    from dotenv import load_dotenv, find_dotenv
+    import os
+    import pprint
+    from pymongo import MongoClient
+    load_dotenv(find_dotenv())
+    password = os.environ.get("MONGODB_PW")
+    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(connection_string)
+    db = client.CARE1
+    collection1 = db.mqtt_clients
+    collection2 = db.http_clients
+
+    global clients_list
+    clients_list.clear()
+    ctr = 0
+    for doc in collection1.find():
+        post = '[' + str(ctr) + ']' + ' - [' + doc["type"] + "_MQTT" + '] ' + doc["care1_device_id"] + '-' + doc["broker"] + ':' + doc["port"]
+        print(post)
+        clients_list.append([1, doc["_id"]])
+        ctr = ctr + 1
+    for doc in collection2.find():
+        post = '[' + str(ctr) + ']' + ' - [' + doc["type"] + "_HTTP" + '] ' + doc["care1_device_id"] + '-' + doc["broker"] + ':' + doc["port"]
+        print(post)
+        clients_list.append([2, doc["_id"]])
+        ctr = ctr + 1
+    print('')
 
 
 def install_dependencies():
