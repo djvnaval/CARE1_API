@@ -53,7 +53,7 @@ def client_adder_MQTTp():
     connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
     client = MongoClient(connection_string)
     db = client.CARE1
-    collection = db.clients
+    collection = db.mqtt_clients
 
     topics = []
     for i in range(n_topics):
@@ -76,7 +76,60 @@ def client_adder_MQTTp():
 
 
 def client_adder_MQTTs():
-    print("HERE")
+    print("ADD MQTT SUBSCRIBING CLIENT")
+    mq = open(MQTTs, 'r')
+    for line in mq:
+        print(line.strip('\n'))
+    mq.close()
+
+    care1_device_id = ""
+    care1_device_id = input("CARE1 Device ID (press ENTER if no ID): ")
+    broker = input("Broker URL: ")
+    port = input("Port number: ")
+    username = ""
+    username = input("Username (press ENTER if no username): ")
+    pw = ""
+    pw = input("Password (press ENTER if no password): ")
+    n_topics = 0
+    n_topics = int(input("Number of topics: "))
+    topic_str = []
+    qos = []
+    for i in range(n_topics):
+        arg = "Topic String " + str(i+1) + ": "
+        topic_str.append(input(arg))
+        qos.append(int(input("Quality of Service (QOS): ")))
+
+    # ADD to clients collection in MongoDB
+    # MongoDB configuration
+    from dotenv import load_dotenv, find_dotenv
+    import os
+    import pprint
+    from pymongo import MongoClient
+    load_dotenv(find_dotenv())
+    password = os.environ.get("MONGODB_PW")
+    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(connection_string)
+    db = client.CARE1
+    collection = db.mqtt_clients
+
+    topics = []
+    for i in range(n_topics):
+        topics.append([topic_str[i], qos[i]])
+
+    post = {
+        "care1_device_id" : care1_device_id,
+        "broker" : broker,
+        "port" : port,
+        "username" : username,
+        "password" : pw,
+        "type" : "SUB",
+        "topics" : topics
+    }
+
+    post_id = collection.insert_one(post).inserted_id
+    response = "\nClient " + str(post_id) + " successfully added."
+    print(response)
+    client_menu()
 
 
 def client_adder_HTTPp():
@@ -163,7 +216,7 @@ def client_menu():
 
 
 def print_clients():
-
+    print('')
     # MongoDB configuration
     from dotenv import load_dotenv, find_dotenv
     import os
