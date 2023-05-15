@@ -34,13 +34,17 @@ def client_adder_MQTTp():
     pw = ""
     pw = input("Password (press ENTER if no password): ")
     n_topics = 0
-    n_topics = int(input("Number of topics: "))
+    n_topics = int(input("Number of topics (if editing later, type '0'): "))
     topic_str = []
     qos = []
-    for i in range(n_topics):
-        arg = "Topic String " + str(i+1) + ": "
-        topic_str.append(input(arg))
-        qos.append(int(input("Quality of Service (QOS): ")))
+
+    if n_topics != 0:
+        for i in range(n_topics):
+            arg = "Topic String " + str(i+1) + ": "
+            topic_str.append(input(arg))
+            qos.append(int(input("Quality of Service (QOS): ")))
+    else:
+        print("Topics are to be added later.")
 
     # ADD to clients collection in MongoDB
     # MongoDB configuration
@@ -191,7 +195,7 @@ def remove_client():
             elif c[0] == 2:
                 collection = db.http_clients
 
-            collection.delete_one({"_id" : c})
+            collection.delete_one({"_id" : c[1]})
             client_menu()
     else:
         print("Invalid input!\n")
