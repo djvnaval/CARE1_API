@@ -18,6 +18,86 @@ MQTTp = "src/MQTTp_note.txt"
 MQTTs = "src/MQTTs_note.txt"
 clients_list = []
 
+# edit_client() variables
+ec = 0
+data = []
+ed = 0
+
+
+def edit_client_1():
+    print("HERE")
+
+
+def edit_client_0():
+    global ec
+    global data
+    global ed
+
+    data.clear()
+
+    # MongoDB configuration
+    from dotenv import load_dotenv, find_dotenv
+    import os
+    import pprint
+    from pymongo import MongoClient
+    load_dotenv(find_dotenv())
+    password = os.environ.get("MONGODB_PW")
+    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(connection_string)
+    db = client.CARE1
+    
+    if clients_list[ec][0] == 1:
+        collection = db.mqtt_clients
+    elif clients_list[ec][0] == 2:
+        collection = db.http_clients
+
+    client = collection.find({"_id" : clients_list[ec][1]})
+
+    data = []
+    ctr = 0
+    for doc in client:
+        for item in doc:
+            if ctr == 0:
+                ctr = ctr + 1
+                continue
+            arg = '[' + str(ctr-1) + '] ' + str(item) + ' : ' + str(doc[str(item)])
+            print(arg)
+            data.append([item, doc[item]])
+            ctr = ctr + 1
+
+    print("\nSELECT ITEM TO EDIT")
+    edit = input("Enter: ")
+    if edit.isdigit() == 0:
+        print("Invalid input!\n")
+        edit_client_0()
+    if int(edit) < -1 or int(edit) > len(data)-1:
+        print("Invalid input!\n")
+        edit_client_0()
+
+    ed = int(edit)
+    edit_client_1()
+
+    # delete item from collection
+    # add client based on new list.... according to designated collection
+
+
+def edit_client():
+    global ec
+    print_clients()
+    print("SELECT A CLIENT TO EDIT")
+    sel = input("Enter: ") # Selection
+    print('')
+    if sel.isdigit() == 0:
+        print("Invalid input!\n")
+        edit_client()
+    if int(sel) < -1 or int(sel) > len(clients_list)-1:
+        print("Invalid input!\n")
+        edit_client()
+
+    ec = int(sel)
+    edit_client_0()
+
+
 def client_adder_MQTTp():
     print("ADD MQTT PUBLISHING CLIENT")
     mq = open(MQTTp, 'r')
@@ -207,6 +287,7 @@ def client_menu():
     print("Actions:")
     print("[1] Add client")
     print("[2] Remove client")
+    print("[3] Edit client")
     print('')
     action = input("Enter: ")
     print('')
@@ -214,6 +295,8 @@ def client_menu():
         add_client()
     elif action == '2':
         remove_client()
+    elif action == '3':
+        edit_client()
     else:
         print("Invalid input!\n")
         client_menu()
@@ -236,6 +319,8 @@ def print_clients():
 
     global clients_list
     clients_list.clear()
+
+    print("EXISTING CLIENTS:")
     ctr = 0
     for doc in collection1.find():
         post = '[' + str(ctr) + ']' + ' - [' + doc["type"] + "_MQTT" + '] ' + doc["care1_device_id"] + '-' + doc["broker"] + ':' + doc["port"]
@@ -268,9 +353,13 @@ def start():
         print(line.strip('\n'))
     tnc.close()
 
-
     # Install dependencies
-    install_dependencies()
+    print("\nSkip installation of dependencies? (y/n)")
+    dep = input("\nEnter: ")
+    if dep == 'y' or dep == 'Y':
+        print("\nSkipping installation of dependencies.\n")
+    else:
+        install_dependencies()
 
 
     # MongoDB configuration
