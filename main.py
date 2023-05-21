@@ -25,6 +25,29 @@ ed = 0
 
 
 def edit_client_1():
+    global ec
+    global data
+    global ed
+
+    data.clear()
+
+    # MongoDB configuration
+    from dotenv import load_dotenv, find_dotenv
+    import os
+    import pprint
+    from pymongo import MongoClient
+    load_dotenv(find_dotenv())
+    password = os.environ.get("MONGODB_PW")
+    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(connection_string)
+    db = client.CARE1
+    
+    if clients_list[ec][0] == 1:
+        collection = db.mqtt_clients
+    elif clients_list[ec][0] == 2:
+        collection = db.http_clients
+
+    
     print("HERE")
 
 
