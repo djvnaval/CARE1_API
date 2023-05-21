@@ -16,6 +16,7 @@ clients = "src/clients.txt"
 terms = "src/TERMS_AND_CONDITIONS.txt"
 MQTTp = "src/MQTTp_note.txt"
 MQTTs = "src/MQTTs_note.txt"
+MDBp = "src/MongoDBp_note.txt"
 clients_list = []
 
 # edit_client() variables
@@ -109,22 +110,44 @@ def edit_client_1(eid):
     elif clients_list[ec][0] == 2:
         collection = db.http_clients
 
-    '''
-    post = {
-        "care1_device_id" : care1_device_id,
-        "broker" : broker,
-        "port" : port,
-        "username" : username,
-        "password" : pw,
-        "type" : "PUB",
-        "topics" : topics
-    }
+    elif clients_list[ec][0] == 3:
+        collection = db.mongodb_clients
+        # This section is specifically inclined to MongoDB client_adder
+        if ed == 2:
+            arg = str(data[ed][0]) + " : " + str(data[ed][1])
+            print(arg)
+            print("Select NEW protocol:\n[0] HTTP\n[1] MQTT")
+            action = input("\nEnter: ")
+            if action == '0':
+                data[ed][1] = "HTTP"
+                print("\nClient attribute edited successfully.")
+            elif action == '1':
+                data[ed][1] = "MQTT"
+                print("\nClient attribute edited successfully.")
+            else:
+                print("Invalid input! Type is not changed.\n")
+        else:
+            arg = str(data[ed][0]) + " : " + str(data[ed][1])
+            print(arg)
+            arg = "Enter NEW " + str(data[ed][0]) + ": "
+            new = input(arg)
+            if new != '\n' or new != '':
+                data[ed][1] = new.strip('\n')
+                print("\nClient attribute edited successfully.")
 
-    post_id = collection.insert_one(post).inserted_id
-    response = "\nClient " + str(post_id) + " successfully added."
-    print(response)
-    client_menu()
-    '''
+        # Modifying in MongoDB
+        post = {
+            "care1_device_id" : data[0][1],
+            "URI" : data[1][1],
+            "protocol" : data[2][1],
+        }
+
+        # Removing old document in MongoDB
+        collection.delete_one({"_id" : eid})
+
+        post_id = collection.insert_one(post).inserted_id
+        response = "\nClient successfully modified with id " + str(post_id) + "."
+        print(response)
 
     client_menu()
 
@@ -151,6 +174,8 @@ def edit_client_0():
         collection = db.mqtt_clients
     elif clients_list[ec][0] == 2:
         collection = db.http_clients
+    elif clients_list[ec][0] == 3:
+        collection = db.mongodb_clients
 
     client = collection.find({"_id" : clients_list[ec][1]})
 
@@ -199,6 +224,53 @@ def edit_client():
     edit_client_0()
 
 
+def client_adder_mongodb():
+    print("ADD PUBLISHING CLIENT USING MONGODB AS GATEWAY/BROKER")
+    md = open(MDBp, 'r')
+    for line in md:
+        print(line.strip('\n'))
+    md.close()
+
+    care1_device_id = ""
+    care1_device_id = input("CARE1 Device ID (press ENTER if no ID): ")
+    connection_str = ""
+    connection_str = input("Connection String (URI): ")
+    print("Select IPE protocol")
+    print("[0] HTTP")
+    print("[1] MQTT")
+    sel = input("Enter: ")
+    if sel == '0':
+        protocol = "HTTP"
+    elif sel == '1':
+        protocol = "MQTT"
+    else:
+        print("Invalid input!\n")
+        client_adder_mongodb()
+
+    # MongoDB configuration
+    from dotenv import load_dotenv, find_dotenv
+    import os
+    import pprint
+    from pymongo import MongoClient
+    load_dotenv(find_dotenv())
+    password = os.environ.get("MONGODB_PW")
+    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+    client = MongoClient(connection_string)
+    db = client.CARE1
+    collection = db.mongodb_clients
+
+    post = {
+        "care1_device_id" : care1_device_id,
+        "URI" : connection_str,
+        "protocol" : protocol
+    }
+
+    post_id = collection.insert_one(post).inserted_id
+    response = "\nClient " + str(post_id) + " successfully added."
+    print(response)
+    client_menu()
+
+
 def client_adder_MQTTp():
     print("ADD MQTT PUBLISHING CLIENT")
     mq = open(MQTTp, 'r')
@@ -227,7 +299,6 @@ def client_adder_MQTTp():
     else:
         print("Topics are to be added later.")
 
-    # ADD to clients collection in MongoDB
     # MongoDB configuration
     from dotenv import load_dotenv, find_dotenv
     import os
@@ -284,7 +355,6 @@ def client_adder_MQTTs():
         topic_str.append(input(arg))
         qos.append(int(input("Quality of Service (QOS): ")))
 
-    # ADD to clients collection in MongoDB
     # MongoDB configuration
     from dotenv import load_dotenv, find_dotenv
     import os
@@ -332,6 +402,7 @@ def add_client():
     print("[2] Add MQTT Subscriber (actuator IPEs, MQTT GUI)")
     print("[3] Add HTTP Posting Client (sensor IPEs)")
     print("[4] Add HTTP Requesting Client (actuator IPEs, HTTP GUI)")
+    print("[5] Add MongoDB Publishing/Posting Client (HTTP/MQTT sensor IPES with MongoDB as gateway/broker)")
     print('')
     action = input("Enter: ")
     print('')
@@ -343,6 +414,8 @@ def add_client():
         client_adder_HTTPp()
     elif action == '4':
         client_adder_HTTPs()
+    elif action == '5':
+        client_adder_mongodb()
     else:
         print("Invalid input!\n")
         add_client()
@@ -375,7 +448,8 @@ def remove_client():
                 collection = db.mqtt_clients
             elif c[0] == 2:
                 collection = db.http_clients
-
+            elif c[0] == 3:
+                collection = db.mongodb_clients
             collection.delete_one({"_id" : c[1]})
             client_menu()
     else:
@@ -417,6 +491,7 @@ def print_clients():
     db = client.CARE1
     collection1 = db.mqtt_clients
     collection2 = db.http_clients
+    collection3 = db.mongodb_clients
 
     global clients_list
     clients_list.clear()
@@ -436,6 +511,11 @@ def print_clients():
         post = "      Topics: " + str(doc["topics"])
         print(post)
         clients_list.append([2, doc["_id"]])
+        ctr = ctr + 1
+    for doc in collection3.find():
+        post = '[' + str(ctr) + ']' + " - [PUB_" + doc["protocol"] + '] ' + doc["care1_device_id"] + '-' + doc["URI"]
+        print(post)
+        clients_list.append([3, doc["_id"]])
         ctr = ctr + 1
     print('')
 
@@ -481,20 +561,3 @@ def start():
 
 
 start()
-
-'''
-Next steps
-
-- Register publishing clients (HTTP, MQTT)
-    - Ask for device (collection) name
-    - Create 1 collection per client
-- Create insert_docs function
-- Parallelized:
-    - Subscribe/get requests from clients in realtime (loop)
-    - While on loop, run insert_docs
-
-- Register subscribing clients (HTTP, MQTT)
-- Create get_docs function
-- Parallelized:
-    - Retrieve documents from collections and publish to clients
-'''
