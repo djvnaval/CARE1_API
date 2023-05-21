@@ -24,12 +24,10 @@ data = []
 ed = 0
 
 
-def edit_client_1():
+def edit_client_1(eid):
     global ec
     global data
     global ed
-
-    data.clear()
 
     # MongoDB configuration
     from dotenv import load_dotenv, find_dotenv
@@ -44,11 +42,91 @@ def edit_client_1():
     
     if clients_list[ec][0] == 1:
         collection = db.mqtt_clients
+        # This section is specifically inclined to MQTT client_adder
+        if ed == 5:
+            arg = str(data[ed][0]) + " : " + str(data[ed][1])
+            print(arg)
+            print("Select NEW type:\n[0] PUB (publishing client)\n[1] SUB (subscribing client)")
+            action = input("\nEnter: ")
+            if action == '0':
+                data[ed][1] = "PUB"
+                print("\nClient attribute edited successfully.")
+            elif action == '1':
+                data[ed][1] = "SUB"
+                print("\nClient attribute edited successfully.")
+            else:
+                print("Invalid input! Type is not changed.\n")
+        elif ed == 6:
+            print(data[ed])
+            print("Topics and QOS:")
+            for item in data[ed][1]:
+                s = item[0] + " : " + str(item[1])
+                print(s)
+            topic_str = []
+            qos = []
+            n_topics = 0
+            n_topics = int(input("Number of topics (if leaving blank and editing later, type '0'): "))
+            if n_topics != 0:
+                for i in range(n_topics):
+                    arg = "Topic String " + str(i+1) + ": "
+                    topic_str.append(input(arg))
+                    qos.append(int(input("Quality of Service (QOS): ")))
+            else:
+                print("Topics are to be added later.")
+
+            topics = []
+            for i in range(n_topics):
+                topics.append([topic_str[i], qos[i]])
+            data[ed][1] = topics
+            print("\nClient attribute edited successfully.")
+        else:
+            arg = str(data[ed][0]) + " : " + str(data[ed][1])
+            print(arg)
+            arg = "Enter NEW " + str(data[ed][0]) + ": "
+            new = input(arg)
+            if new != '\n' or new != '':
+                data[ed][1] = new.strip('\n')
+                print("\nClient attribute edited successfully.")
+
+        # Modifying in MongoDB
+        post = {
+            "care1_device_id" : data[0][1],
+            "broker" : data[1][1],
+            "port" : data[2][1],
+            "username" : data[3][1],
+            "password" : data[4][1],
+            "type" : data[5][1],
+            "topics" : data[6][1]
+        }
+
+        # Removing old document in MongoDB
+        collection.delete_one({"_id" : eid})
+
+        post_id = collection.insert_one(post).inserted_id
+        response = "\nClient successfully modified with id " + str(post_id) + "."
+        print(response)
+
     elif clients_list[ec][0] == 2:
         collection = db.http_clients
 
-    
-    print("HERE")
+    '''
+    post = {
+        "care1_device_id" : care1_device_id,
+        "broker" : broker,
+        "port" : port,
+        "username" : username,
+        "password" : pw,
+        "type" : "PUB",
+        "topics" : topics
+    }
+
+    post_id = collection.insert_one(post).inserted_id
+    response = "\nClient " + str(post_id) + " successfully added."
+    print(response)
+    client_menu()
+    '''
+
+    client_menu()
 
 
 def edit_client_0():
@@ -98,7 +176,7 @@ def edit_client_0():
         edit_client_0()
 
     ed = int(edit)
-    edit_client_1()
+    edit_client_1(clients_list[ec][1])
 
     # delete item from collection
     # add client based on new list.... according to designated collection
@@ -348,10 +426,14 @@ def print_clients():
     for doc in collection1.find():
         post = '[' + str(ctr) + ']' + ' - [' + doc["type"] + "_MQTT" + '] ' + doc["care1_device_id"] + '-' + doc["broker"] + ':' + doc["port"]
         print(post)
+        post = "      Topics: " + str(doc["topics"])
+        print(post)
         clients_list.append([1, doc["_id"]])
         ctr = ctr + 1
     for doc in collection2.find():
         post = '[' + str(ctr) + ']' + ' - [' + doc["type"] + "_HTTP" + '] ' + doc["care1_device_id"] + '-' + doc["broker"] + ':' + doc["port"]
+        print(post)
+        post = "      Topics: " + str(doc["topics"])
         print(post)
         clients_list.append([2, doc["_id"]])
         ctr = ctr + 1
