@@ -273,6 +273,9 @@ def client_adder_mongodb():
         "protocol" : protocol
     }
 
+    db1 = client.mongodb_client_readings
+    db1.create_collection(care1_device_id)
+
     post_id = collection.insert_one(post).inserted_id
     response = "\nClient " + str(post_id) + " successfully added."
     print(response)
