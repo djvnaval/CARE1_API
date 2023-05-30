@@ -12,7 +12,6 @@ from os.path import exists
 
 
 # Global variables
-clients = "src/clients.txt"
 terms = "src/TERMS_AND_CONDITIONS.txt"
 MQTTp = "src/MQTTp_note.txt"
 MQTTs = "src/MQTTs_note.txt"
@@ -23,6 +22,18 @@ clients_list = []
 ec = 0
 data = []
 ed = 0
+
+
+def start_client_connect():
+    print("\nSTART_CLIENT_CONNECT will open a new tab and run the start_client_connect program to start connection in parallel. The program in the current tab will not be terminated. Would you like to proceed? (y/n)")
+    s = input("\nEnter: ")
+    if s == 'y' or s == 'Y':
+        command = "gnome-terminal --tab --title=start_client_connect -- bash -c 'python3 start_client_connect.py ;bash'"
+        dep = subprocess.run(command, shell=True, capture_output=True)
+        client_menu()
+    else:
+        print("Returning to client menu")
+        client_menu()
 
 
 def edit_client_1(eid):
@@ -202,9 +213,6 @@ def edit_client_0():
 
     ed = int(edit)
     edit_client_1(clients_list[ec][1])
-
-    # delete item from collection
-    # add client based on new list.... according to designated collection
 
 
 def edit_client():
@@ -463,6 +471,7 @@ def client_menu():
     print("[1] Add client")
     print("[2] Remove client")
     print("[3] Edit client")
+    print("[4] Start client connect")
     print('')
     action = input("Enter: ")
     print('')
@@ -472,6 +481,8 @@ def client_menu():
         remove_client()
     elif action == '3':
         edit_client()
+    elif action == '4':
+        start_client_connect()
     else:
         print("Invalid input!\n")
         client_menu()
