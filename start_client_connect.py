@@ -9,13 +9,17 @@ Created on Sat Apr 22 12:25:32 2023
 
 import subprocess
 from os.path import exists
+import os
+import pprint
+from pymongo import MongoClient
+from dotenv import load_dotenv, find_dotenv
 
 
 # Global variables
 clients_list = []
 ec = 0
 dbs = []
-col_names = []
+MAIN_CON_STRING = ""
 
 
 def show_collection(cl):
@@ -27,28 +31,40 @@ def show_collection(cl):
 	start()
 
 
-def view_collection(dbc, con):
-	global col_names
-	# Connect to client
-	import os
-	import pprint
-	from pymongo import MongoClient
-	cli = MongoClient(con)
-	db = cli.dbc
-	col = db.sensorData100
-	show_collection(col)
+def view_collection(con, database_name, dev_id):
+	client = MongoClient(con)
+	command = f"client.{database_name}.list_collection_names()"
+	collections = []
+	ctr = 0
+	for col in eval(command):
+		arg = '[' + str(ctr) + "] " + col
+		print(arg)
+		collections.append(col)
+		ctr = ctr + 1
+	print("\nSelect a collection to connect to Central Point:")
+	sel = input("Enter: ")
+	if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(collections)-1:
+			print("Invalid input!\n")
+			view_collection()
+	collection_name = collections[int(sel)]
+	command = f"client.{database_name}.{collection_name}"
+	coll = eval(command)
+	main_client = MongoClient(MAIN_CON_STRING)
+	main_db = main_client.mongodb_client_readings
+	command = f"main_db.{dev_id}"
+	main_col = eval(command)
+	for doc in coll.find():
+		main_col.insert_one(doc)
+		print("Device readings transferred to Central Point's database!")
 
 
 def start_connect():
 	global dbs
-    # MongoDB configuration
-	from dotenv import load_dotenv, find_dotenv
-	import os
-	import pprint
-	from pymongo import MongoClient
+	global MAIN_CON_STRING
 	load_dotenv(find_dotenv())
 	password = os.environ.get("MONGODB_PW")
 	connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+	MAIN_CON_STRING = connection_string
 	client = MongoClient(connection_string)
 	db = client.CARE1
     
@@ -62,6 +78,7 @@ def start_connect():
 		clii = collection.find({"_id" : clients_list[ec][1]})
 		for doc in clii:
 			con = doc["URI"]
+			dev_id = doc["care1_device_id"]
 		cli = MongoClient(con)
 		print("\nAVAILABLE DATABASES")
 		ctr = 0
@@ -71,15 +88,11 @@ def start_connect():
 			dbs.append(str(dbname[1]['name']))
 			ctr = ctr + 1
 		sel = input("\nSelect a database to view: ")
-		if sel.isdigit() == 0:
-			print("Invalid input!\n")
-			start_connect()
-		if int(sel) < -1 or int(sel) > ctr-1:
+		if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > ctr-1:
 			print("Invalid input!\n")
 			start_connect()
 		dbnamae = dbs[int(sel)]
-		
-		view_collection(cli.dbnamae, con)
+		view_collection(con, dbnamae, dev_id)
 
 
 def select_client():
@@ -88,13 +101,9 @@ def select_client():
     print("SELECT A CLIENT TO START")
     sel = input("Enter: ") # Selection
     print('')
-    if sel.isdigit() == 0:
+    if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(clients_list)-1:
         print("Invalid input!\n")
         select_client()
-    if int(sel) < -1 or int(sel) > len(clients_list)-1:
-        print("Invalid input!\n")
-        select_client()
-
     ec = int(sel)
     start_connect()
 
