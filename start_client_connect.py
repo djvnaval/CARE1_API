@@ -13,6 +13,66 @@ import os
 import pprint
 from pymongo import MongoClient
 from dotenv import load_dotenv, find_dotenv
+import bson
+
+import bson
+from pymongo import MongoClient
+
+
+
+
+def dump(collections, conn, db_name, path):
+    """
+    MongoDB Dump
+    :param collections: Database collections name
+    :param conn: MongoDB client connection
+    :param db_name: Database name
+    :param path:
+    :return:
+    
+    >>> DB_BACKUP_DIR = '/path/backups/'
+    >>> conn = MongoClient("mongodb://admin:admin@127.0.0.1:27017", authSource="admin")
+    >>> db_name = 'my_db'
+    >>> collections = ['collection_name', 'collection_name1', 'collection_name2']
+    >>> dump(collections, conn, db_name, DB_BACKUP_DIR)
+    """
+
+    client = MongoClient(conn)
+    command = f"client.{db_name}"
+    db = eval(command)
+    if not os.path.exists(path):
+    	os.makedirs(path)
+    for coll in collections:
+        with open(os.path.join(path, f'{coll}.bson'), 'wb+') as f:
+            for doc in db[coll].find():
+                f.write(bson.BSON.encode(doc))
+
+
+def restore(path, conn, db_name):
+    """
+    MongoDB Restore
+    :param path: Database dumped path
+    :param conn: MongoDB client connection
+    :param db_name: Database name
+    :return:
+    
+    >>> DB_BACKUP_DIR = '/path/backups/'
+    >>> conn = MongoClient("mongodb://admin:admin@127.0.0.1:27017", authSource="admin")
+    >>> db_name = 'my_db'
+    >>> restore(DB_BACKUP_DIR, conn, db_name)
+    
+    """
+    
+    client = MongoClient(conn)
+    command = f"client.{db_name}"
+    db = eval(command)
+    for coll in os.listdir(path):
+        if coll.endswith('.bson'):
+            with open(os.path.join(path, coll), 'rb+') as f:
+            	for doc in bson.decode_all(f.read()):
+            		if db[coll.split('.')[0]].count_documents(doc) == 0:
+            			db[coll.split('.')[0]].insert_one(doc)
+            			print(doc)
 
 
 # Global variables
@@ -53,10 +113,16 @@ def view_collection(con, database_name, dev_id):
 	main_db = main_client.mongodb_client_readings
 	command = f"main_db.{dev_id}"
 	main_col = eval(command)
-	for doc in coll.find():
-		main_col.insert_one(doc)
-		print("Device readings transferred to Central Point's database!")
+	
+	print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
 
+	path = f"dump/{database_name}/{collection_name}/"
+	
+	while 1:
+		dump([collection_name], con, database_name, path)
+		restore(path, MAIN_CON_STRING, "mongodb_client_readings")
+		print("Connection is ongoing...")
+		
 
 def start_connect():
 	global dbs
