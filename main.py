@@ -16,9 +16,8 @@ terms = "src/TERMS_AND_CONDITIONS.txt"
 MQTTp = "src/MQTTp_note.txt"
 MQTTs = "src/MQTTs_note.txt"
 MDBp = "src/MongoDBp_note.txt"
+MDBs = "src/MongoDBs_note.txt"
 clients_list = []
-
-# edit_client() variables
 ec = 0
 data = []
 ed = 0
@@ -30,30 +29,19 @@ def start_client_connect():
     if s == 'y' or s == 'Y':
         command = "gnome-terminal --tab --title=start_client_connect -- bash -c 'python3 start_client_connect.py ;bash'"
         dep = subprocess.run(command, shell=True, capture_output=True)
-        client_menu()
+        main_menu()
     else:
         print("Returning to client menu")
-        client_menu()
+        main_menu()
 
 
 def edit_client_1(eid):
     global ec
     global data
     global ed
-
-    # MongoDB configuration
-    from dotenv import load_dotenv, find_dotenv
-    import os
-    import pprint
-    from pymongo import MongoClient
-    load_dotenv(find_dotenv())
-    password = os.environ.get("MONGODB_PW")
-    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(connection_string)
-    db = client.CARE1
     
     if clients_list[ec][0] == 1:
-        collection = db.mqtt_clients
+        collection = main_db.mqtt_clients
         # This section is specifically inclined to MQTT client_adder
         if ed == 5:
             arg = str(data[ed][0]) + " : " + str(data[ed][1])
@@ -100,8 +88,12 @@ def edit_client_1(eid):
                 data[ed][1] = new.strip('\n')
                 print("\nClient attribute edited successfully.")
 
+        # Removing old document in MongoDB
+        collection.delete_one({"_id" : eid})
+
         # Modifying in MongoDB
         post = {
+            "_id" : eid,
             "care1_device_id" : data[0][1],
             "broker" : data[1][1],
             "port" : data[2][1],
@@ -111,18 +103,15 @@ def edit_client_1(eid):
             "topics" : data[6][1]
         }
 
-        # Removing old document in MongoDB
-        collection.delete_one({"_id" : eid})
-
         post_id = collection.insert_one(post).inserted_id
         response = "\nClient successfully modified with id " + str(post_id) + "."
         print(response)
 
     elif clients_list[ec][0] == 2:
-        collection = db.http_clients
+        collection = main_db.http_clients
 
     elif clients_list[ec][0] == 3:
-        collection = db.mongodb_clients
+        collection = main_db.mongodb_clients
         # This section is specifically inclined to MongoDB client_adder
         if ed == 2:
             arg = str(data[ed][0]) + " : " + str(data[ed][1])
@@ -160,7 +149,7 @@ def edit_client_1(eid):
         response = "\nClient successfully modified with id " + str(post_id) + "."
         print(response)
 
-    client_menu()
+    main_menu()
 
 
 def edit_client_0():
@@ -169,24 +158,13 @@ def edit_client_0():
     global ed
 
     data.clear()
-
-    # MongoDB configuration
-    from dotenv import load_dotenv, find_dotenv
-    import os
-    import pprint
-    from pymongo import MongoClient
-    load_dotenv(find_dotenv())
-    password = os.environ.get("MONGODB_PW")
-    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(connection_string)
-    db = client.CARE1
     
     if clients_list[ec][0] == 1:
-        collection = db.mqtt_clients
+        collection = main_db.mqtt_clients
     elif clients_list[ec][0] == 2:
-        collection = db.http_clients
+        collection = main_db.http_clients
     elif clients_list[ec][0] == 3:
-        collection = db.mongodb_clients
+        collection = main_db.mongodb_clients
 
     client = collection.find({"_id" : clients_list[ec][1]})
 
@@ -232,9 +210,16 @@ def edit_client():
     edit_client_0()
 
 
-def client_adder_mongodb():
-    print("ADD PUBLISHING CLIENT USING MONGODB AS GATEWAY/BROKER")
-    md = open(MDBp, 'r')
+def client_adder_mongodb(type):
+    if type == 0:
+        print("ADD SENSOR CLIENT USING MONGODB AS GATEWAY/BROKER")
+        md = open(MDBp, 'r')
+        t = "sensor"
+    if type == 1:
+        print("ADD ACTUATOR CLIENT USING MONGODB AS GATEWAY/BROKER")
+        md = open(MDBs, 'r')
+        t = "actuator"
+
     for line in md:
         print(line.strip('\n'))
     md.close()
@@ -255,22 +240,13 @@ def client_adder_mongodb():
         print("Invalid input!\n")
         client_adder_mongodb()
 
-    # MongoDB configuration
-    from dotenv import load_dotenv, find_dotenv
-    import os
-    import pprint
-    from pymongo import MongoClient
-    load_dotenv(find_dotenv())
-    password = os.environ.get("MONGODB_PW")
-    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(connection_string)
-    db = client.CARE1
-    collection = db.mongodb_clients
+    collection = main_db.mongodb_clients
 
     post = {
         "care1_device_id" : care1_device_id,
         "URI" : connection_str,
-        "protocol" : protocol
+        "protocol" : protocol,
+        "type" : t
     }
 
     db1 = client.mongodb_client_readings
@@ -279,12 +255,20 @@ def client_adder_mongodb():
     post_id = collection.insert_one(post).inserted_id
     response = "\nClient " + str(post_id) + " successfully added."
     print(response)
-    client_menu()
+    main_menu()
 
 
-def client_adder_MQTTp():
-    print("ADD MQTT PUBLISHING CLIENT")
-    mq = open(MQTTp, 'r')
+def client_adder_MQTT(type):
+    if type == 0:
+        print("ADD MQTT PUBLISHING CLIENT")
+        mq = open(MQTTp, 'r')
+        t = "PUB"
+
+    elif type == 1:
+        print("ADD MQTT SUBSCRIBING CLIENT")
+        mq = open(MQTTs, 'r')
+        t = "SUB"
+
     for line in mq:
         print(line.strip('\n'))
     mq.close()
@@ -310,21 +294,11 @@ def client_adder_MQTTp():
     else:
         print("Topics are to be added later.")
 
-    # MongoDB configuration
-    from dotenv import load_dotenv, find_dotenv
-    import os
-    import pprint
-    from pymongo import MongoClient
-    load_dotenv(find_dotenv())
-    password = os.environ.get("MONGODB_PW")
-    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(connection_string)
-    db = client.CARE1
-    collection = db.mqtt_clients
-
     topics = []
     for i in range(n_topics):
         topics.append([topic_str[i], qos[i]])
+
+    collection = main_db.mqtt_clients
 
     post = {
         "care1_device_id" : care1_device_id,
@@ -332,70 +306,14 @@ def client_adder_MQTTp():
         "port" : port,
         "username" : username,
         "password" : pw,
-        "type" : "PUB",
+        "type" : t,
         "topics" : topics
     }
 
     post_id = collection.insert_one(post).inserted_id
     response = "\nClient " + str(post_id) + " successfully added."
     print(response)
-    client_menu()
-
-
-def client_adder_MQTTs():
-    print("ADD MQTT SUBSCRIBING CLIENT")
-    mq = open(MQTTs, 'r')
-    for line in mq:
-        print(line.strip('\n'))
-    mq.close()
-
-    care1_device_id = ""
-    care1_device_id = input("CARE1 Device ID (press ENTER if no ID): ")
-    broker = input("Broker URL: ")
-    port = input("Port number: ")
-    username = ""
-    username = input("Username (press ENTER if no username): ")
-    pw = ""
-    pw = input("Password (press ENTER if no password): ")
-    n_topics = 0
-    n_topics = int(input("Number of topics: "))
-    topic_str = []
-    qos = []
-    for i in range(n_topics):
-        arg = "Topic String " + str(i+1) + ": "
-        topic_str.append(input(arg))
-        qos.append(int(input("Quality of Service (QOS): ")))
-
-    # MongoDB configuration
-    from dotenv import load_dotenv, find_dotenv
-    import os
-    import pprint
-    from pymongo import MongoClient
-    load_dotenv(find_dotenv())
-    password = os.environ.get("MONGODB_PW")
-    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(connection_string)
-    db = client.CARE1
-    collection = db.mqtt_clients
-
-    topics = []
-    for i in range(n_topics):
-        topics.append([topic_str[i], qos[i]])
-
-    post = {
-        "care1_device_id" : care1_device_id,
-        "broker" : broker,
-        "port" : port,
-        "username" : username,
-        "password" : pw,
-        "type" : "SUB",
-        "topics" : topics
-    }
-
-    post_id = collection.insert_one(post).inserted_id
-    response = "\nClient " + str(post_id) + " successfully added."
-    print(response)
-    client_menu()
+    main_menu()
 
 
 def client_adder_HTTPp():
@@ -409,24 +327,27 @@ def client_adder_HTTPs():
 def add_client():
     print_clients()
     print("ADD CLIENTS - Actions:")
-    print("[1] Add MQTT Publisher (sensor IPEs)")
-    print("[2] Add MQTT Subscriber (actuator IPEs, MQTT GUI)")
-    print("[3] Add HTTP Posting Client (sensor IPEs)")
-    print("[4] Add HTTP Requesting Client (actuator IPEs, HTTP GUI)")
-    print("[5] Add MongoDB Publishing/Posting Client (HTTP/MQTT sensor IPES with MongoDB as gateway/broker)")
+    print("[1] Add General MQTT Publishing Client")
+    print("[2] Add General MQTT Subscribing Client")
+    print("[3] Add General HTTP Posting Client")
+    print("[4] Add General HTTP Requesting Client")
+    print("[5] Add Sensor Client (HTTP/MQTT sensor IPES with MongoDB as gateway/broker)")
+    print("[6] Add Actuator Client (HTTP/MQTT actuator IPES with MongoDB as gateway/broker)")
     print('')
     action = input("Enter: ")
     print('')
     if action == '1':
-        client_adder_MQTTp()
+        client_adder_MQTT(0)
     elif action == '2':
-        client_adder_MQTTs()
+        client_adder_MQTT(1)
     elif action == '3':
         client_adder_HTTPp()
     elif action == '4':
         client_adder_HTTPs()
     elif action == '5':
-        client_adder_mongodb()
+        client_adder_mongodb(0)
+    elif action == '6':
+        client_adder_mongodb(1)
     else:
         print("Invalid input!\n")
         add_client()
@@ -443,69 +364,24 @@ def remove_client():
             remove_client()
         else:
             c = clients_list.pop(n)
-
-            # MongoDB configuration
-            from dotenv import load_dotenv, find_dotenv
-            import os
-            import pprint
-            from pymongo import MongoClient
-            load_dotenv(find_dotenv())
-            password = os.environ.get("MONGODB_PW")
-            connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-            client = MongoClient(connection_string)
-            db = client.CARE1
-
             if c[0] == 1:
-                collection = db.mqtt_clients
+                collection = main_db.mqtt_clients
             elif c[0] == 2:
-                collection = db.http_clients
+                collection = main_db.http_clients
             elif c[0] == 3:
-                collection = db.mongodb_clients
+                collection = main_db.mongodb_clients
             collection.delete_one({"_id" : c[1]})
-            client_menu()
+            main_menu()
     else:
         print("Invalid input!\n")
         remove_client()
-
-
-def client_menu():
-    print_clients()
-    print("Actions:")
-    print("[1] Add client")
-    print("[2] Remove client")
-    print("[3] Edit client")
-    print("[4] Start client connect")
-    print('')
-    action = input("Enter: ")
-    print('')
-    if action == '1':
-        add_client()
-    elif action == '2':
-        remove_client()
-    elif action == '3':
-        edit_client()
-    elif action == '4':
-        start_client_connect()
-    else:
-        print("Invalid input!\n")
-        client_menu()
 
 
 def print_clients():
     print('')
-    # MongoDB configuration
-    from dotenv import load_dotenv, find_dotenv
-    import os
-    import pprint
-    from pymongo import MongoClient
-    load_dotenv(find_dotenv())
-    password = os.environ.get("MONGODB_PW")
-    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(connection_string)
-    db = client.CARE1
-    collection1 = db.mqtt_clients
-    collection2 = db.http_clients
-    collection3 = db.mongodb_clients
+    collection1 = main_db.mqtt_clients
+    collection2 = main_db.http_clients
+    collection3 = main_db.mongodb_clients
 
     global clients_list
     clients_list.clear()
@@ -534,6 +410,29 @@ def print_clients():
     print('')
 
 
+def main_menu():
+    print_clients()
+    print("Actions:")
+    print("[1] Add client")
+    print("[2] Remove client")
+    print("[3] Edit client")
+    print("[4] Start sensor/actuator client connect")
+    print('')
+    action = input("Enter: ")
+    print('')
+    if action == '1':
+        add_client()
+    elif action == '2':
+        remove_client()
+    elif action == '3':
+        edit_client()
+    elif action == '4':
+        start_client_connect()
+    else:
+        print("Invalid input!\n")
+        main_menu()
+
+
 def install_dependencies():
     print("Installing dependencies...")
     commands = ['pip install requests',
@@ -545,33 +444,31 @@ def install_dependencies():
         print(dep.stdout.decode())
 
     
-def start():
-    # Terms and Conditions
-    tnc = open(terms, "r")
-    for line in tnc:
-        print(line.strip('\n'))
-    tnc.close()
+# START
 
-    # Install dependencies
-    print("\nSkip installation of dependencies? (y/n)")
-    dep = input("\nEnter: ")
-    if dep == 'y' or dep == 'Y':
-        print("\nSkipping installation of dependencies.\n")
-    else:
-        install_dependencies()
+# Terms and Conditions
+tnc = open(terms, "r")
+for line in tnc:
+    print(line.strip('\n'))
+tnc.close()
 
+# Install dependencies
+print("\nSkip installation of dependencies? (y/n)")
+dep = input("\nEnter: ")
+if dep == 'y' or dep == 'Y':
+    print("\nSkipping installation of dependencies.\n")
+else:
+    install_dependencies()
 
-    # MongoDB configuration
-    from dotenv import load_dotenv, find_dotenv
-    import os
-    import pprint
-    from pymongo import MongoClient
-    load_dotenv(find_dotenv())
-    password = os.environ.get("MONGODB_PW")
-    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(connection_string)
-        
-    client_menu()
-
-
-start()
+# MongoDB configuration
+from dotenv import load_dotenv, find_dotenv
+import os
+import pprint
+from pymongo import MongoClient
+load_dotenv(find_dotenv())
+main_password = os.environ.get("MONGODB_PW")
+main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+main_client = MongoClient(main_connection_string)
+main_db = main_client.CARE1
+    
+main_menu()

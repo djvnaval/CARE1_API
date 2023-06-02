@@ -1,6 +1,6 @@
 
-
-ADDING MQTT SUBSCRIBING CLIENTS
+ 
+ADDING GENERAL MQTT SUBSCRIBING CLIENT
 
 These clients receives data, thus this section needs the broker or data destination details, and you are about to connect the Central Point (this device) as a publisher. With that, please prepare to input the following details:
 	- CARE1 Device ID (optional, for easy referencing)

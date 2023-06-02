@@ -7,36 +7,22 @@ Created on Sat Apr 22 12:25:32 2023
 """
 
 
-import subprocess
-from os.path import exists
-import os
-import pprint
-from pymongo import MongoClient
 from dotenv import load_dotenv, find_dotenv
-import bson
-
-import bson
 from pymongo import MongoClient
+from os.path import exists
+import subprocess
+import pprint
+import bson
+import os
 
 
+# Global variables
+clients_list = []
+ec = 0
+dbs = []
 
 
 def dump(collections, conn, db_name, path):
-    """
-    MongoDB Dump
-    :param collections: Database collections name
-    :param conn: MongoDB client connection
-    :param db_name: Database name
-    :param path:
-    :return:
-    
-    >>> DB_BACKUP_DIR = '/path/backups/'
-    >>> conn = MongoClient("mongodb://admin:admin@127.0.0.1:27017", authSource="admin")
-    >>> db_name = 'my_db'
-    >>> collections = ['collection_name', 'collection_name1', 'collection_name2']
-    >>> dump(collections, conn, db_name, DB_BACKUP_DIR)
-    """
-
     client = MongoClient(conn)
     command = f"client.{db_name}"
     db = eval(command)
@@ -49,20 +35,6 @@ def dump(collections, conn, db_name, path):
 
 
 def restore(path, conn, db_name):
-    """
-    MongoDB Restore
-    :param path: Database dumped path
-    :param conn: MongoDB client connection
-    :param db_name: Database name
-    :return:
-    
-    >>> DB_BACKUP_DIR = '/path/backups/'
-    >>> conn = MongoClient("mongodb://admin:admin@127.0.0.1:27017", authSource="admin")
-    >>> db_name = 'my_db'
-    >>> restore(DB_BACKUP_DIR, conn, db_name)
-    
-    """
-    
     client = MongoClient(conn)
     command = f"client.{db_name}"
     db = eval(command)
@@ -73,13 +45,6 @@ def restore(path, conn, db_name):
             		if db[coll.split('.')[0]].count_documents(doc) == 0:
             			db[coll.split('.')[0]].insert_one(doc)
             			print(doc)
-
-
-# Global variables
-clients_list = []
-ec = 0
-dbs = []
-MAIN_CON_STRING = ""
 
 
 def show_collection(cl):
@@ -109,7 +74,7 @@ def view_collection(con, database_name, dev_id):
 	collection_name = collections[int(sel)]
 	command = f"client.{database_name}.{collection_name}"
 	coll = eval(command)
-	main_client = MongoClient(MAIN_CON_STRING)
+	main_client = MongoClient(main_connection_string)
 	main_db = main_client.mongodb_client_readings
 	command = f"main_db.{dev_id}"
 	main_col = eval(command)
@@ -120,27 +85,20 @@ def view_collection(con, database_name, dev_id):
 	
 	while 1:
 		dump([collection_name], con, database_name, path)
-		restore(path, MAIN_CON_STRING, "mongodb_client_readings")
+		restore(path, main_connection_string, "mongodb_client_readings")
 		print("Connection is ongoing...")
 		
 
 def start_connect():
 	global dbs
-	global MAIN_CON_STRING
-	load_dotenv(find_dotenv())
-	password = os.environ.get("MONGODB_PW")
-	connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-	MAIN_CON_STRING = connection_string
-	client = MongoClient(connection_string)
-	db = client.CARE1
     
 	if clients_list[ec][0] == 1:
-		collection = db.mqtt_clients
+		collection = main_db.mqtt_clients
 	elif clients_list[ec][0] == 2:
-		collection = db.http_clients
+		collection = main_db.http_clients
 	elif clients_list[ec][0] == 3:
 		# Connect to client
-		collection = db.mongodb_clients
+		collection = main_db.mongodb_clients
 		clii = collection.find({"_id" : clients_list[ec][1]})
 		for doc in clii:
 			con = doc["URI"]
@@ -161,34 +119,11 @@ def start_connect():
 		view_collection(con, dbnamae, dev_id)
 
 
-def select_client():
-    global ec
-    print_clients()
-    print("SELECT A CLIENT TO START")
-    sel = input("Enter: ") # Selection
-    print('')
-    if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(clients_list)-1:
-        print("Invalid input!\n")
-        select_client()
-    ec = int(sel)
-    start_connect()
-
-
 def print_clients():
     print('')
-    # MongoDB configuration
-    from dotenv import load_dotenv, find_dotenv
-    import os
-    import pprint
-    from pymongo import MongoClient
-    load_dotenv(find_dotenv())
-    password = os.environ.get("MONGODB_PW")
-    connection_string = f"mongodb+srv://care1:{password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-    client = MongoClient(connection_string)
-    db = client.CARE1
-    collection1 = db.mqtt_clients
-    collection2 = db.http_clients
-    collection3 = db.mongodb_clients
+    collection1 = main_db.mqtt_clients
+    collection2 = main_db.http_clients
+    collection3 = main_db.mongodb_clients
 
     global clients_list
     clients_list.clear()
@@ -217,8 +152,39 @@ def print_clients():
     print('')
 
 
-def start():
-	print("START CLIENT CONNECTION")
-	select_client()
+def select_client():
+    global ec
+    print_clients()
+    print("SELECT A CLIENT TO START")
+    sel = input("Enter: ") # Selection
+    print('')
+    if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(clients_list)-1:
+        print("Invalid input!\n")
+        select_client()
+    ec = int(sel)
+    start_connect()
 
-start()
+
+print("START CLIENT CONNECTION")
+# MongoDB configuration
+from dotenv import load_dotenv, find_dotenv
+import os
+import pprint
+from pymongo import MongoClient
+load_dotenv(find_dotenv())
+main_password = os.environ.get("MONGODB_PW")
+main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+main_client = MongoClient(main_connection_string)
+main_db = main_client.CARE1
+
+'''
+# Drop previous connection data
+db1 = main_client.mongodb_client_readings
+for col in db1.list_collection_names():
+	if col == "do_not_delete":
+		continue
+	command = f"db1.{col}.drop()"
+	eval(command)
+'''
+
+select_client()
