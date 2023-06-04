@@ -35,4 +35,4 @@ def actuate(db, col, t, limit):
 			eval(command)
 			print(post)
 
-actuate("HTTPSmartFarm", "solenoidValve_actuations", 10, 100)
+actuate("HTTPSmartFarm", "solenoidValve", 10, 100)

@@ -398,7 +398,7 @@ def print_clients():
         clients_list.append([2, doc["_id"]])
         ctr = ctr + 1
     for doc in collection3.find():
-        post = '[' + str(ctr) + ']' + " - [PUB_" + doc["protocol"] + '] ' + doc["care1_device_id"] + '-' + doc["URI"]
+        post = '[' + str(ctr) + ']' + " - [" + doc["type"] + '] ' + doc["care1_device_id"] + '-' + doc["URI"]
         print(post)
         clients_list.append([3, doc["_id"]])
         ctr = ctr + 1
