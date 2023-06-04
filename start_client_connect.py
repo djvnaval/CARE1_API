@@ -83,40 +83,43 @@ def start_connect():
 	elif clients_list[ec][0] == 2:
 		collection = main_db.http_clients
 	elif clients_list[ec][0] == 3:
-		# Connect to client
-		collection = main_db.mongodb_clients
-		clii = collection.find({"_id" : clients_list[ec][1]})
-		for doc in clii:
-			con = doc["URI"]
-			dev_id = doc["care1_device_id"]
-		cli = MongoClient(con)
-		print("\nAVAILABLE DATABASES")
-		ctr = 0
-		for dbname in enumerate(cli.list_databases()):
-			arg = '[' + str(ctr) + '] ' + str(dbname[1]['name'])
-			print(arg)
-			dbs.append(str(dbname[1]['name']))
-			ctr = ctr + 1
-		sel = input("\nSelect a database to view: ")
-		if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > ctr-1:
-			print("Invalid input!\n")
-			start_connect()
-		dbnamae = dbs[int(sel)]
-		# Check existence in central point
-		dbnames = main_client.list_database_names()
-		if dbnamae in dbnames:
-			print("\nDatabase '", dbnamae, "' already exists. Remove existing collections in this database to avoid dangling objects? (y/n)", sep='')
-			sel = input("Enter: ")
-			if sel != 'n' and sel != 'N':
-				print("\nDropping collections...\n\n")
-				command = f"main_client.{dbnamae}"
-				DB = eval(command)
-				for col in DB.list_collection_names():
-					command = f"DB.{col}.drop()"
-					eval(command)
-			else:
-				print("\nProceeding.")
-		view_collection(con, dbnamae, dev_id)
+		if clients_list[ec][2] == "sensor":
+			# Connect to client
+			collection = main_db.mongodb_clients
+			clii = collection.find({"_id" : clients_list[ec][1]})
+			for doc in clii:
+				con = doc["URI"]
+				dev_id = doc["care1_device_id"]
+			cli = MongoClient(con)
+			print("\nAVAILABLE DATABASES")
+			ctr = 0
+			for dbname in enumerate(cli.list_databases()):
+				arg = '[' + str(ctr) + '] ' + str(dbname[1]['name'])
+				print(arg)
+				dbs.append(str(dbname[1]['name']))
+				ctr = ctr + 1
+			sel = input("\nSelect a database to view: ")
+			if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > ctr-1:
+				print("Invalid input!\n")
+				start_connect()
+			dbnamae = dbs[int(sel)]
+			# Check existence in central point
+			dbnames = main_client.list_database_names()
+			if dbnamae in dbnames:
+				print("\nDatabase '", dbnamae, "' already exists. Remove existing collections in this database to avoid dangling objects? (y/n)", sep='')
+				sel = input("Enter: ")
+				if sel != 'n' and sel != 'N':
+					print("\nDropping collections...\n\n")
+					command = f"main_client.{dbnamae}"
+					DB = eval(command)
+					for col in DB.list_collection_names():
+						command = f"DB.{col}.drop()"
+						eval(command)
+				else:
+					print("\nProceeding.")
+			view_collection(con, dbnamae, dev_id)
+		elif clients_list[ec][2] == "actuator":
+			print("HERE")
 
 
 def print_clients():
@@ -147,7 +150,7 @@ def print_clients():
     for doc in collection3.find():
         post = '[' + str(ctr) + ']' + " - [PUB_" + doc["protocol"] + '] ' + doc["care1_device_id"] + '-' + doc["URI"]
         print(post)
-        clients_list.append([3, doc["_id"]])
+        clients_list.append([3, doc["_id"], doc["type"]])
         ctr = ctr + 1
     print('')
 
