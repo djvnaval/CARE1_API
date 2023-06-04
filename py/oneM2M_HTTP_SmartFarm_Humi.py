@@ -1,9 +1,7 @@
-col = 'solenoidValve'
-rcon = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
-con = 'mongodb+srv://jan11backupstorage:47PIN8N6QdVK2afx@actuatoripe.woncb4j.mongodb.net/'
-db = 'HTTPSmartFarm'
-path = 'py/dump/HTTPSmartFarm/solenoidValve_actuate/'
-
+col = 'Humi'
+con = 'mongodb+srv://onem2mCARE1:onem2mCARE1diliman@onem2m.up2wghs.mongodb.net/?retryWrites=true&w=majority'
+db = 'oneM2M_HTTP_SmartFarm'
+path = 'py/dump/oneM2M_HTTP_SmartFarm/Humi/'
 
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
@@ -21,7 +19,7 @@ def dump(collections, conn, db_name, path):
     if not os.path.exists(path):
     	os.makedirs(path)
     for coll in collections:
-        with open(os.path.join(path, f'{coll}_actuate.bson'), 'wb+') as f:
+        with open(os.path.join(path, f'{coll}.bson'), 'wb+') as f:
             for doc in db[coll].find():
                 f.write(bson.BSON.encode(doc))
 
@@ -39,8 +37,15 @@ def restore(path, conn, db_name):
             			print(doc)
 
 print("START CLIENT CONNECTION")
+# MongoDB configuration
+load_dotenv(find_dotenv())
+main_password = os.environ.get("MONGODB_PW")
+main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+main_client = MongoClient(main_connection_string)
+main_db = main_client.CARE1
+
 print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
 while 1:
     dump([col], con, db, path)
-    restore(path, rcon, f"{db}_actuate")
+    restore(path, main_connection_string, db)
     print("Connection is ongoing...")

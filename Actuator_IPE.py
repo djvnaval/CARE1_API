@@ -35,4 +35,6 @@ def actuate(db, col, t, limit):
 			eval(command)
 			print(post)
 
-actuate("HTTPSmartFarm", "solenoidValve", 10, 100)
+#actuate("HTTPSmartFarm", "solenoidValve", 10, 100)
+actuate("oneM2M_HTTP_SmartFarm", "solenoidValve", 10, 100)
+actuate("oneM2M_MQTT_SmartFarm", "solenoidValve", 10, 100)

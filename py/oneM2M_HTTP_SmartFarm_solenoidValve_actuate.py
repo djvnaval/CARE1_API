@@ -1,8 +1,8 @@
 col = 'solenoidValve'
-rcon = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
+rcon = 'mongodb+srv://onem2mCARE1:onem2mCARE1diliman@onem2m.up2wghs.mongodb.net/?retryWrites=true&w=majority'
 con = 'mongodb+srv://jan11backupstorage:47PIN8N6QdVK2afx@actuatoripe.woncb4j.mongodb.net/'
-db = 'HTTPSmartFarm'
-path = 'py/dump/HTTPSmartFarm/solenoidValve_actuate/'
+db = 'oneM2M_HTTP_SmartFarm'
+path = 'py/dump/oneM2M_HTTP_SmartFarm/solenoidValve_actuate/'
 
 
 from dotenv import load_dotenv, find_dotenv
