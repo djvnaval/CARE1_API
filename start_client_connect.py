@@ -22,38 +22,20 @@ ec = 0
 dbs = []
 
 
-def dump(collections, conn, db_name, path):
-    client = MongoClient(conn)
-    command = f"client.{db_name}"
-    db = eval(command)
-    if not os.path.exists(path):
-    	os.makedirs(path)
-    for coll in collections:
-        with open(os.path.join(path, f'{coll}.bson'), 'wb+') as f:
-            for doc in db[coll].find():
-                f.write(bson.BSON.encode(doc))
+def generate_py(col, con, db, path):
+	f = open("py_template.py", 'r')
+	w = open(f"py/{db}_{col}.py", 'w')
+	w.write(f"col = '{col}'\n")
+	w.write(f"con = '{con}'\n")
+	w.write(f"db = '{db}'\n")
+	w.write(f"path = '{path}'\n")
 
+	for line in f:
+		w.write(line)
 
-def restore(path, conn, db_name):
-    client = MongoClient(conn)
-    command = f"client.{db_name}"
-    db = eval(command)
-    for coll in os.listdir(path):
-        if coll.endswith('.bson'):
-            with open(os.path.join(path, coll), 'rb+') as f:
-            	for doc in bson.decode_all(f.read()):
-            		if db[coll.split('.')[0]].count_documents(doc) == 0:
-            			db[coll.split('.')[0]].insert_one(doc)
-            			print(doc)
-
-
-def show_collection(cl):
-	cursor = cl.find()
-	print(cl)
-	for doc in cursor:
-		for item in doc:
-			print(doc[item])
-	start()
+	w.close()
+	f.close()
+	return f"py/{db}_{col}.py"
 
 
 def view_collection(con, database_name, dev_id):
@@ -66,27 +48,31 @@ def view_collection(con, database_name, dev_id):
 		print(arg)
 		collections.append(col)
 		ctr = ctr + 1
+	arg = "[" + str(len(collections)) + "] All collections" 
+	print(arg)
 	print("\nSelect a collection to connect to Central Point:")
 	sel = input("Enter: ")
-	if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(collections)-1:
+	if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(collections):
 			print("Invalid input!\n")
 			view_collection()
-	collection_name = collections[int(sel)]
-	command = f"client.{database_name}.{collection_name}"
-	coll = eval(command)
-	main_client = MongoClient(main_connection_string)
-	main_db = main_client.mongodb_client_readings
-	command = f"main_db.{dev_id}"
-	main_col = eval(command)
-	
-	print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
+	elif int(sel) == len(collections):
 
-	path = f"dump/{database_name}/{collection_name}/"
-	
-	while 1:
-		dump([collection_name], con, database_name, path)
-		restore(path, main_connection_string, "mongodb_client_readings")
-		print("Connection is ongoing...")
+		print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
+		for col in collections:
+			path = f"py/dump/{database_name}/{col}/"
+			pyfile = generate_py(col, con, database_name, path)
+			command = f"gnome-terminal --tab --title={database_name}/{col} -- bash -c 'python3 {pyfile} ;bash'"
+			dep = subprocess.run(command, shell=True, capture_output=True)
+	else:
+		collection_name = collections[int(sel)]
+
+		print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
+		path = f"py/dump/{database_name}/{collection_name}/"
+		pyfile = generate_py(collection_name, con, database_name, path)
+		command = f"gnome-terminal --tab --title={database_name}/{collection_name} -- bash -c 'python3 {pyfile} ;bash'"
+		dep = subprocess.run(command, shell=True, capture_output=True)
+
+	select_client()
 		
 
 def start_connect():
@@ -116,6 +102,20 @@ def start_connect():
 			print("Invalid input!\n")
 			start_connect()
 		dbnamae = dbs[int(sel)]
+		# Check existence in central point
+		dbnames = main_client.list_database_names()
+		if dbnamae in dbnames:
+			print("\nDatabase '", dbnamae, "' already exists. Remove existing collections in this database to avoid dangling objects? (y/n)", sep='')
+			sel = input("Enter: ")
+			if sel != 'n' and sel != 'N':
+				print("\nDropping collections...\n\n")
+				command = f"main_client.{dbnamae}"
+				DB = eval(command)
+				for col in DB.list_collection_names():
+					command = f"DB.{col}.drop()"
+					eval(command)
+			else:
+				print("\nProceeding.")
 		view_collection(con, dbnamae, dev_id)
 
 

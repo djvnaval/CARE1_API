@@ -88,9 +88,6 @@ def edit_client_1(eid):
                 data[ed][1] = new.strip('\n')
                 print("\nClient attribute edited successfully.")
 
-        # Removing old document in MongoDB
-        collection.delete_one({"_id" : eid})
-
         # Modifying in MongoDB
         post = {
             "_id" : eid,
@@ -102,9 +99,9 @@ def edit_client_1(eid):
             "type" : data[5][1],
             "topics" : data[6][1]
         }
-
-        post_id = collection.insert_one(post).inserted_id
-        response = "\nClient successfully modified with id " + str(post_id) + "."
+        newval = { "$set": post }
+        collection.update_one({"_id" : eid}, newval)
+        response = "\nClient successfully modified with id " + str(eid) + "."
         print(response)
 
     elif clients_list[ec][0] == 2:
@@ -137,16 +134,14 @@ def edit_client_1(eid):
 
         # Modifying in MongoDB
         post = {
+            "_id" : eid,
             "care1_device_id" : data[0][1],
             "URI" : data[1][1],
             "protocol" : data[2][1],
         }
-
-        # Removing old document in MongoDB
-        collection.delete_one({"_id" : eid})
-
-        post_id = collection.insert_one(post).inserted_id
-        response = "\nClient successfully modified with id " + str(post_id) + "."
+        newval = { "$set": post }
+        collection.update_one({"_id" : eid}, newval)
+        response = "\nClient successfully modified with id " + str(eid) + "."
         print(response)
 
     main_menu()
@@ -249,7 +244,7 @@ def client_adder_mongodb(type):
         "type" : t
     }
 
-    db1 = client.mongodb_client_readings
+    db1 = main_client.mongodb_client_readings
     db1.create_collection(care1_device_id)
 
     post_id = collection.insert_one(post).inserted_id
