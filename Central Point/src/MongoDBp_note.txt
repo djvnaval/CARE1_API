@@ -1,0 +1,12 @@
+
+
+ADDING SENSOR CLIENT (HTTP/MQTT sensor IPES with MongoDB as gateway/broker)
+
+These clients, utilizing either HTTP or MQTT protocol, publish sensor data via MongoDB as its gateway or broker, thus this section needs the connection details, and you are about to connect the Central Point (this device) as a subscriber. With that, please prepare to input the following details:
+	- CARE1 Device ID (optional, for easy referencing)
+	- URI or Connection String
+	- Protocol
+
+
+-END-
+
