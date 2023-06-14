@@ -88,6 +88,7 @@ def flood():
             waterDrain = 25.875
             refillFlag = 0
         else:
+            print("not enough nutrient solution")
             motorSensor = 0
             refillFlag = 1
 
@@ -98,10 +99,10 @@ def drain():
     global waterDrain
 
     motorSensor = 0
-    
+
     if waterDrain >= 0.1078125:
         gallons = round((gallons + 0.1078125), 7) 
-        waterDrain = round((waterDrain - 0.1078125 - leakage(0)),7)
+        waterDrain = round((waterDrain - 0.1078125 - leakage(2)),7)
         if waterDrain < 0:
             waterDrain = 0
         flowMeter = 1
@@ -120,10 +121,12 @@ def refill():
     global gallons
     global overflowSensor
     global actuation
+    global waterDrain
 
-    while gallons < 50:
+    if (gallons + waterDrain) < 50 and actuation == 1:
         gallons = gallons + 1
-    
+        overflowSensor = 0
+
     if gallons > 60:
         overflowSensor = 1
         actuation = 0
@@ -318,10 +321,12 @@ if __name__ == "__main__":
             print(actuation, gallons, waterDrain)
             getActuationData()
             print(actuation, gallons, waterDrain)
+            #print('actuation:', actuation, 'gallons in the tank:', gallons, 'gallons in the plants', waterDrain)
             if actuation == 1:
                 refill()
             flood()
             print(actuation, gallons, waterDrain)
+            #print('actuation:', actuation, 'gallons in the tank:', gallons, 'gallons in the plants', waterDrain)
             if refillFlag == 1:
                 while actuation != 1:
                     getActuationData()
@@ -331,5 +336,6 @@ if __name__ == "__main__":
                 flood()
             drain()
             print(actuation, gallons, waterDrain)
+            #print('actuation:', actuation, 'gallons in the tank:', gallons, 'gallons in the plants', waterDrain)
         sendData()
         timeStart = time.time()
