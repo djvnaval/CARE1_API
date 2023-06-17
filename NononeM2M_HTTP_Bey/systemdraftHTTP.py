@@ -123,10 +123,11 @@ def refill():
     global actuation
     global waterDrain
     global motorSensor
+    global flowMeter
 
     motorSensor = 0
 
-    if (gallons + waterDrain) < 50 and actuation == 1:
+    if flowMeter == 0 and gallons < 50 and actuation == 1:
         gallons = gallons + 1
         overflowSensor = 0
 
@@ -340,7 +341,6 @@ if __name__ == "__main__":
                 refillFlag == 0
                 print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 refill()
-                print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 flood()
             drain()
             #print(actuation, gallons, waterDrain)
