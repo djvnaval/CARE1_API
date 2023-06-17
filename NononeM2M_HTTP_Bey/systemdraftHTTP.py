@@ -102,7 +102,7 @@ def drain():
 
     if waterDrain >= 0.1078125:
         gallons = round((gallons + 0.1078125), 7) 
-        waterDrain = round((waterDrain - 0.1078125 - leakage(2)),7)
+        waterDrain = round((waterDrain - 0.1078125 - leakage(10)),7)
         if waterDrain < 0:
             waterDrain = 0
         flowMeter = 1
@@ -122,6 +122,9 @@ def refill():
     global overflowSensor
     global actuation
     global waterDrain
+    global motorSensor
+
+    motorSensor = 0
 
     if (gallons + waterDrain) < 50 and actuation == 1:
         gallons = gallons + 1
@@ -318,24 +321,28 @@ if __name__ == "__main__":
 
     while True:
         while time.time() < timeStart + readInterval:
-            print(actuation, gallons, waterDrain)
+            #print(actuation, gallons, waterDrain)
             getActuationData()
-            print(actuation, gallons, waterDrain)
-            #print('actuation:', actuation, 'gallons in the tank:', gallons, 'gallons in the plants', waterDrain)
+            #print(actuation, gallons, waterDrain)
+            print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
             if actuation == 1:
                 refill()
             flood()
-            print(actuation, gallons, waterDrain)
-            #print('actuation:', actuation, 'gallons in the tank:', gallons, 'gallons in the plants', waterDrain)
+            #print(actuation, gallons, waterDrain)
+            print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
             if refillFlag == 1:
+                actuateTime = time.time() + 5
                 while actuation != 1:
                     getActuationData()
                     print("pls actuate")
+                    if time.time() >= actuateTime:
+                        actuation = 1 
                 refillFlag == 0
+                print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 refill()
                 flood()
             drain()
-            print(actuation, gallons, waterDrain)
-            #print('actuation:', actuation, 'gallons in the tank:', gallons, 'gallons in the plants', waterDrain)
+            #print(actuation, gallons, waterDrain)
+            print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
         sendData()
         timeStart = time.time()
