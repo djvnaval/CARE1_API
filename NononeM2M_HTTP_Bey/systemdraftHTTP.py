@@ -102,7 +102,7 @@ def drain():
 
     if waterDrain >= 0.1078125:
         gallons = round((gallons + 0.1078125), 7) 
-        waterDrain = round((waterDrain - 0.1078125 - leakage(10)),7)
+        waterDrain = round((waterDrain - 0.1078125 - leakage(0)),7)
         if waterDrain < 0:
             waterDrain = 0
         flowMeter = 1
@@ -340,6 +340,7 @@ if __name__ == "__main__":
                 refillFlag == 0
                 print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 refill()
+                print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 flood()
             drain()
             #print(actuation, gallons, waterDrain)
