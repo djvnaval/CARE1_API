@@ -1,0 +1,755 @@
+START CLIENT CONNECTION
+
+CONNECTION IS ESTABLISHED SUCCESSFULLY!
+
+{'_id': ObjectId('6484a4c1740ec8b23d0e9ac1'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 28, 49, 782000)}
+{'_id': ObjectId('6484a4fe740ec8b23d0e9aca'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 29, 50, 411000)}
+{'_id': ObjectId('6484a53d740ec8b23d0e9ad3'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 30, 53, 363000)}
+{'_id': ObjectId('6484a57c740ec8b23d0e9adc'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 31, 56, 292000)}
+{'_id': ObjectId('6484a5bb740ec8b23d0e9ae5'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 32, 59, 381000)}
+{'_id': ObjectId('6484a5fa740ec8b23d0e9aee'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 34, 2, 278000)}
+{'_id': ObjectId('6484a639740ec8b23d0e9af7'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 35, 5, 172000)}
+{'_id': ObjectId('6484a678740ec8b23d0e9b00'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 36, 8, 65000)}
+{'_id': ObjectId('6484a6b6740ec8b23d0e9b09'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 37, 10, 959000)}
+{'_id': ObjectId('6484a6f5740ec8b23d0e9b12'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 38, 13, 902000)}
+{'_id': ObjectId('6484a734740ec8b23d0e9b1b'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 39, 16, 776000)}
+{'_id': ObjectId('6484a773740ec8b23d0e9b24'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 40, 19, 774000)}
+{'_id': ObjectId('6484a7b2740ec8b23d0e9b2d'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 41, 22, 636000)}
+{'_id': ObjectId('6484a7f1740ec8b23d0e9b36'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 42, 25, 635000)}
+{'_id': ObjectId('6484a830740ec8b23d0e9b3f'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 43, 28, 703000)}
+{'_id': ObjectId('6484a86f740ec8b23d0e9b48'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 44, 31, 652000)}
+{'_id': ObjectId('6484a8ae740ec8b23d0e9b51'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 11, 0, 45, 34, 615000)}
+{'_id': ObjectId('648923fccef3bd34a625e88d'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 20, 44, 685000)}
+{'_id': ObjectId('6489242dcef57869b44a2741'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 21, 33, 36000)}
+{'_id': ObjectId('6489253bab47015c68197c6a'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 26, 3, 200000)}
+{'_id': ObjectId('64892577ab47015c68197c73'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 27, 3, 581000)}
+{'_id': ObjectId('648925b7ab47015c68197c7c'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 28, 7, 7000)}
+{'_id': ObjectId('648925f5ab47015c68197c85'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 29, 9, 997000)}
+{'_id': ObjectId('64892635ab47015c68197c8e'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 30, 13, 65000)}
+{'_id': ObjectId('64892674ab47015c68197c97'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 31, 16, 965000)}
+{'_id': ObjectId('648926df5b89a02379c8f41a'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 33, 3, 362000)}
+{'_id': ObjectId('6489271b5b89a02379c8f423'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 34, 3, 779000)}
+{'_id': ObjectId('6489275b5b89a02379c8f42c'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 35, 7, 679000)}
+{'_id': ObjectId('648928bc1b642f756a292e53'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 41, 0, 252000)}
+{'_id': ObjectId('648928f81b642f756a292e5c'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 42, 0, 305000)}
+{'_id': ObjectId('648929140aa2d8d3b362239b'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 42, 28, 829000)}
+{'_id': ObjectId('648929d036851be51ae010fe'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 45, 36, 750000)}
+{'_id': ObjectId('64892a0d36851be51ae01107'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 46, 37, 464000)}
+{'_id': ObjectId('64892a5d1159daca1664288d'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 47, 57, 543000)}
+{'_id': ObjectId('64892a991159daca16642896'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 48, 57, 752000)}
+{'_id': ObjectId('64892b6b875b9bee35dba86a'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 10, 52, 27, 655000)}
+{'_id': ObjectId('6489bcc891e3ce293d0db8f4'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 12, 40, 125000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be41cce7a224be6a0888'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 18, 57, 677000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be4ccce7a224be6a0891'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 19, 8, 257000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be58cce7a224be6a089a'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 19, 20, 885000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be65cce7a224be6a08a3'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 19, 33, 584000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be72cce7a224be6a08ac'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 19, 46, 555000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be7fcce7a224be6a08b5'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 19, 59, 530000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be8ccce7a224be6a08be'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 20, 12, 537000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be99cce7a224be6a08c7'), 'value': 34, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 20, 25, 581000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bea6cce7a224be6a08d0'), 'value': 37, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 20, 38, 584000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489beb3cce7a224be6a08d9'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 20, 51, 517000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bec0cce7a224be6a08e2'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 21, 4, 425000)}
+Connection is ongoing...
+{'_id': ObjectId('6489becdcce7a224be6a08eb'), 'value': 36, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 21, 17, 402000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bedacce7a224be6a08f4'), 'value': 35, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 21, 30, 441000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bee7cce7a224be6a08fd'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 21, 43, 311000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bef4cce7a224be6a0906'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 21, 56, 237000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bf01cce7a224be6a090f'), 'value': 38, 'type': 'temperature', 'unit': '°C', 'time': datetime.datetime(2023, 6, 14, 21, 22, 9, 234000)}
+Connection is ongoing...
+
+
+
+
+
+
+
+
+
+
+
+
+START CLIENT CONNECTION
+
+CONNECTION IS ESTABLISHED SUCCESSFULLY!
+
+{'_id': ObjectId('6484a4c1740ec8b23d0e9ac0'), 'value': 48, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 28, 49, 427000)}
+{'_id': ObjectId('6484a4fe740ec8b23d0e9ac9'), 'value': 40, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 29, 50, 179000)}
+{'_id': ObjectId('6484a53d740ec8b23d0e9ad2'), 'value': 49, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 30, 53, 114000)}
+{'_id': ObjectId('6484a57c740ec8b23d0e9adb'), 'value': 49, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 31, 56, 59000)}
+{'_id': ObjectId('6484a5bb740ec8b23d0e9ae4'), 'value': 32, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 32, 59, 144000)}
+{'_id': ObjectId('6484a5fa740ec8b23d0e9aed'), 'value': 32, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 34, 2, 49000)}
+{'_id': ObjectId('6484a638740ec8b23d0e9af6'), 'value': 46, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 35, 4, 932000)}
+{'_id': ObjectId('6484a677740ec8b23d0e9aff'), 'value': 36, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 36, 7, 836000)}
+{'_id': ObjectId('6484a6b6740ec8b23d0e9b08'), 'value': 50, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 37, 10, 698000)}
+{'_id': ObjectId('6484a6f5740ec8b23d0e9b11'), 'value': 44, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 38, 13, 675000)}
+{'_id': ObjectId('6484a734740ec8b23d0e9b1a'), 'value': 41, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 39, 16, 540000)}
+{'_id': ObjectId('6484a773740ec8b23d0e9b23'), 'value': 32, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 40, 19, 546000)}
+{'_id': ObjectId('6484a7b2740ec8b23d0e9b2c'), 'value': 34, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 41, 22, 401000)}
+{'_id': ObjectId('6484a7f1740ec8b23d0e9b35'), 'value': 35, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 42, 25, 407000)}
+{'_id': ObjectId('6484a830740ec8b23d0e9b3e'), 'value': 40, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 43, 28, 468000)}
+{'_id': ObjectId('6484a86f740ec8b23d0e9b47'), 'value': 32, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 44, 31, 425000)}
+{'_id': ObjectId('6484a8ae740ec8b23d0e9b50'), 'value': 50, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 11, 0, 45, 34, 375000)}
+{'_id': ObjectId('648923fccef3bd34a625e88c'), 'value': 41, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 20, 44, 214000)}
+{'_id': ObjectId('6489242ccef57869b44a2740'), 'value': 48, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 21, 32, 756000)}
+{'_id': ObjectId('6489253aab47015c68197c69'), 'value': 31, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 26, 2, 895000)}
+{'_id': ObjectId('64892577ab47015c68197c72'), 'value': 47, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 27, 3, 319000)}
+{'_id': ObjectId('648925b6ab47015c68197c7b'), 'value': 35, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 28, 6, 717000)}
+{'_id': ObjectId('648925f5ab47015c68197c84'), 'value': 30, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 29, 9, 708000)}
+{'_id': ObjectId('64892634ab47015c68197c8d'), 'value': 32, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 30, 12, 675000)}
+{'_id': ObjectId('64892674ab47015c68197c96'), 'value': 42, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 31, 16, 679000)}
+{'_id': ObjectId('648926df5b89a02379c8f419'), 'value': 50, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 33, 3, 56000)}
+{'_id': ObjectId('6489271b5b89a02379c8f422'), 'value': 48, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 34, 3, 491000)}
+{'_id': ObjectId('6489275b5b89a02379c8f42b'), 'value': 50, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 35, 7, 287000)}
+{'_id': ObjectId('648928bb1b642f756a292e52'), 'value': 34, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 40, 59, 950000)}
+{'_id': ObjectId('648928f81b642f756a292e5b'), 'value': 47, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 42, 0, 45000)}
+{'_id': ObjectId('648929140aa2d8d3b362239a'), 'value': 47, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 42, 28, 525000)}
+{'_id': ObjectId('648929d036851be51ae010fd'), 'value': 37, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 45, 36, 332000)}
+{'_id': ObjectId('64892a0d36851be51ae01106'), 'value': 44, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 46, 37, 177000)}
+{'_id': ObjectId('64892a5d1159daca1664288c'), 'value': 30, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 47, 57, 137000)}
+{'_id': ObjectId('64892a991159daca16642895'), 'value': 34, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 48, 57, 470000)}
+{'_id': ObjectId('64892b6b875b9bee35dba869'), 'value': 31, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 10, 52, 27, 379000)}
+{'_id': ObjectId('6489bcc791e3ce293d0db8f3'), 'value': 31, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 12, 39, 880000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be41cce7a224be6a0887'), 'value': 35, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 18, 57, 378000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be4bcce7a224be6a0890'), 'value': 37, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 19, 7, 970000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be58cce7a224be6a0899'), 'value': 40, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 19, 20, 616000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be65cce7a224be6a08a2'), 'value': 42, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 19, 33, 354000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be72cce7a224be6a08ab'), 'value': 35, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 19, 46, 326000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be7fcce7a224be6a08b4'), 'value': 49, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 19, 59, 302000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be8ccce7a224be6a08bd'), 'value': 45, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 20, 12, 309000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be99cce7a224be6a08c6'), 'value': 35, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 20, 25, 352000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bea6cce7a224be6a08cf'), 'value': 50, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 20, 38, 356000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489beb3cce7a224be6a08d8'), 'value': 47, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 20, 51, 273000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bec0cce7a224be6a08e1'), 'value': 39, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 21, 4, 188000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489becdcce7a224be6a08ea'), 'value': 48, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 21, 17, 174000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bedacce7a224be6a08f3'), 'value': 38, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 21, 30, 212000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bee7cce7a224be6a08fc'), 'value': 48, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 21, 43, 81000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bef4cce7a224be6a0905'), 'value': 32, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 21, 56, 8000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bf01cce7a224be6a090e'), 'value': 44, 'type': 'humidity', 'unit': '%', 'time': datetime.datetime(2023, 6, 14, 21, 22, 9, 4000)}
+Connection is ongoing...
+
+
+
+
+
+
+
+
+START CLIENT CONNECTION
+
+CONNECTION IS ESTABLISHED SUCCESSFULLY!
+
+{'_id': ObjectId('6484a4c3740ec8b23d0e9ac7'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 28, 51, 587000)}
+{'_id': ObjectId('6484a4ff740ec8b23d0e9ad0'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 29, 51, 853000)}
+{'_id': ObjectId('6484a53e740ec8b23d0e9ad9'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 30, 54, 799000)}
+{'_id': ObjectId('6484a57d740ec8b23d0e9ae2'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 31, 57, 724000)}
+{'_id': ObjectId('6484a5bc740ec8b23d0e9aeb'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 33, 0, 755000)}
+{'_id': ObjectId('6484a5fb740ec8b23d0e9af4'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 34, 3, 659000)}
+{'_id': ObjectId('6484a63a740ec8b23d0e9afd'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 35, 6, 542000)}
+{'_id': ObjectId('6484a679740ec8b23d0e9b06'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 36, 9, 445000)}
+{'_id': ObjectId('6484a6b8740ec8b23d0e9b0f'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 37, 12, 359000)}
+{'_id': ObjectId('6484a6f7740ec8b23d0e9b18'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 38, 15, 273000)}
+{'_id': ObjectId('6484a736740ec8b23d0e9b21'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 39, 18, 151000)}
+{'_id': ObjectId('6484a775740ec8b23d0e9b2a'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 40, 21, 150000)}
+{'_id': ObjectId('6484a7b4740ec8b23d0e9b33'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 41, 24, 21000)}
+{'_id': ObjectId('6484a7f3740ec8b23d0e9b3c'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 42, 27, 12000)}
+{'_id': ObjectId('6484a832740ec8b23d0e9b45'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 43, 30, 86000)}
+{'_id': ObjectId('6484a871740ec8b23d0e9b4e'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 44, 33, 29000)}
+{'_id': ObjectId('6484a8af740ec8b23d0e9b57'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 45, 35, 992000)}
+{'_id': ObjectId('648923fecef3bd34a625e893'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 20, 46, 565000)}
+{'_id': ObjectId('6489242ecef57869b44a2747'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 21, 34, 904000)}
+{'_id': ObjectId('6489253dab47015c68197c70'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 26, 5, 43000)}
+{'_id': ObjectId('64892579ab47015c68197c79'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 27, 5, 152000)}
+{'_id': ObjectId('648925b8ab47015c68197c82'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 28, 8, 766000)}
+{'_id': ObjectId('648925f7ab47015c68197c8b'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 29, 11, 597000)}
+{'_id': ObjectId('64892637ab47015c68197c94'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 30, 15, 280000)}
+{'_id': ObjectId('64892676ab47015c68197c9d'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 31, 18, 808000)}
+{'_id': ObjectId('648926e15b89a02379c8f420'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 33, 5, 511000)}
+{'_id': ObjectId('6489271d5b89a02379c8f429'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 34, 5, 621000)}
+{'_id': ObjectId('6489275d5b89a02379c8f432'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 35, 9, 522000)}
+{'_id': ObjectId('648928be1b642f756a292e59'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 41, 2, 94000)}
+{'_id': ObjectId('648928f91b642f756a292e62'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 1, 899000)}
+{'_id': ObjectId('648929160aa2d8d3b36223a1'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 30, 775000)}
+{'_id': ObjectId('648929d236851be51ae01104'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 45, 38, 583000)}
+{'_id': ObjectId('64892a0f36851be51ae0110d'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 46, 39, 307000)}
+{'_id': ObjectId('64892a611159daca16642893'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 1, 333000)}
+{'_id': ObjectId('64892a9b1159daca1664289c'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 59, 600000)}
+{'_id': ObjectId('64892b6d875b9bee35dba870'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 52, 29, 524000)}
+{'_id': ObjectId('6489bcc991e3ce293d0db8fa'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 12, 41, 555000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be43cce7a224be6a088e'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 18, 59, 250000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be4dcce7a224be6a0897'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 9, 835000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be5acce7a224be6a08a0'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 22, 467000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be66cce7a224be6a08a9'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 34, 964000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be73cce7a224be6a08b2'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 47, 931000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be80cce7a224be6a08bb'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 0, 999000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be8ecce7a224be6a08c4'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 14, 44000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be9bcce7a224be6a08cd'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 27, 51000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bea7cce7a224be6a08d6'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 39, 968000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489beb4cce7a224be6a08df'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 52, 916000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bec1cce7a224be6a08e8'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 5, 878000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bececce7a224be6a08f1'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 18, 814000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bedbcce7a224be6a08fa'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 31, 811000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bee8cce7a224be6a0903'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 44, 688000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bef5cce7a224be6a090c'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 57, 722000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bf02cce7a224be6a0915'), 'value': 0, 'type': 'overflow sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 22, 10, 656000)}
+Connection is ongoing...
+
+
+
+
+
+
+
+
+
+START CLIENT CONNECTION
+
+CONNECTION IS ESTABLISHED SUCCESSFULLY!
+
+{'_id': ObjectId('6484a4c2740ec8b23d0e9ac4'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 28, 50, 692000)}
+{'_id': ObjectId('6484a4ff740ec8b23d0e9acd'), 'value': 30.46875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 29, 51, 116000)}
+{'_id': ObjectId('6484a53e740ec8b23d0e9ad6'), 'value': 37.2609375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 30, 54, 108000)}
+{'_id': ObjectId('6484a57c740ec8b23d0e9adf'), 'value': 44.053125, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 31, 56, 985000)}
+{'_id': ObjectId('6484a5bc740ec8b23d0e9ae8'), 'value': 24.7375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 33, 0, 69000)}
+{'_id': ObjectId('6484a5fa740ec8b23d0e9af1'), 'value': 31.5296875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 34, 2, 961000)}
+{'_id': ObjectId('6484a639740ec8b23d0e9afa'), 'value': 38.321875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 35, 5, 855000)}
+{'_id': ObjectId('6484a678740ec8b23d0e9b03'), 'value': 45.1140625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 36, 8, 751000)}
+{'_id': ObjectId('6484a6b7740ec8b23d0e9b0c'), 'value': 25.7984375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 37, 11, 676000)}
+{'_id': ObjectId('6484a6f6740ec8b23d0e9b15'), 'value': 32.590625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 38, 14, 587000)}
+{'_id': ObjectId('6484a735740ec8b23d0e9b1e'), 'value': 39.3828125, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 39, 17, 462000)}
+{'_id': ObjectId('6484a774740ec8b23d0e9b27'), 'value': 46.175, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 40, 20, 468000)}
+{'_id': ObjectId('6484a7b3740ec8b23d0e9b30'), 'value': 26.859375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 41, 23, 332000)}
+{'_id': ObjectId('6484a7f2740ec8b23d0e9b39'), 'value': 33.6515625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 42, 26, 322000)}
+{'_id': ObjectId('6484a831740ec8b23d0e9b42'), 'value': 40.44375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 43, 29, 386000)}
+{'_id': ObjectId('6484a870740ec8b23d0e9b4b'), 'value': 47.2359375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 44, 32, 341000)}
+{'_id': ObjectId('6484a8af740ec8b23d0e9b54'), 'value': 27.9203125, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 45, 35, 303000)}
+{'_id': ObjectId('648923fdcef3bd34a625e890'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 20, 45, 768000)}
+{'_id': ObjectId('6489242dcef57869b44a2744'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 21, 33, 986000)}
+{'_id': ObjectId('6489253cab47015c68197c6d'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 26, 4, 127000)}
+{'_id': ObjectId('64892578ab47015c68197c76'), 'value': 29.9296875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 27, 4, 365000)}
+{'_id': ObjectId('648925b7ab47015c68197c7f'), 'value': 36.290625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 28, 7, 927000)}
+{'_id': ObjectId('648925f6ab47015c68197c88'), 'value': 42.4359375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 29, 10, 803000)}
+{'_id': ObjectId('64892636ab47015c68197c91'), 'value': 48.58125, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 30, 14, 90000)}
+{'_id': ObjectId('64892675ab47015c68197c9a'), 'value': 28.61875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 31, 17, 887000)}
+{'_id': ObjectId('648926e05b89a02379c8f41d'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 33, 4, 592000)}
+{'_id': ObjectId('6489271c5b89a02379c8f426'), 'value': 51.7140625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 34, 4, 702000)}
+{'_id': ObjectId('6489275c5b89a02379c8f42f'), 'value': 57.9671875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 35, 8, 600000)}
+{'_id': ObjectId('648928bd1b642f756a292e56'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 41, 1, 173000)}
+{'_id': ObjectId('648928f91b642f756a292e5f'), 'value': 30.9296875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 1, 102000)}
+{'_id': ObjectId('648929150aa2d8d3b362239e'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 29, 854000)}
+{'_id': ObjectId('648929d136851be51ae01101'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 45, 37, 662000)}
+{'_id': ObjectId('64892a0e36851be51ae0110a'), 'value': 30.7140625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 46, 38, 343000)}
+{'_id': ObjectId('64892a601159daca16642890'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 0, 412000)}
+{'_id': ObjectId('64892a9a1159daca16642899'), 'value': 8.665625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 58, 674000)}
+{'_id': ObjectId('64892b6c875b9bee35dba86d'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 52, 28, 603000)}
+{'_id': ObjectId('6489bcc891e3ce293d0db8f7'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 12, 40, 835000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be42cce7a224be6a088b'), 'value': 50, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 18, 58, 486000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be4dcce7a224be6a0894'), 'value': 24.8625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 9, 67000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be59cce7a224be6a089d'), 'value': 25.940625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 21, 689000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be66cce7a224be6a08a6'), 'value': 27.01875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 34, 274000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be73cce7a224be6a08af'), 'value': 28.2046875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 47, 242000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be80cce7a224be6a08b8'), 'value': 29.390625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 0, 307000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be8dcce7a224be6a08c1'), 'value': 30.5765625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 13, 284000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be9acce7a224be6a08ca'), 'value': 31.7625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 26, 301000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bea7cce7a224be6a08d3'), 'value': 32.9484375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 39, 270000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489beb4cce7a224be6a08dc'), 'value': 34.134375, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 52, 202000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bec1cce7a224be6a08e5'), 'value': 35.3203125, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 5, 138000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bececce7a224be6a08ee'), 'value': 36.50625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 18, 98000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bedbcce7a224be6a08f7'), 'value': 37.6921875, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 31, 125000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bee8cce7a224be6a0900'), 'value': 38.878125, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 44, 4000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bef5cce7a224be6a0909'), 'value': 40.0640625, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 57, 33000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bf01cce7a224be6a0912'), 'value': 41.25, 'type': 'water level', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 22, 9, 951000)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+START CLIENT CONNECTION
+
+CONNECTION IS ESTABLISHED SUCCESSFULLY!
+
+{'_id': ObjectId('6484a4c3740ec8b23d0e9ac6'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 28, 51, 284000)}
+{'_id': ObjectId('6484a4ff740ec8b23d0e9acf'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 29, 51, 584000)}
+{'_id': ObjectId('6484a53e740ec8b23d0e9ad8'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 30, 54, 569000)}
+{'_id': ObjectId('6484a57d740ec8b23d0e9ae1'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 31, 57, 495000)}
+{'_id': ObjectId('6484a5bc740ec8b23d0e9aea'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 33, 0, 525000)}
+{'_id': ObjectId('6484a5fb740ec8b23d0e9af3'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 34, 3, 417000)}
+{'_id': ObjectId('6484a63a740ec8b23d0e9afc'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 35, 6, 314000)}
+{'_id': ObjectId('6484a679740ec8b23d0e9b05'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 36, 9, 214000)}
+{'_id': ObjectId('6484a6b8740ec8b23d0e9b0e'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 37, 12, 131000)}
+{'_id': ObjectId('6484a6f7740ec8b23d0e9b17'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 38, 15, 44000)}
+{'_id': ObjectId('6484a735740ec8b23d0e9b20'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 39, 17, 924000)}
+{'_id': ObjectId('6484a774740ec8b23d0e9b29'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 40, 20, 923000)}
+{'_id': ObjectId('6484a7b3740ec8b23d0e9b32'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 41, 23, 791000)}
+{'_id': ObjectId('6484a7f2740ec8b23d0e9b3b'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 42, 26, 783000)}
+{'_id': ObjectId('6484a831740ec8b23d0e9b44'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 43, 29, 853000)}
+{'_id': ObjectId('6484a870740ec8b23d0e9b4d'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 44, 32, 800000)}
+{'_id': ObjectId('6484a8af740ec8b23d0e9b56'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 45, 35, 763000)}
+{'_id': ObjectId('648923fecef3bd34a625e892'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 20, 46, 301000)}
+{'_id': ObjectId('6489242ecef57869b44a2746'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 21, 34, 596000)}
+{'_id': ObjectId('6489253cab47015c68197c6f'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 26, 4, 736000)}
+{'_id': ObjectId('64892578ab47015c68197c78'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 27, 4, 887000)}
+{'_id': ObjectId('648925b8ab47015c68197c81'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 28, 8, 498000)}
+{'_id': ObjectId('648925f7ab47015c68197c8a'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 29, 11, 336000)}
+{'_id': ObjectId('64892636ab47015c68197c93'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 30, 14, 909000)}
+{'_id': ObjectId('64892676ab47015c68197c9c'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 31, 18, 502000)}
+{'_id': ObjectId('648926e15b89a02379c8f41f'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 33, 5, 206000)}
+{'_id': ObjectId('6489271d5b89a02379c8f428'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 34, 5, 315000)}
+{'_id': ObjectId('6489275d5b89a02379c8f431'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 35, 9, 214000)}
+{'_id': ObjectId('648928bd1b642f756a292e58'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 41, 1, 788000)}
+{'_id': ObjectId('648928f91b642f756a292e61'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 1, 624000)}
+{'_id': ObjectId('648929160aa2d8d3b36223a0'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 30, 468000)}
+{'_id': ObjectId('648929d236851be51ae01103'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 45, 38, 275000)}
+{'_id': ObjectId('64892a0f36851be51ae0110c'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 46, 39, 1000)}
+{'_id': ObjectId('64892a611159daca16642892'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 1, 26000)}
+{'_id': ObjectId('64892a9b1159daca1664289b'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 59, 283000)}
+{'_id': ObjectId('64892b6d875b9bee35dba86f'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 52, 29, 219000)}
+{'_id': ObjectId('6489bcc991e3ce293d0db8f9'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 12, 41, 316000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be42cce7a224be6a088d'), 'value': 0, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 18, 58, 987000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be4dcce7a224be6a0896'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 9, 593000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be5acce7a224be6a089f'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 22, 155000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be66cce7a224be6a08a8'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 34, 732000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be73cce7a224be6a08b1'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 47, 701000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be80cce7a224be6a08ba'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 0, 763000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be8dcce7a224be6a08c3'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 13, 802000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be9acce7a224be6a08cc'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 26, 756000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bea7cce7a224be6a08d5'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 39, 740000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489beb4cce7a224be6a08de'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 52, 688000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bec1cce7a224be6a08e7'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 5, 651000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bececce7a224be6a08f0'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 18, 584000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bedbcce7a224be6a08f9'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 31, 582000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bee8cce7a224be6a0902'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 44, 461000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bef5cce7a224be6a090b'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 57, 492000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bf02cce7a224be6a0914'), 'value': 1, 'type': 'flow meter', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 22, 10, 423000)}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+START CLIENT CONNECTION
+
+CONNECTION IS ESTABLISHED SUCCESSFULLY!
+
+{'_id': ObjectId('6484a4c2740ec8b23d0e9ac5'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 28, 50, 985000)}
+{'_id': ObjectId('6484a4ff740ec8b23d0e9ace'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 29, 51, 348000)}
+{'_id': ObjectId('6484a53e740ec8b23d0e9ad7'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 30, 54, 336000)}
+{'_id': ObjectId('6484a57d740ec8b23d0e9ae0'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 31, 57, 234000)}
+{'_id': ObjectId('6484a5bc740ec8b23d0e9ae9'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 33, 0, 296000)}
+{'_id': ObjectId('6484a5fb740ec8b23d0e9af2'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 34, 3, 190000)}
+{'_id': ObjectId('6484a63a740ec8b23d0e9afb'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 35, 6, 85000)}
+{'_id': ObjectId('6484a678740ec8b23d0e9b04'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 36, 8, 980000)}
+{'_id': ObjectId('6484a6b7740ec8b23d0e9b0d'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 37, 11, 903000)}
+{'_id': ObjectId('6484a6f6740ec8b23d0e9b16'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 38, 14, 817000)}
+{'_id': ObjectId('6484a735740ec8b23d0e9b1f'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 39, 17, 690000)}
+{'_id': ObjectId('6484a774740ec8b23d0e9b28'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 40, 20, 695000)}
+{'_id': ObjectId('6484a7b3740ec8b23d0e9b31'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 41, 23, 563000)}
+{'_id': ObjectId('6484a7f2740ec8b23d0e9b3a'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 42, 26, 551000)}
+{'_id': ObjectId('6484a831740ec8b23d0e9b43'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 43, 29, 622000)}
+{'_id': ObjectId('6484a870740ec8b23d0e9b4c'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 44, 32, 571000)}
+{'_id': ObjectId('6484a8af740ec8b23d0e9b55'), 'value': 1, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 45, 35, 532000)}
+{'_id': ObjectId('648923fecef3bd34a625e891'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 20, 46, 31000)}
+{'_id': ObjectId('6489242ecef57869b44a2745'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 21, 34, 300000)}
+{'_id': ObjectId('6489253cab47015c68197c6e'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 26, 4, 431000)}
+{'_id': ObjectId('64892578ab47015c68197c77'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 27, 4, 625000)}
+{'_id': ObjectId('648925b8ab47015c68197c80'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 28, 8, 235000)}
+{'_id': ObjectId('648925f7ab47015c68197c89'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 29, 11, 75000)}
+{'_id': ObjectId('64892636ab47015c68197c92'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 30, 14, 498000)}
+{'_id': ObjectId('64892676ab47015c68197c9b'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 31, 18, 194000)}
+{'_id': ObjectId('648926e05b89a02379c8f41e'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 33, 4, 897000)}
+{'_id': ObjectId('6489271d5b89a02379c8f427'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 34, 5, 8000)}
+{'_id': ObjectId('6489275c5b89a02379c8f430'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 35, 8, 908000)}
+{'_id': ObjectId('648928bd1b642f756a292e57'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 41, 1, 481000)}
+{'_id': ObjectId('648928f91b642f756a292e60'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 1, 364000)}
+{'_id': ObjectId('648929160aa2d8d3b362239f'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 30, 121000)}
+{'_id': ObjectId('648929d136851be51ae01102'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 45, 37, 969000)}
+{'_id': ObjectId('64892a0e36851be51ae0110b'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 46, 38, 612000)}
+{'_id': ObjectId('64892a601159daca16642891'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 0, 719000)}
+{'_id': ObjectId('64892a9a1159daca1664289a'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 58, 986000)}
+{'_id': ObjectId('64892b6c875b9bee35dba86e'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 52, 28, 911000)}
+{'_id': ObjectId('6489bcc991e3ce293d0db8f8'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 12, 41, 78000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be42cce7a224be6a088c'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 18, 58, 755000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be4dcce7a224be6a0895'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 9, 321000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be59cce7a224be6a089e'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 21, 921000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be66cce7a224be6a08a7'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 34, 505000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be73cce7a224be6a08b0'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 47, 472000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be80cce7a224be6a08b9'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 0, 535000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be8dcce7a224be6a08c2'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 13, 575000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be9acce7a224be6a08cb'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 26, 529000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bea7cce7a224be6a08d4'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 39, 510000)}
+Connection is ongoing...
+{'_id': ObjectId('6489beb4cce7a224be6a08dd'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 52, 449000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bec1cce7a224be6a08e6'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 5, 375000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bececce7a224be6a08ef'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 18, 334000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bedbcce7a224be6a08f8'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 31, 355000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bee8cce7a224be6a0901'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 44, 233000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bef5cce7a224be6a090a'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 57, 262000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bf02cce7a224be6a0913'), 'value': 0, 'type': 'motor sensor', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 22, 10, 195000)}
+
+
+
+
+
+
+
+
+
+
+
+START CLIENT CONNECTION
+
+CONNECTION IS ESTABLISHED SUCCESSFULLY!
+
+{'_id': ObjectId('6484a4c2740ec8b23d0e9ac2'), 'value': 5.93, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 28, 50, 103000)}
+{'_id': ObjectId('6484a4fe740ec8b23d0e9acb'), 'value': 5.71, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 29, 50, 657000)}
+{'_id': ObjectId('6484a53d740ec8b23d0e9ad4'), 'value': 5.64, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 30, 53, 653000)}
+{'_id': ObjectId('6484a57c740ec8b23d0e9add'), 'value': 5.83, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 31, 56, 519000)}
+{'_id': ObjectId('6484a5bb740ec8b23d0e9ae6'), 'value': 5.98, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 32, 59, 610000)}
+{'_id': ObjectId('6484a5fa740ec8b23d0e9aef'), 'value': 5.89, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 34, 2, 506000)}
+{'_id': ObjectId('6484a639740ec8b23d0e9af8'), 'value': 5.5, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 35, 5, 400000)}
+{'_id': ObjectId('6484a678740ec8b23d0e9b01'), 'value': 5.73, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 36, 8, 293000)}
+{'_id': ObjectId('6484a6b7740ec8b23d0e9b0a'), 'value': 5.6, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 37, 11, 217000)}
+{'_id': ObjectId('6484a6f6740ec8b23d0e9b13'), 'value': 5.98, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 38, 14, 129000)}
+{'_id': ObjectId('6484a735740ec8b23d0e9b1c'), 'value': 5.87, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 39, 17, 6000)}
+{'_id': ObjectId('6484a774740ec8b23d0e9b25'), 'value': 5.54, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 40, 20, 2000)}
+{'_id': ObjectId('6484a7b2740ec8b23d0e9b2e'), 'value': 5.76, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 41, 22, 864000)}
+{'_id': ObjectId('6484a7f1740ec8b23d0e9b37'), 'value': 5.78, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 42, 25, 865000)}
+{'_id': ObjectId('6484a830740ec8b23d0e9b40'), 'value': 5.86, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 43, 28, 931000)}
+{'_id': ObjectId('6484a86f740ec8b23d0e9b49'), 'value': 5.5, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 44, 31, 880000)}
+{'_id': ObjectId('6484a8ae740ec8b23d0e9b52'), 'value': 5.79, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 45, 34, 846000)}
+{'_id': ObjectId('648923fdcef3bd34a625e88e'), 'value': 5.51, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 20, 45, 226000)}
+{'_id': ObjectId('6489242dcef57869b44a2742'), 'value': 5.86, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 21, 33, 368000)}
+{'_id': ObjectId('6489253bab47015c68197c6b'), 'value': 5.52, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 26, 3, 508000)}
+{'_id': ObjectId('64892577ab47015c68197c74'), 'value': 5.62, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 27, 3, 842000)}
+{'_id': ObjectId('648925b7ab47015c68197c7d'), 'value': 5.95, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 28, 7, 313000)}
+{'_id': ObjectId('648925f6ab47015c68197c86'), 'value': 5.89, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 29, 10, 271000)}
+{'_id': ObjectId('64892635ab47015c68197c8f'), 'value': 5.95, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 30, 13, 373000)}
+{'_id': ObjectId('64892675ab47015c68197c98'), 'value': 5.99, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 31, 17, 272000)}
+{'_id': ObjectId('648926df5b89a02379c8f41b'), 'value': 5.93, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 33, 3, 977000)}
+{'_id': ObjectId('6489271c5b89a02379c8f424'), 'value': 5.76, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 34, 4, 86000)}
+{'_id': ObjectId('6489275b5b89a02379c8f42d'), 'value': 5.68, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 35, 7, 986000)}
+{'_id': ObjectId('648928bc1b642f756a292e54'), 'value': 5.74, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 41, 0, 559000)}
+{'_id': ObjectId('648928f81b642f756a292e5d'), 'value': 5.55, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 0, 569000)}
+{'_id': ObjectId('648929150aa2d8d3b362239c'), 'value': 5.55, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 29, 137000)}
+{'_id': ObjectId('648929d136851be51ae010ff'), 'value': 5.71, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 45, 37, 33000)}
+{'_id': ObjectId('64892a0d36851be51ae01108'), 'value': 5.83, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 46, 37, 771000)}
+{'_id': ObjectId('64892a5d1159daca1664288e'), 'value': 5.79, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 47, 57, 850000)}
+{'_id': ObjectId('64892a9a1159daca16642897'), 'value': 5.61, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 58, 64000)}
+{'_id': ObjectId('64892b6b875b9bee35dba86b'), 'value': 5.67, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 52, 27, 990000)}
+{'_id': ObjectId('6489bcc891e3ce293d0db8f5'), 'value': 5.85, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 12, 40, 361000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be41cce7a224be6a0889'), 'value': 5.91, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 18, 57, 909000)}
+{'_id': ObjectId('6489be4ccce7a224be6a0892'), 'value': 5.87, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 8, 501000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be59cce7a224be6a089b'), 'value': 5.77, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 21, 129000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be65cce7a224be6a08a4'), 'value': 5.85, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 33, 813000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be72cce7a224be6a08ad'), 'value': 5.79, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 46, 783000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be7fcce7a224be6a08b6'), 'value': 5.86, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 59, 778000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be8ccce7a224be6a08bf'), 'value': 5.64, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 12, 806000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be99cce7a224be6a08c8'), 'value': 5.55, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 25, 809000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bea6cce7a224be6a08d1'), 'value': 5.54, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 38, 812000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489beb3cce7a224be6a08da'), 'value': 5.61, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 51, 746000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bec0cce7a224be6a08e3'), 'value': 5.97, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 4, 654000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489becdcce7a224be6a08ec'), 'value': 5.81, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 17, 630000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bedacce7a224be6a08f5'), 'value': 5.93, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 30, 669000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bee7cce7a224be6a08fe'), 'value': 5.95, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 43, 542000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bef4cce7a224be6a0907'), 'value': 5.88, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 56, 575000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bf01cce7a224be6a0910'), 'value': 5.79, 'type': 'pH value', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 22, 9, 463000)}
+Connection is ongoing...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+START CLIENT CONNECTION
+
+CONNECTION IS ESTABLISHED SUCCESSFULLY!
+
+{'_id': ObjectId('6484a4c4740ec8b23d0e9ac8'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 28, 52, 101000)}
+{'_id': ObjectId('6484a500740ec8b23d0e9ad1'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 29, 52, 347000)}
+{'_id': ObjectId('6484a53f740ec8b23d0e9ada'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 30, 55, 253000)}
+{'_id': ObjectId('6484a57e740ec8b23d0e9ae3'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 31, 58, 180000)}
+{'_id': ObjectId('6484a5bd740ec8b23d0e9aec'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 33, 1, 206000)}
+{'_id': ObjectId('6484a5fc740ec8b23d0e9af5'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 34, 4, 113000)}
+{'_id': ObjectId('6484a63a740ec8b23d0e9afe'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 35, 6, 994000)}
+{'_id': ObjectId('6484a679740ec8b23d0e9b07'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 36, 9, 897000)}
+{'_id': ObjectId('6484a6b8740ec8b23d0e9b10'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 37, 12, 816000)}
+{'_id': ObjectId('6484a6f7740ec8b23d0e9b19'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 38, 15, 726000)}
+{'_id': ObjectId('6484a736740ec8b23d0e9b22'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 39, 18, 604000)}
+{'_id': ObjectId('6484a775740ec8b23d0e9b2b'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 40, 21, 601000)}
+{'_id': ObjectId('6484a7b4740ec8b23d0e9b34'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 41, 24, 473000)}
+{'_id': ObjectId('6484a7f3740ec8b23d0e9b3d'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 42, 27, 464000)}
+{'_id': ObjectId('6484a832740ec8b23d0e9b46'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 43, 30, 545000)}
+{'_id': ObjectId('6484a871740ec8b23d0e9b4f'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 44, 33, 496000)}
+{'_id': ObjectId('6484a8b0740ec8b23d0e9b58'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 11, 0, 45, 36, 449000)}
+{'_id': ObjectId('648923ffcef3bd34a625e894'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 20, 47, 145000)}
+{'_id': ObjectId('6489242fcef57869b44a2748'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 21, 35, 518000)}
+{'_id': ObjectId('6489253dab47015c68197c71'), 'value': 1, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 26, 5, 658000)}
+{'_id': ObjectId('64892579ab47015c68197c7a'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 27, 5, 670000)}
+{'_id': ObjectId('648925b9ab47015c68197c83'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 28, 9, 361000)}
+{'_id': ObjectId('648925f8ab47015c68197c8c'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 29, 12, 133000)}
+{'_id': ObjectId('64892638ab47015c68197c95'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 30, 16, 34000)}
+{'_id': ObjectId('64892677ab47015c68197c9e'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 31, 19, 423000)}
+{'_id': ObjectId('648926e25b89a02379c8f421'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 33, 6, 126000)}
+{'_id': ObjectId('6489271e5b89a02379c8f42a'), 'value': 1, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 34, 6, 237000)}
+{'_id': ObjectId('6489275e5b89a02379c8f433'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 35, 10, 138000)}
+{'_id': ObjectId('648928be1b642f756a292e5a'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 41, 2, 664000)}
+{'_id': ObjectId('648928fa1b642f756a292e63'), 'value': 1, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 2, 429000)}
+{'_id': ObjectId('648929170aa2d8d3b36223a2'), 'value': 1, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 42, 31, 390000)}
+{'_id': ObjectId('648929d336851be51ae01105'), 'value': 1, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 45, 39, 175000)}
+{'_id': ObjectId('64892a0f36851be51ae0110e'), 'value': 1, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 46, 39, 923000)}
+{'_id': ObjectId('64892a611159daca16642894'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 48, 1, 948000)}
+{'_id': ObjectId('64892a9c1159daca1664289d'), 'value': 1, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 49, 0, 215000)}
+{'_id': ObjectId('64892b6e875b9bee35dba871'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 10, 52, 30, 140000)}
+{'_id': ObjectId('6489bcca91e3ce293d0db8fb'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 12, 42, 28000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be43cce7a224be6a088f'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 18, 59, 734000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be4ecce7a224be6a0898'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 10, 292000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be5acce7a224be6a08a1'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 22, 952000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be67cce7a224be6a08aa'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 35, 505000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be74cce7a224be6a08b3'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 19, 48, 392000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be81cce7a224be6a08bc'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 1, 452000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489be8ecce7a224be6a08c5'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 14, 523000)}
+Connection is ongoing...
+{'_id': ObjectId('6489be9bcce7a224be6a08ce'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 27, 505000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bea8cce7a224be6a08d7'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 40, 445000)}
+Connection is ongoing...
+{'_id': ObjectId('6489beb5cce7a224be6a08e0'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 20, 53, 369000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bec2cce7a224be6a08e9'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 6, 353000)}
+Connection is ongoing...
+{'_id': ObjectId('6489becfcce7a224be6a08f2'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 19, 270000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bedccce7a224be6a08fb'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 32, 270000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bee9cce7a224be6a0904'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 45, 181000)}
+Connection is ongoing...
+{'_id': ObjectId('6489bef6cce7a224be6a090d'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 21, 58, 175000)}
+Connection is ongoing...
+Connection is ongoing...
+{'_id': ObjectId('6489bf03cce7a224be6a0916'), 'value': 0, 'type': 'solenoid valve', 'unit': 'none', 'time': datetime.datetime(2023, 6, 14, 21, 22, 11, 133000)}

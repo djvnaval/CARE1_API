@@ -1,7 +1,7 @@
-col = 'pHsensor'
+col = 'flowMeter'
 con = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
 db = 'HTTPSmartFarm'
-path = 'py/dump/HTTPSmartFarm/pHsensor/'
+path = 'py/dump/HTTPSmartFarm/flowMeter/'
 
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
