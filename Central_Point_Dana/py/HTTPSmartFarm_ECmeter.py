@@ -2,6 +2,7 @@ col = 'ECmeter'
 con = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
 db = 'HTTPSmartFarm'
 path = 'py/dump/HTTPSmartFarm/ECmeter/'
+
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
 from os.path import exists
@@ -37,10 +38,6 @@ def restore(path, conn, db_name):
 
 print("START CLIENT CONNECTION")
 # MongoDB configuration
-from dotenv import load_dotenv, find_dotenv
-import os
-import pprint
-from pymongo import MongoClient
 load_dotenv(find_dotenv())
 main_password = os.environ.get("MONGODB_PW")
 main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"

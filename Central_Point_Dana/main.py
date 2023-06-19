@@ -432,8 +432,7 @@ def install_dependencies():
     print("Installing dependencies...")
     commands = ['pip install requests',
                 'pip install pymongo',
-                'pip install python-dotenv',
-                'pip install paho-mqtt']
+                'pip install python-dotenv']
     for item in commands:
         dep = subprocess.run(item, shell=True, capture_output=True)
         print(dep.stdout.decode())
