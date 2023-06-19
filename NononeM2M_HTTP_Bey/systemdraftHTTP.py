@@ -316,7 +316,7 @@ if __name__ == "__main__":
     overflowSensor = 0
     refillFlag = 0
 
-    readInterval = 60
+    readInterval = 10
     timeStart = time.time()
     sendData()
 
@@ -338,7 +338,7 @@ if __name__ == "__main__":
                     print("pls actuate")
                     if time.time() >= actuateTime:
                         actuation = 1 
-                refillFlag == 0
+                refillFlag = 0
                 print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 refill()
                 flood()
