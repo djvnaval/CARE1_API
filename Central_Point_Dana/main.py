@@ -114,7 +114,7 @@ def edit_client_1(eid):
                     print("\n\nClient attribute edited successfully.")
                 else:
                     print("\n\nInvalid input! Type is not changed.")
-        else:
+        elif ed < 2 or ed > 5:
             arg = "\n\n" + str(data[ed][0]) + " : " + str(data[ed][1])
             print(arg)
             arg = "\nEnter NEW " + str(data[ed][0]) + ": "
@@ -313,7 +313,7 @@ def print_clients():
     print("\n\nEXISTING CLIENTS")
     ctr = 0
     for doc in collection.find():
-        post = '[' + str(ctr) + ']' + " - [" + doc["type"] + '] ' + doc["device"] + " : " + doc["care1_device_id"]
+        post = '[' + str(ctr) + ']' + " - [" + doc["type"] + '] ' + doc["device"] + " : " + doc["care1_device_id"] + " : " + doc["protocol"]
         print(post)
         clients_list.append([0, doc["_id"]])
         ctr = ctr + 1

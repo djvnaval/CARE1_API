@@ -4,9 +4,16 @@ from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
 from os.path import exists
 import subprocess
+import datetime
 import pprint
 import bson
+import time
 import os
+
+
+def time_int(d): # d=datetime.datetime.now()
+    time.sleep(1)
+    return int(d.strftime("%Y%m%d%H%M%S"))
 
 
 def dump(collections, conn, db_name, path):
@@ -29,9 +36,10 @@ def restore(path, conn, db_name):
         if coll.endswith('.bson'):
             with open(os.path.join(path, coll), 'rb+') as f:
             	for doc in bson.decode_all(f.read()):
-            		if db[coll.split('.')[0]].count_documents(doc) == 0:
-            			db[coll.split('.')[0]].insert_one(doc)
-            			print(doc)
+                    if db[coll.split('.')[0]].count_documents(doc) == 0:
+                        #doc.update({"_id": time_int(datetime.datetime.now())})
+                        db[coll.split('.')[0]].insert_one(doc)
+                        print(doc)
 
 print("START CLIENT CONNECTION")
 print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")

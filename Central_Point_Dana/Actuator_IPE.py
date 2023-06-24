@@ -7,6 +7,7 @@ Created on Sat Apr 22 12:25:32 2023
 """
 
 
+from bson.objectid import ObjectId
 from pymongo import MongoClient
 import time
 import datetime
@@ -27,6 +28,7 @@ def actuate(db, col, t, limit):
 			time.sleep(t)
 			val = random.randint(0,1)
 			post = {
+				"_id" : int(datetime.datetime.now().strftime("%Y%m%d%H%M%S")),
 				"value" : val,
 				"type" : "solenoid valve",
 				"unit" : "none",
@@ -35,6 +37,6 @@ def actuate(db, col, t, limit):
 			eval(command)
 			print(post)
 
-#actuate("HTTPSmartFarm", "solenoidValve", 10, 100)
-actuate("oneM2M_HTTP_SmartFarm", "solenoidValve", 10, 100)
-actuate("oneM2M_MQTT_SmartFarm", "solenoidValve", 10, 100)
+actuate("HTTPSmartFarm", "solenoidValve", 2, 100)
+#actuate("oneM2M_HTTP_SmartFarm", "solenoidValve", 5, 100)
+#actuate("oneM2M_MQTT_SmartFarm", "solenoidValve", 5, 100)

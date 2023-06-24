@@ -1,3 +1,7 @@
+col = 'solenoidValve'
+con = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
+db = 'HTTPSmartFarm'
+path = 'data/dump/HTTPSmartFarm/solenoidValve/'
 
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
