@@ -1,0 +1,13 @@
+
+
+ADDING PUBLISHING CLIENT
+
+These clients, utilizing either HTTP or MQTT protocol and oneM2M or non-oneM2M standard, publish data to the central point via MongoDB as its gateway or broker, thus this section needs the connection details, and you are about to connect the central point (this device). With that, please prepare to input the following details:
+	- CARE1 Device ID (optional, for easy referencing)
+	- URI or Connection String
+	- Protocol
+	- type
+
+
+-END-
+

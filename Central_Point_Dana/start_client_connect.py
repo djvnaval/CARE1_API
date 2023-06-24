@@ -60,6 +60,7 @@ def view_collection(con, database_name, dev_id):
 	command = f"client.{database_name}.list_collection_names()"
 	collections = []
 	ctr = 0
+
 	for col in eval(command):
 		arg = '[' + str(ctr) + "] " + col
 		print(arg)
@@ -67,6 +68,7 @@ def view_collection(con, database_name, dev_id):
 		ctr = ctr + 1
 	arg = "[" + str(len(collections)) + "] All collections" 
 	print(arg)
+
 	print("\nSelect a collection to connect to Central Point:")
 	sel = input("Enter: ")
 	if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(collections):
@@ -80,7 +82,7 @@ def view_collection(con, database_name, dev_id):
 				pyfile = generate_py(col, con, database_name, path)
 				command = f"gnome-terminal --tab --title={database_name}/{col} -- bash -c 'python3 {pyfile} ;bash'"
 				dep = subprocess.run(command, shell=True, capture_output=True)
-		elif clients_list[ec][2] == "actuator":
+		elif clients_list[ec][2] == "actuation switch":
 			print_clients()
 			print("[n] None (store actuation data in Central Point only)")
 			print("\n\nSelect recipient of actuation data")
@@ -112,7 +114,7 @@ def view_collection(con, database_name, dev_id):
 			pyfile = generate_py(collection_name, con, database_name, path)
 			command = f"gnome-terminal --tab --title={database_name}/{collection_name} -- bash -c 'python3 {pyfile} ;bash'"
 			dep = subprocess.run(command, shell=True, capture_output=True)
-		elif clients_list[ec][2] == "actuator":
+		elif clients_list[ec][2] == "actuation switch":
 			print_clients()
 			print("[n] None (store actuation data in Central Point only)")
 			print("\n\nSelect recipient of actuation data")
@@ -142,12 +144,9 @@ def view_collection(con, database_name, dev_id):
 
 def start_connect():
 	global dbs
-    
-	if clients_list[ec][0] == 1:
-		collection = main_db.mqtt_clients
-	elif clients_list[ec][0] == 2:
-		collection = main_db.http_clients
-	elif clients_list[ec][0] == 3:
+
+	if clients_list[ec][0] == 0:
+
 		# Connect to client
 		collection = main_db.mongodb_clients
 		clii = collection.find({"_id" : clients_list[ec][1]})
@@ -156,6 +155,7 @@ def start_connect():
 			dev_id = doc["care1_device_id"]
 		cli = MongoClient(con)
 		print("\nAVAILABLE DATABASES")
+
 		ctr = 0
 		for dbname in enumerate(cli.list_databases()):
 			arg = '[' + str(ctr) + '] ' + str(dbname[1]['name'])
@@ -163,10 +163,12 @@ def start_connect():
 			dbs.append(str(dbname[1]['name']))
 			ctr = ctr + 1
 		sel = input("\nSelect a database to view: ")
+
 		if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > ctr-1:
 			print("Invalid input!\n")
 			start_connect()
 		dbnamae = dbs[int(sel)]
+
 		# Check existence in central point
 		dbnames = main_client.list_database_names()
 		if dbnamae in dbnames:
@@ -186,33 +188,17 @@ def start_connect():
 
 def print_clients():
     print('')
-    collection1 = main_db.mqtt_clients
-    collection2 = main_db.http_clients
-    collection3 = main_db.mongodb_clients
+    collection = main_db.mongodb_clients
 
     global clients_list
     clients_list.clear()
 
     print("EXISTING CLIENTS:")
     ctr = 0
-    for doc in collection1.find():
-        post = '[' + str(ctr) + ']' + ' - [' + doc["type"] + "_MQTT" + '] ' + doc["care1_device_id"] + '-' + doc["broker"] + ':' + doc["port"]
+    for doc in collection.find():
+        post = '[' + str(ctr) + ']' + " - [" + doc["type"] + '] ' + doc["care1_device_id"] + '-' + doc["device"]
         print(post)
-        post = "      Topics: " + str(doc["topics"])
-        print(post)
-        clients_list.append([1, doc["_id"]])
-        ctr = ctr + 1
-    for doc in collection2.find():
-        post = '[' + str(ctr) + ']' + ' - [' + doc["type"] + "_HTTP" + '] ' + doc["care1_device_id"] + '-' + doc["broker"] + ':' + doc["port"]
-        print(post)
-        post = "      Topics: " + str(doc["topics"])
-        print(post)
-        clients_list.append([2, doc["_id"]])
-        ctr = ctr + 1
-    for doc in collection3.find():
-        post = '[' + str(ctr) + ']' + " - [" + doc["type"] + '] ' + doc["care1_device_id"] + '-' + doc["URI"]
-        print(post)
-        clients_list.append([3, doc["_id"], doc["type"], doc["URI"]])
+        clients_list.append([0, doc["_id"], doc["device"], doc["URI"]])
         ctr = ctr + 1
     print('')
 
@@ -241,15 +227,5 @@ main_password = os.environ.get("MONGODB_PW")
 main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
 main_client = MongoClient(main_connection_string)
 main_db = main_client.CARE1
-
-'''
-# Drop previous connection data
-db1 = main_client.mongodb_client_readings
-for col in db1.list_collection_names():
-	if col == "do_not_delete":
-		continue
-	command = f"db1.{col}.drop()"
-	eval(command)
-'''
 
 select_client()
