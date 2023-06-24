@@ -5,6 +5,7 @@ import logging
 import time
 import random
 import datetime
+from inputimeout import inputimeout
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -82,7 +83,7 @@ def pm25indoor(rate):
 
 def pm25outdoor(rate):
     global PM2_5out
-    PM2_5out = random.randint(70,80)
+    #PM2_5out = random.randint(70,80)
 
     PM2_5out = PM2_5out + rate
     sleep(0.3)
@@ -214,15 +215,16 @@ if __name__ == "__main__":
     timeStart = time.time()
     actuateTime = 0
     sendData()
-    pm25indoor(10)
-    pm25outdoor(0)
+
+    rateIn = 5
+    rateOut = 10
     getActuationData()
 
     while True:
         while time.time() < timeStart + readInterval:
             #getActuationData()
-            pm25indoor(10)
-            pm25outdoor(30)
+            pm25indoor(rateIn)
+            pm25outdoor(rateOut)
             print("pmIN: ", PM2_5in, "pmOUT: ", PM2_5out, "winAct: ", winAct, "ffAct: ", ffAct)
             
             if winAct == 1:
@@ -268,5 +270,25 @@ if __name__ == "__main__":
 
             print("pmIN: ", PM2_5in, "pmOUT: ", PM2_5out, "winAct: ", winAct, "ffAct: ", ffAct)
         sendData()
+        
+        try:
+            # Take timed input using inputimeout() function
+            rateIn = inputimeout(prompt='Change rate Indoor:', timeout=3)
+            rateIn = int(rateIn)
+        
+        except Exception as e:
+            # Declare the timeout statement
+            time_over = 'Indoor Rate not changed'
+            print(time_over)
+        
+        try:
+            rateOut = inputimeout(prompt='Change rate Outdoor:', timeout=3)
+            rateOut = int(rateOut)
+
+        except Exception as e:
+            # Declare the timeout statement
+            time_over = 'Outdoor Rate not changed'
+            print(time_over)
+
         timeStart = time.time()
             
