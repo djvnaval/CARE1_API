@@ -24,7 +24,17 @@ ed = 0
 def maintain_cp():
     print("\n\nCENTRAL POINT MAINTENANCE")
     print("\nSelect action:")
-    print("[0] ")
+    print("[0] Clean central point local data (generated bson and py files)")
+    sel = input("\nEnter: ")
+    if sel == '0':
+        commands = ["rm -r data", "mkdir data", "mkdir data/dump", "mkdir data/py"]
+        for c in commands:
+            dep = subprocess.run(c, shell=True, capture_output=True)
+            print(dep.stdout.decode())
+        main_menu()
+    else:
+        print("\n\nInvalid input!")
+
 
 
 def start_client_connect():
@@ -63,7 +73,7 @@ def edit_client_1(eid):
                 data[ed][1] = "HTTP/MQTT"
                 print("\n\nClient attribute edited successfully.")
             else:
-                print("\n\nInvalid input! Type is not changed.\n")
+                print("\n\nInvalid input! Type is not changed.")
         if ed == 3:
             arg = "\n\n" + str(data[ed][0]) + " : " + str(data[ed][1])
             print(arg)
@@ -76,7 +86,7 @@ def edit_client_1(eid):
                 data[ed][1] = "sub"
                 print("\n\nClient attribute edited successfully.")
             else:
-                print("\n\nInvalid input! Type is not changed.\n")
+                print("\n\nInvalid input! Type is not changed.")
         if ed == 4:
             if data[3][1] == "pub":
                 arg = "\n\n" + str(data[ed][0]) + " : " + str(data[ed][1])
@@ -90,7 +100,7 @@ def edit_client_1(eid):
                     data[ed][1] = "actuation switch"
                     print("\n\nClient attribute edited successfully.")
                 else:
-                    print("\n\nInvalid input! Type is not changed.\n")
+                    print("\n\nInvalid input! Type is not changed.")
             elif data[3][1] == "sub":
                 arg = "\n\n" + str(data[ed][0]) + " : " + str(data[ed][1])
                 print(arg)
@@ -103,7 +113,7 @@ def edit_client_1(eid):
                     data[ed][1] = "monitoring application"
                     print("\n\nClient attribute edited successfully.")
                 else:
-                    print("\n\nInvalid input! Type is not changed.\n")
+                    print("\n\nInvalid input! Type is not changed.")
         else:
             arg = "\n\n" + str(data[ed][0]) + " : " + str(data[ed][1])
             print(arg)
@@ -157,10 +167,10 @@ def edit_client_0():
     print("\n\nSELECT ITEM TO EDIT")
     edit = input("\nEnter: ")
     if edit.isdigit() == 0:
-        print("\n\nInvalid input!\n")
+        print("\n\nInvalid input!")
         edit_client_0()
     if int(edit) < -1 or int(edit) > len(data)-1:
-        print("\n\nInvalid input!\n")
+        print("\n\nInvalid input!")
         edit_client_0()
 
     ed = int(edit)
@@ -174,10 +184,10 @@ def edit_client():
     sel = input("\nSelect client to edit: ")
     print('')
     if sel.isdigit() == 0:
-        print("\n\nInvalid input!\n")
+        print("\n\nInvalid input!")
         edit_client()
     if int(sel) < -1 or int(sel) > len(clients_list)-1:
-        print("\n\nInvalid input!\n")
+        print("\n\nInvalid input!")
         edit_client()
 
     ec = int(sel)
@@ -198,7 +208,7 @@ def client_adder(type):
         elif sel == '1':
             device = "actuation switch"
         else:
-            print("\n\nInvalid input!\n")
+            print("\n\nInvalid input!")
             client_adder()
     if type == 1:
         print("\n\nADD SUBSCRIBING CLIENT")
@@ -213,7 +223,7 @@ def client_adder(type):
         elif sel == '1':
             device = "monitoring application"
         else:
-            print("\n\nInvalid input!\n")
+            print("\n\nInvalid input!")
             client_adder()
 
     for line in md:
@@ -236,7 +246,7 @@ def client_adder(type):
     elif sel == '2':
         protocol = "HTTP/MQTT"
     else:
-        print("\n\nInvalid input!\n")
+        print("\n\nInvalid input!")
         client_adder_mongodb()
 
     collection = main_db.mongodb_clients
@@ -270,7 +280,7 @@ def add_client():
     elif action == '1':
         client_adder(1)
     else:
-        print("\n\nInvalid input!\n")
+        print("\n\nInvalid input!")
         add_client()
 
 
@@ -282,7 +292,7 @@ def remove_client():
     if remove.isnumeric():
         n = int(remove)
         if n > len(clients_list)-1 or n < 0:
-            print("\n\nInvalid input!\n")
+            print("\n\nInvalid input!")
             remove_client()
         else:
             c = clients_list.pop(n)
@@ -291,7 +301,7 @@ def remove_client():
             collection.delete_one({"_id" : c[1]})
             main_menu()
     else:
-        print("\n\nInvalid input!\n")
+        print("\n\nInvalid input!")
         remove_client()
 
 
@@ -303,7 +313,7 @@ def print_clients():
     print("\n\nEXISTING CLIENTS")
     ctr = 0
     for doc in collection.find():
-        post = '[' + str(ctr) + ']' + " - [" + doc["type"] + '] ' + doc["care1_device_id"] + '-' + doc["device"]
+        post = '[' + str(ctr) + ']' + " - [" + doc["type"] + '] ' + doc["device"] + " : " + doc["care1_device_id"]
         print(post)
         clients_list.append([0, doc["_id"]])
         ctr = ctr + 1
@@ -330,7 +340,7 @@ def main_menu():
     elif action == '4':
         maintain_cp()
     else:
-        print("\n\nInvalid input!\n")
+        print("\n\nInvalid input!")
         main_menu()
 
 
@@ -359,7 +369,7 @@ tnc.close()
 print("\n\nSkip installation of dependencies? (y/n)")
 dep = input("\nEnter: ")
 if dep == 'y' or dep == 'Y':
-    print("\n\nSkipping installation of dependencies.\n")
+    print("\n\nSkipping installation of dependencies.")
 else:
     install_dependencies()
 
