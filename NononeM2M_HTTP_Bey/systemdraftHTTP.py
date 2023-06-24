@@ -1,4 +1,3 @@
-
 from prometheus_client import Gauge, start_http_server
 from systemd.journal import JournalHandler
 
@@ -6,6 +5,7 @@ import logging
 import time
 import random
 import datetime
+from inputimeout import inputimeout
 
 
 from pymongo.mongo_client import MongoClient
@@ -92,7 +92,7 @@ def flood():
             motorSensor = 0
             refillFlag = 1
 
-def drain():
+def drain(leakage):
     global motorSensor
     global flowMeter
     global gallons
@@ -102,7 +102,7 @@ def drain():
 
     if waterDrain >= 0.1078125:
         gallons = round((gallons + 0.1078125), 7) 
-        waterDrain = round((waterDrain - 0.1078125 - leakage(0)),7)
+        waterDrain = round((waterDrain - 0.1078125 - leakage),7)
         if waterDrain < 0:
             waterDrain = 0
         flowMeter = 1
@@ -111,8 +111,8 @@ def drain():
     
     sleep(47/64)
 
-def leakage(leak):
-    return leak
+#def leakage(leak):
+#   return leak
 
 def sleep(seconds):
     time.sleep(seconds)
@@ -210,7 +210,7 @@ def waterLevel_sensor():
     waterlevelSensor = {
             "value":gallons,
             "type":"water level",
-            "unit":"none",
+            "unit":"gallons",
             "time":timeStamper()
             }
     
@@ -315,8 +315,9 @@ if __name__ == "__main__":
     motorSensor = 0
     overflowSensor = 0
     refillFlag = 0
+    leakage = 0
 
-    readInterval = 60
+    readInterval = 10
     timeStart = time.time()
     sendData()
 
@@ -335,15 +336,22 @@ if __name__ == "__main__":
                 actuateTime = time.time() + 5
                 while actuation != 1:
                     getActuationData()
-                    print("pls actuate")
+                    print("please actuate")
                     if time.time() >= actuateTime:
                         actuation = 1 
-                refillFlag == 0
+                refillFlag = 0
                 print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 refill()
                 flood()
-            drain()
+            drain(leakage)
             #print(actuation, gallons, waterDrain)
             print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
         sendData()
+        try:
+            leakage = inputimeout(prompt='leakage:', timeout=3)
+            leakage = int(leakage)
+        except Exception as e:
+            time_over = 'Leakage not changed'
+            print(time_over)
+
         timeStart = time.time()
