@@ -23,10 +23,13 @@ ed = 0
 
 def maintain_cp():
     print("\n\nCENTRAL POINT MAINTENANCE")
+    print("\nSelect action:")
+    print("[0] ")
 
 
 def start_client_connect():
-    print("\n\nSTART_CLIENT_CONNECT will open a new tab and run the start_client_connect program to start connection in parallel. The program in the current tab will not be terminated. Would you like to proceed? (y/n)")
+    print("\n\nSTART CLIENT CONNECTION")
+    print("\nSTART_CLIENT_CONNECT will open a new tab and run the start_client_connect program to start connection in parallel. The program in the current tab will not be terminated. Would you like to proceed? (y/n)")
     s = input("\nEnter: ")
     if s == 'y' or s == 'Y':
         command = "gnome-terminal --tab --title=start_client_connect -- bash -c 'python3 start_client_connect.py ;bash'"
@@ -165,10 +168,10 @@ def edit_client_0():
 
 
 def edit_client():
+    print("\n\nEDIT CLIENT")
     global ec
     print_clients()
-    print("\n\nSELECT A CLIENT TO EDIT")
-    sel = input("\nEnter: ") # Selection
+    sel = input("\nSelect client to edit: ")
     print('')
     if sel.isdigit() == 0:
         print("\n\nInvalid input!\n")
@@ -256,14 +259,15 @@ def client_adder(type):
 
 
 def add_client():
+    print("\n\nADD CLIENT")
     print_clients()
-    print("\n\nADD CLIENTS - Actions:")
-    print("[1] Add Publishing Client (sensors, actuator switches, etc.)")
-    print("[2] Add Subscribing Client (actuators, monitoring applications, etc.)")
+    print("\n\nSelect action:")
+    print("[0] Add Publishing Client (sensors, actuator switches, etc.)")
+    print("[1] Add Subscribing Client (actuators, monitoring applications, etc.)")
     action = input("\nEnter: ")
-    if action == '1':
+    if action == '0':
         client_adder(0)
-    elif action == '2':
+    elif action == '1':
         client_adder(1)
     else:
         print("\n\nInvalid input!\n")
@@ -271,6 +275,7 @@ def add_client():
 
 
 def remove_client():
+    print("\n\nREMOVE CLIENT")
     print_clients()
     global clients_list
     remove = input("\nRemove: ")
@@ -295,7 +300,7 @@ def print_clients():
     global clients_list
     clients_list.clear()
 
-    print("\n\nEXISTING CLIENTS:")
+    print("\n\nEXISTING CLIENTS")
     ctr = 0
     for doc in collection.find():
         post = '[' + str(ctr) + ']' + " - [" + doc["type"] + '] ' + doc["care1_device_id"] + '-' + doc["device"]
@@ -305,23 +310,24 @@ def print_clients():
 
 
 def main_menu():
+    print("\n\nMAIN MENU")
     print_clients()
-    print("\n\nActions:")
-    print("[1] Add client")
-    print("[2] Remove client")
-    print("[3] Edit client")
-    print("[4] Start sensor/actuator client connect")
-    print("[5] Central point maintainance")
+    print("\n\nSelect action:")
+    print("[0] Add client")
+    print("[1] Remove client")
+    print("[2] Edit client")
+    print("[3] Start sensor/actuator client connect")
+    print("[4] Central point maintainance")
     action = input("\nEnter: ")
-    if action == '1':
+    if action == '0':
         add_client()
-    elif action == '2':
+    elif action == '1':
         remove_client()
-    elif action == '3':
+    elif action == '2':
         edit_client()
-    elif action == '4':
+    elif action == '3':
         start_client_connect()
-    elif action == '5':
+    elif action == '4':
         maintain_cp()
     else:
         print("\n\nInvalid input!\n")
@@ -341,11 +347,13 @@ def install_dependencies():
     
 # START
 
+
 # Terms and Conditions
 tnc = open(terms, "r")
 for line in tnc:
     print(line.strip('\n'))
 tnc.close()
+
 
 # Install dependencies
 print("\n\nSkip installation of dependencies? (y/n)")
@@ -354,6 +362,7 @@ if dep == 'y' or dep == 'Y':
     print("\n\nSkipping installation of dependencies.\n")
 else:
     install_dependencies()
+
 
 # MongoDB configuration
 from dotenv import load_dotenv, find_dotenv
@@ -366,4 +375,5 @@ main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mon
 main_client = MongoClient(main_connection_string)
 main_db = main_client.CARE1
     
+
 main_menu()
