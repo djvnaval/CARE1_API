@@ -22,7 +22,7 @@ ec = 0
 dbs = []
 
 
-def generate_py(col, con, db, path):
+def generate_py(col, con, db, path): # Sensors
 	f = open("py_template.py", 'r')
 	w = open(f"data/{db}_{col}.py", 'w')
 	w.write(f"col = '{col}'\n")
@@ -38,7 +38,7 @@ def generate_py(col, con, db, path):
 	return f"data/{db}_{col}.py"
 
 
-def generate_py_actuate(rcon, scol, scon, db, path):
+def generate_py_actuate(rcon, scol, scon, db, path): # Actuation switches
 	f = open("py_template_0.py", 'r')
 	w = open(f"data/{db}_{scol}.py", 'w')
 	w.write(f"col = '{scol}'\n")
