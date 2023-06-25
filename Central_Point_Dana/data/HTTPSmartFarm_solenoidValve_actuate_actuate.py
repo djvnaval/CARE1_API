@@ -1,3 +1,8 @@
+col = 'solenoidValve_actuate'
+rcon = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
+con = 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority'
+db = 'HTTPSmartFarm'
+path = 'data/dump/HTTPSmartFarm/solenoidValve_actuate_actuate/'
 
 
 from dotenv import load_dotenv, find_dotenv
@@ -23,7 +28,7 @@ def dump(collections, conn, db_name, path):
     if not os.path.exists(path):
     	os.makedirs(path)
     for coll in collections:
-        with open(os.path.join(path, f'{coll}.bson'), 'wb+') as f:
+        with open(os.path.join(path, f'{coll}_actuate.bson'), 'wb+') as f:
             for doc in db[coll].find():
                 f.write(bson.BSON.encode(doc))
 
