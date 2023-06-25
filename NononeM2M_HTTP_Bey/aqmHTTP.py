@@ -26,7 +26,7 @@ except Exception as e:
 
 #Collections/sensors
 db = client.HTTPAQM
-dbActuate = client.HTTPAQM_actuate
+#dbActuate = client.HTTPAQM_actuate
 colHumi = db.dht22Humi
 colTemp = db.dht22Temp
 colPM2_5in = db.PM2_5_indoor
