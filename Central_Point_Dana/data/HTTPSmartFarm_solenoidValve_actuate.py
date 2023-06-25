@@ -1,6 +1,6 @@
-col = 'solenoidValve'
-rcon = 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority'
-con = 'mongodb+srv://jan11backupstorage:47PIN8N6QdVK2afx@actuatoripe.woncb4j.mongodb.net/'
+col = 'solenoidValve_actuate'
+rcon = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
+con = 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority'
 db = 'HTTPSmartFarm'
 path = 'data/dump/HTTPSmartFarm/solenoidValve_actuate/'
 
@@ -28,7 +28,7 @@ def dump(collections, conn, db_name, path):
     if not os.path.exists(path):
     	os.makedirs(path)
     for coll in collections:
-        with open(os.path.join(path, f'{coll}_actuate.bson'), 'wb+') as f:
+        with open(os.path.join(path, f'{coll}.bson'), 'wb+') as f:
             for doc in db[coll].find():
                 f.write(bson.BSON.encode(doc))
 
@@ -50,5 +50,5 @@ print("START CLIENT CONNECTION")
 print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
 while 1:
     dump([col], con, db, path)
-    restore(path, rcon, f"{db}_actuate")
+    restore(path, rcon, db)
     print("Connection is ongoing...")

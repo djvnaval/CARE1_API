@@ -22,7 +22,7 @@ ec = 0
 dbs = []
 
 
-def generate_py(col, con, db, path):
+def generate_py(col, con, db, path): # Sensors
 	f = open("py_template.py", 'r')
 	w = open(f"data/{db}_{col}.py", 'w')
 	w.write(f"col = '{col}'\n")
@@ -38,9 +38,9 @@ def generate_py(col, con, db, path):
 	return f"data/{db}_{col}.py"
 
 
-def generate_py_actuate(rcon, scol, scon, db, path):
+def generate_py_actuate(rcon, scol, scon, db, path): # Actuation switches
 	f = open("py_template_0.py", 'r')
-	w = open(f"data/{db}_{scol}_actuate.py", 'w')
+	w = open(f"data/{db}_{scol}.py", 'w')
 	w.write(f"col = '{scol}'\n")
 	w.write(f"rcon = '{rcon}'\n")
 	w.write(f"con = '{scon}'\n")
@@ -52,7 +52,7 @@ def generate_py_actuate(rcon, scol, scon, db, path):
 
 	w.close()
 	f.close()
-	return f"data/{db}_{scol}_actuate.py"
+	return f"data/{db}_{scol}.py"
 
 
 def view_collection(con, database_name, dev_id):
@@ -62,83 +62,121 @@ def view_collection(con, database_name, dev_id):
 	collections = []
 	ctr = 0
 
-	for col in eval(command):
-		arg = '[' + str(ctr) + "] " + col
-		print(arg)
-		collections.append(col)
-		ctr = ctr + 1
-	arg = "[" + str(len(collections)) + "] All collections" 
-	print(arg)
+	if clients_list[ec][2] == "sensor":
+		# central point database check
+		dbnames = main_client.list_database_names()
+		if database_name in dbnames:
+			print("\n\nDatabase '", database_name, "' already exists. Sync existing collections in this database to avoid dangling objects? (y/n)", sep='')
+			sel = input("Enter: ")
+			if sel != 'n' and sel != 'N':
+				print("\nSyncing collections...")
+				x = f"main_client.{database_name}"
+				DB = eval(x)
+				for col in DB.list_collection_names():
+					x = f"DB.{col}.drop()"
+					eval(x)
+			else:
+				print("\n\nProceeding.")
 
-	print("\n\nSelect a collection to connect to Central Point:")
-	sel = input("\nEnter: ")
-	if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(collections):
-			print("\n\nInvalid input!")
-			view_collection()
-	elif int(sel) == len(collections):
-		if clients_list[ec][2] == "sensor":
+		for col in eval(command):
+			arg = '[' + str(ctr) + "] " + col
+			print(arg)
+			collections.append(col)
+			ctr = ctr + 1
+		arg = "[" + str(len(collections)) + "] All collections" 
+		print(arg)
+		print("\n\nSelect collection/s to connect to Central Point")
+		sel = input("\nEnter: ")
+
+		if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(collections):
+				print("\n\nInvalid input!")
+				view_collection(con, database_name, dev_id)
+		elif int(sel) == len(collections):
 			print("\n\nCONNECTION IS ESTABLISHED SUCCESSFULLY!")
 			for col in collections:
 				path = f"data/dump/{database_name}/{col}/"
 				pyfile = generate_py(col, con, database_name, path)
-				command = f"gnome-terminal --tab --title={database_name}/{col} -- bash -c 'python3 {pyfile} ;bash'"
-				dep = subprocess.run(command, shell=True, capture_output=True)
-		elif clients_list[ec][2] == "actuation switch":
-			print_clients()
-			print("[n] None (store actuation data in Central Point only)")
-			print("\n\nSelect recipient of actuation data")
-			s = input("\nEnter:")
-			if s.isdigit() == 0 or int(s) < -1 or int(s) > len(clients_list)-1:
-				if s == 'n' or s == 'N':
-					print("\n\nCONNECTION IS ESTABLISHED SUCCESSFULLY!")
-					for col in collections:
-						path = f"data/dump/{database_name}/{col}_actuate/"
-						pyfile = generate_py_actuate(main_connection_string, col, con, database_name, path)
-						command = f"gnome-terminal --tab --title={database_name}/{col}_actuate -- bash -c 'python3 {pyfile} ;bash'"
-						dep = subprocess.run(command, shell=True, capture_output=True)
-				print("\n\nInvalid input!")
-				view_collection(con, database_name, dev_id)
-			else:
-				print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!")
-				for col in collections:
-					rcon = clients_list[int(s)][3]
-					path = f"data/dump/{database_name}/{col}_actuate/"
-					pyfile = generate_py_actuate(rcon, col, con, database_name, path)
-					command = f"gnome-terminal --tab --title={database_name}/{col}_actuate -- bash -c 'python3 {pyfile} ;bash'"
-					dep = subprocess.run(command, shell=True, capture_output=True)
-
-	else:
-		if clients_list[ec][2] == "sensor":
+				y = f"gnome-terminal --tab --title={database_name}/{col} -- bash -c 'python3 {pyfile} ;bash'"
+				dep = subprocess.run(y, shell=True, capture_output=True)
+		else:
 			collection_name = collections[int(sel)]
 			print("\n\nCONNECTION IS ESTABLISHED SUCCESSFULLY!")
 			path = f"data/dump/{database_name}/{collection_name}/"
 			pyfile = generate_py(collection_name, con, database_name, path)
-			command = f"gnome-terminal --tab --title={database_name}/{collection_name} -- bash -c 'python3 {pyfile} ;bash'"
-			dep = subprocess.run(command, shell=True, capture_output=True)
-		elif clients_list[ec][2] == "actuation switch":
+			u = f"gnome-terminal --tab --title={database_name}/{collection_name} -- bash -c 'python3 {pyfile} ;bash'"
+			dep = subprocess.run(u, shell=True, capture_output=True)
+
+	elif clients_list[ec][2] == "actuation switch":
+		for col in eval(command):
+			arg = '[' + str(ctr) + "] " + col
+			print(arg)
+			collections.append(col)
+			ctr = ctr + 1
+		print("\n\nSelect collection containing actuations to be sent")
+		sel = input("\nEnter: ")
+
+		if sel.isdigit() == 0 or int(sel) < -1 or int(sel) > len(collections) - 1:
+				print("\n\nInvalid input!")
+				view_collection(con, database_name, dev_id)
+		else:
 			print_clients()
 			print("[n] None (store actuation data in Central Point only)")
 			print("\n\nSelect recipient of actuation data")
-			s = input("\nEnter:")
-			if s.isdigit() == 0 or int(s) < -1 or int(s) > len(clients_list)-1:
+			s = input("\nEnter: ")
+			if s.isdigit() == 0 or int(s) < -1 or int(s) > len(clients_list) - 1:
 				if s == 'n' or s == 'N':
+					# central point database check
+					dbnames = main_client.list_database_names()
+					if database_name in dbnames:
+						print("\nSyncing collections...")
+						p = f"main_client.{database_name}"
+						DB = eval(p)
+						for ccc in DB.list_collection_names():
+							if ccc == collections[int(sel)]:
+								print(f"\n\n{ccc} already exists in the recipent database. Sync to avoid dangling objects? (y/n)")
+								act = input("Enter: ")
+								if act != 'n' and act != 'N':
+									k = f"DB.{ccc}.drop()"
+									eval(k)
+								break
+
 					collection_name = collections[int(sel)]
 					print("\n\nCONNECTION IS ESTABLISHED SUCCESSFULLY!")
-					path = f"data/dump/{database_name}/{collection_name}_actuate/"
+					path = f"data/dump/{database_name}/{collection_name}/"
 					pyfile = generate_py_actuate(main_connection_string, collection_name, con, database_name, path)
-					command = f"gnome-terminal --tab --title={database_name}/{collection_name}_actuate -- bash -c 'python3 {pyfile} ;bash'"
-					dep = subprocess.run(command, shell=True, capture_output=True)
-				print("\n\nInvalid input!")
-				view_collection(con, database_name, dev_id)
-				
+					ll = f"gnome-terminal --tab --title={database_name}/{collection_name} -- bash -c 'python3 {pyfile} ;bash'"
+					dep = subprocess.run(ll, shell=True, capture_output=True)
+				else:
+					print("\n\nInvalid input!")
+					view_collection(con, database_name, dev_id)
 			else:
-				rcon = clients_list[int(s)][3]
+				# recipient database check
+				client__ = MongoClient(clients_list[int(s)][3])
+				dbnames = client__.list_database_names()
+				if database_name in dbnames:
+					print("\nSyncing collections...")
+					mm = f"client__.{database_name}"
+					DB = eval(mm)
+					for ccc in DB.list_collection_names():
+						if ccc == collections[int(sel)]:
+							print(f"\n\n{ccc} already exists in the recipent database. Sync to avoid dangling objects? (y/n)")
+							act = input("Enter: ")
+							if act != 'n' and act != 'N':
+								qq = f"DB.{ccc}.drop()"
+								eval(qq)
+							break
+
+					else:
+						print("\n\nProceeding.")
+
 				collection_name = collections[int(sel)]
 				print("\n\nCONNECTION IS ESTABLISHED SUCCESSFULLY!")
-				path = f"data/dump/{database_name}/{collection_name}_actuate/"
-				pyfile = generate_py_actuate(rcon, collection_name, con, database_name, path)
-				command = f"gnome-terminal --tab --title={database_name}/{collection_name}_actuate -- bash -c 'python3 {pyfile} ;bash'"
-				dep = subprocess.run(command, shell=True, capture_output=True)
+				path = f"data/dump/{database_name}/{collection_name}/"
+				pyfile = generate_py_actuate(clients_list[int(s)][3], collection_name, con, database_name, path)
+				aa = f"gnome-terminal --tab --title={database_name}/{collection_name} -- bash -c 'python3 {pyfile} ;bash'"
+				dep = subprocess.run(aa, shell=True, capture_output=True)
+	else:
+		print("\n\nIf client device is an actuator, select a publisher (actuation switch) to connect to it first.")
 
 	select_client()
 		
@@ -171,20 +209,6 @@ def start_connect():
 			start_connect()
 		dbnamae = dbs[int(sel)]
 
-		# Check existence in central point
-		dbnames = main_client.list_database_names()
-		if dbnamae in dbnames:
-			print("\n\nDatabase '", dbnamae, "' already exists. Sync existing collections in this database to avoid dangling objects? (y/n)", sep='')
-			sel = input("Enter: ")
-			if sel != 'n' and sel != 'N':
-				print("\nSyncing collections...")
-				command = f"main_client.{dbnamae}"
-				DB = eval(command)
-				for col in DB.list_collection_names():
-					command = f"DB.{col}.drop()"
-					eval(command)
-			else:
-				print("\n\nProceeding.")
 		view_collection(con, dbnamae, dev_id)
 
 
