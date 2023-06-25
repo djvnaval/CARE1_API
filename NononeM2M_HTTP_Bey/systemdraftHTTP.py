@@ -28,7 +28,7 @@ except Exception as e:
 
 #Collections/sensors
 db = client.HTTPSmartFarm
-dbActuate = client.HTTPSmartFarm_actuate
+#dbActuate = client.HTTPSmartFarm_actuate
 colHumi = db.dht22Humi
 colTemp = db.dht22Temp
 colpH = db.pHsensor
@@ -38,7 +38,7 @@ colmotorSensor = db.motorSensor
 colflowMeter = db.flowMeter
 coloverflowSensor = db.overflowSensor
 colSolenoidValve = db.solenoidValve
-colActuation = dbActuate.solenoidValve_actuate
+colActuation = db.solenoidValve_actuate
 
 # Setup logging to the Systemd Journal
 log = logging.getLogger('dht22_sensor')
