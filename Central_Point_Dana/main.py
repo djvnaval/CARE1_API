@@ -36,7 +36,6 @@ def maintain_cp():
         print("\n\nInvalid input!")
 
 
-
 def start_client_connect():
     print("\n\nSTART CLIENT CONNECTION")
     print("\nSTART_CLIENT_CONNECT will open a new tab and run the start_client_connect program to start connection in parallel. The program in the current tab will not be terminated. Would you like to proceed? (y/n)")
@@ -194,8 +193,22 @@ def edit_client():
     edit_client_0()
 
 
-def client_adder(type):
-    if type == 0:
+def add_client():
+    print("\n\nADD CLIENT")
+    print_clients()
+    print("\n\nSelect action:")
+    print("[0] Add Publishing Client (sensors, actuator switches, etc.)")
+    print("[1] Add Subscribing Client (actuators, monitoring applications, etc.)")
+    action = input("\nEnter: ")
+    if action == '0':
+        type == "pub"
+    elif action == '1':
+        type == "sub"
+    else:
+        print("\n\nInvalid input!")
+        add_client()
+
+    if type == "pub":
         print("\n\nADD PUBLISHING CLIENT")
         md = open(p_client, 'r')
         t = "pub"
@@ -209,8 +222,8 @@ def client_adder(type):
             device = "actuation switch"
         else:
             print("\n\nInvalid input!")
-            client_adder()
-    if type == 1:
+            add_client()
+    else:
         print("\n\nADD SUBSCRIBING CLIENT")
         md = open(s_client, 'r')
         t = "sub"
@@ -224,7 +237,7 @@ def client_adder(type):
             device = "monitoring application"
         else:
             print("\n\nInvalid input!")
-            client_adder()
+            add_client()
 
     for line in md:
         print(line.strip('\n'))
@@ -247,7 +260,7 @@ def client_adder(type):
         protocol = "HTTP/MQTT"
     else:
         print("\n\nInvalid input!")
-        client_adder_mongodb()
+        add_client()
 
     collection = main_db.mongodb_clients
 
@@ -266,22 +279,6 @@ def client_adder(type):
     response = "\n\nClient " + str(post_id) + " successfully added."
     print(response)
     main_menu()
-
-
-def add_client():
-    print("\n\nADD CLIENT")
-    print_clients()
-    print("\n\nSelect action:")
-    print("[0] Add Publishing Client (sensors, actuator switches, etc.)")
-    print("[1] Add Subscribing Client (actuators, monitoring applications, etc.)")
-    action = input("\nEnter: ")
-    if action == '0':
-        client_adder(0)
-    elif action == '1':
-        client_adder(1)
-    else:
-        print("\n\nInvalid input!")
-        add_client()
 
 
 def remove_client():
@@ -326,7 +323,7 @@ def main_menu():
     print("[0] Add client")
     print("[1] Remove client")
     print("[2] Edit client")
-    print("[3] Start sensor/actuator client connect")
+    print("[3] Start client connection")
     print("[4] Central point maintainance")
     action = input("\nEnter: ")
     if action == '0':
