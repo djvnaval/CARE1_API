@@ -20,5 +20,10 @@
         "requirejs": "^2.3.6",
         "tailwindcss": "^3.3.2",
         "vite": "^4.3.9"
+    },
+    "dependencies": {
+        "chartjs-adapter-date-fns": "^3.0.0",
+        "chartjs-gauge": "^0.3.0",
+        "date-fns": "^2.30.0"
     }
 }

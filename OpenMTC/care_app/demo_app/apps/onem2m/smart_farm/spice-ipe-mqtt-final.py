@@ -39,13 +39,13 @@ class IPE(XAE):
     # offset = minimum value
     # range = max - min
 
-    # Humidity: 40% to 90%
-    humi_range = 50
+    # Humidity: 40% to 70%
+    humi_range = 30
     humi_offset = 40
     
-    # Temperature: 30degC to 50degC
-    temp_range = 20
-    temp_offset = 30
+    # Temperature: 20degC to 30degC
+    temp_range = 10
+    temp_offset = 20
 
     # pH value: 5.5 to 7.5
     pH_range = 20
@@ -334,7 +334,7 @@ class IPE(XAE):
             data = {
                 'value': value,
                 'type': 'electric conductivity',
-                'unit': 'uS/cm',
+                'unit': 'mS/cm',
                 'time': time
             }
         elif sensor.startswith('MotorSensor'):
