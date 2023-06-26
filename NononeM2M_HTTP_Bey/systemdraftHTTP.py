@@ -149,7 +149,7 @@ def timeStamper():
 
 
 def dht22Humi():
-    humidity = random.randint(30,50)
+    humidity = random.randint(40,60)
 
     dht22SensorHumi = {
             "value":humidity,
@@ -164,7 +164,7 @@ def dht22Humi():
     return humidity
 
 def dht22Temp   ():
-    temperature = random.randint(34,38)
+    temperature = random.randint(20,24)
 
     dht22SensorTemp = {
             "value":temperature,
@@ -179,7 +179,7 @@ def dht22Temp   ():
     return temperature
 
 def pHsensor():
-    pHvalue = round(random.uniform(5.5,6),2)
+    pHvalue = round(random.uniform(5.8,6.3),2)
 
     pHSensor = {
             "value":pHvalue,
