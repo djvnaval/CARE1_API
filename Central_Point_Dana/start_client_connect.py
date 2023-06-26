@@ -176,7 +176,7 @@ def view_collection(con, database_name, dev_id):
 				aa = f"gnome-terminal --tab --title={database_name}/{collection_name} -- bash -c 'python3 {pyfile} ;bash'"
 				dep = subprocess.run(aa, shell=True, capture_output=True)
 	else:
-		print("\n\nIf client device is an actuator, select a publisher (actuation switch) to connect to it first.")
+		print("\n\nIf client device selected is a subscriber, select a publisher to connect to it first.")
 
 	select_client()
 		
