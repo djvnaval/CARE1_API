@@ -67,6 +67,8 @@ def getActuationData():
     else:
         actuation = cursor["value"]
 
+    svUpdate()
+
 
 def flood():
     global actuation
@@ -91,6 +93,7 @@ def flood():
             print("not enough nutrient solution")
             motorSensor = 0
             refillFlag = 1
+    svUpdate()
 
 def drain(leakage):
     global motorSensor
@@ -137,6 +140,8 @@ def refill():
     else:
         overflowSensor = 0
         actuation = 0
+    
+    svUpdate()
     
 def timeStamper():
     timeStamp = datetime.datetime.now()
@@ -301,6 +306,20 @@ def sendData():
     #printing
     print('humidity:',humidity, 'temp:',temp,'pHvalue:', pH, 'waterLevel:', waterLevel, 'EC:', EC, 'waterPump:', waterPump, 'flowMeter:', drainIndicator, 'overflowSensor:', overflowIndicator, 'actuationStatus:', solValve,'timeStamp:', timeStamp)
 
+def svUpdate():
+    global actuation
+
+    cursor = colSolenoidValve.find_one({}, sort=[('time', -1)])
+    valueBefore = cursor["value"]
+
+    if cursor == None:
+        print("No data")
+    else:
+        id = cursor["_id"]
+        colSolenoidValve.update_one({"_id": id}, {"$set": {"value": actuation}})
+        print(id)
+        cursor2 = colSolenoidValve.find_one({}, sort=[('time', -1)])
+    print("before: ", valueBefore, "after: ", cursor2["value"])
 
 if __name__ == "__main__":
     metrics_port = 8001
@@ -308,7 +327,8 @@ if __name__ == "__main__":
     print("Serving sensor metrics on :{}".format(metrics_port))
     log.info("Serving sensor metrics on :{}".format(metrics_port))
     
-    actuation = 1
+    actuation = 0
+    getActuationData()
     gallons = 50
     waterDrain = 0
     flowMeter = 0
@@ -320,6 +340,16 @@ if __name__ == "__main__":
     readInterval = 10
     timeStart = time.time()
     sendData()
+
+    #cursor = colSolenoidValve.find_one({}, sort=[('time', -1)])
+
+    #if cursor == None:
+    #    actuation = 0
+    #else:
+    #    id = cursor["_id"]
+
+    #colSolenoidValve.update_one({"_id": id}, {"$set": {"value": 1}})
+    #print(id)
 
     while True:
         while time.time() < timeStart + readInterval:
@@ -339,6 +369,7 @@ if __name__ == "__main__":
                     print("please actuate")
                     if time.time() >= actuateTime:
                         actuation = 1 
+                        svUpdate()
                 refillFlag = 0
                 print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 refill()

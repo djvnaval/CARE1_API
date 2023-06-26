@@ -229,8 +229,8 @@ if __name__ == "__main__":
             
             if winAct == 1:
                 #actuateTime = 0
-                if PM2_5in >= 100:
-                    if PM2_5out < 100:
+                if PM2_5in >= 80:
+                    if PM2_5out < 80:
                         ffAct = 0
                         print("window opened")
                         pm25indoor(-40)
@@ -243,8 +243,8 @@ if __name__ == "__main__":
                     ffAct = 0
             if ffAct == 1:
                 #actuateTime = 0
-                if PM2_5in >= 100:
-                    if PM2_5out < 100:
+                if PM2_5in >= 80:
+                    if PM2_5out < 80:
                         ffAct = 0
                         winAct = 1
                         #pm25indoor(-10)
@@ -256,7 +256,7 @@ if __name__ == "__main__":
                     winAct = 0
                     ffAct = 0
             else:
-                if PM2_5in >= 100:
+                if PM2_5in >= 80:
                     print("pls actuate")
                     if actuateTime == 0:
                         actuateTime = time.time() + 5
