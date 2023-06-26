@@ -147,8 +147,8 @@ class IPE(XAE):
 
         self.get_sensor_data()
 
-        if self.pm25_in >= 100:
-            if self.pm25_out >= 100:
+        if self.pm25_in >= 80:
+            if self.pm25_out >= 80:
                 if self.window_actuation == self.window_OPEN:
                     print("\nPLEASE ACTUATE: Close the window\n")
                     time.sleep(5)
