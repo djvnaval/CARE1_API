@@ -199,7 +199,7 @@ def ECmeter():
     ECSensor = {
             "value":EC,
             "type":"electric conductivity",
-            "unit":"µmhos/cm",
+            "unit":"mS/cm",
             "time":timeStamper()
             }
     
