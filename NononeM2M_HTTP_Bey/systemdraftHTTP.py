@@ -6,6 +6,9 @@ import time
 import random
 import datetime
 from inputimeout import inputimeout
+from random_object_id import generate
+from bson import ObjectId
+
 
 
 from pymongo.mongo_client import MongoClient
@@ -45,12 +48,12 @@ log = logging.getLogger('dht22_sensor')
 log.addHandler(JournalHandler())
 log.setLevel(logging.INFO)
 
-#Gauges for humidity and temperature
-gHumidity = Gauge('dht22_humidity', 'Humidity percentage measured by the DHT22 Sensor')
-gTemperature = Gauge('dht22_temperature', 'Temperature measured by the DHT22 Sensor')
+#Gauges for Sensor and Actuator IPEs
+gHumidity = Gauge('dht22_humidity', 'Humidity percentage measured by the DHT22 Sensor', ['scale'])
+gTemperature = Gauge('dht22_temperature', 'Temperature measured by the DHT22 Sensor', ['scale'])
 gpHvalue = Gauge('pH_sensor', 'pH level measured by the pH sensor')
-gWaterLevel = Gauge('water_level_sensor', 'water level measured by the water level sensor')
-gEC = Gauge('EC_meter', 'amount of nutrients measured by the electric conductivity sensor')
+gWaterLevel = Gauge('water_level_sensor', 'water level measured by the water level sensor', ['scale'])
+gEC = Gauge('EC_meter', 'amount of nutrients measured by the electric conductivity sensor', ['scale'])
 gSolenoidValve = Gauge('solenoid_valve', 'actuation for external source')
 gmotorSensor = Gauge('motor_sensor', 'sensor for on and off status of water pump')
 gflowMeter = Gauge('flow_meter', 'sensor to note wheter draining is complete')
@@ -66,7 +69,7 @@ def getActuationData():
         actuation = 0
     else:
         actuation = cursor["value"]
-
+    print(cursor["_id"])
     svUpdate()
 
 
@@ -112,7 +115,7 @@ def drain(leakage):
     else:
         flowMeter = 0
     
-    sleep(47/64)
+    #sleep(47/64)
 
 #def leakage(leak):
 #   return leak
@@ -149,7 +152,7 @@ def timeStamper():
 
 
 def dht22Humi():
-    humidity = random.randint(40,60)
+    humidity = random.randint(30,50)
 
     dht22SensorHumi = {
             "value":humidity,
@@ -159,12 +162,12 @@ def dht22Humi():
             }
     
     colHumi.insert_one(dht22SensorHumi)
-    gHumidity.set(humidity)
+    gHumidity.labels('%').set(humidity)
 
     return humidity
 
 def dht22Temp   ():
-    temperature = random.randint(20,24)
+    temperature = random.randint(34,38)
 
     dht22SensorTemp = {
             "value":temperature,
@@ -174,12 +177,12 @@ def dht22Temp   ():
             }
     
     colTemp.insert_one(dht22SensorTemp)
-    gTemperature.set(temperature)
+    gTemperature.labels('°C').set(temperature)
 
     return temperature
 
 def pHsensor():
-    pHvalue = round(random.uniform(5.8,6.3),2)
+    pHvalue = round(random.uniform(5.5,6),2)
 
     pHSensor = {
             "value":pHvalue,
@@ -204,7 +207,7 @@ def ECmeter():
             }
     
     colECmeter.insert_one(ECSensor)
-    gEC.set(EC)
+    gEC.labels('mS/cm').set(EC)
 
     return EC
 
@@ -220,7 +223,7 @@ def waterLevel_sensor():
             }
     
     colWaterlevel.insert_one(waterlevelSensor)
-    gWaterLevel.set(gallons)
+    gWaterLevel.labels('gallons').set(gallons)
 
     return gallons
 
@@ -306,20 +309,39 @@ def sendData():
     #printing
     print('humidity:',humidity, 'temp:',temp,'pHvalue:', pH, 'waterLevel:', waterLevel, 'EC:', EC, 'waterPump:', waterPump, 'flowMeter:', drainIndicator, 'overflowSensor:', overflowIndicator, 'actuationStatus:', solValve,'timeStamp:', timeStamp)
 
+
+def idGenerator():
+    newID = ObjectId(generate())
+    #print(newID)
+    return newID
+
 def svUpdate():
     global actuation
 
     cursor = colSolenoidValve.find_one({}, sort=[('time', -1)])
     valueBefore = cursor["value"]
 
-    if cursor == None:
-        print("No data")
+    if actuation != valueBefore:
+        if cursor == None:
+            print("No data")
+        else:
+            id = cursor["_id"]
+            type = cursor["type"]
+            unit = cursor["unit"]
+            time = cursor["time"]
+            newID = idGenerator()
+
+            colSolenoidValve.delete_one({"_id": id})
+            colSolenoidValve.insert_one({"_id": newID, "value":actuation, "type":type, "unit":unit, "time":time})
+            #print(id)
+            #print(newID)
+            cursor2 = colSolenoidValve.find_one({}, sort=[('time', -1)])
+
+        print("before: ", valueBefore, "after: ", cursor2["value"])
     else:
-        id = cursor["_id"]
-        colSolenoidValve.update_one({"_id": id}, {"$set": {"value": actuation}})
-        print(id)
-        cursor2 = colSolenoidValve.find_one({}, sort=[('time', -1)])
-    print("before: ", valueBefore, "after: ", cursor2["value"])
+        print("no change in actuation state")
+    
+    #sleep(1)
 
 if __name__ == "__main__":
     metrics_port = 8001
@@ -327,6 +349,7 @@ if __name__ == "__main__":
     print("Serving sensor metrics on :{}".format(metrics_port))
     log.info("Serving sensor metrics on :{}".format(metrics_port))
     
+    #sleep(120)
     actuation = 0
     getActuationData()
     gallons = 50

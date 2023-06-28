@@ -6,6 +6,8 @@ import time
 import random
 import datetime
 from inputimeout import inputimeout
+from random_object_id import generate
+from bson import ObjectId
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -27,8 +29,10 @@ except Exception as e:
 #Collections/sensors
 db = client.HTTPAQM
 #dbActuate = client.HTTPAQM_actuate
-colHumi = db.dht22Humi
-colTemp = db.dht22Temp
+colHumiIN = db.dht22Humi_indoor
+colHumiOUT = db.dht22Humi_outdoor
+colTempIN = db.dht22Temp_indoor
+colTempOUT = db.dht22Temp_outdoor
 colPM2_5in = db.PM2_5_indoor
 colPM2_5out = db.PM2_5_outdoor
 colWindow = db.windowSensor
@@ -43,8 +47,10 @@ log.addHandler(JournalHandler())
 log.setLevel(logging.INFO)
 
 #Gauges for the sensor
-gHumidity = Gauge('dht22_humidity', 'Humidity percentage measured by the DHT22 Sensor')
-gTemperature = Gauge('dht22_temperature', 'Temperature measured by the DHT22 Sensor')
+gHumidityIN = Gauge('dht22_humidity_indoor', 'Humidity percentage measured by the DHT22 Sensor indoor')
+gHumidityOUT = Gauge('dht22_humidity_outdoor', 'Humidity percentage measured by the DHT22 Sensor outdoor')
+gTemperatureIN = Gauge('dht22_temperature_indoor', 'Temperature measured by the DHT22 Sensor indoor')
+gTemperatureOUT = Gauge('dht22_temperature_outdoor', 'Temperature measured by the DHT22 Sensor outdoor')
 gPM25in = Gauge('PM2_5_sensor_indoor', 'Air quality basis')
 gPM25out = Gauge('PM2_5_sensor_outdoor', 'Air quality basis')
 gwindowSensor = Gauge('window_sensor', 'signals whether window is open or not')
@@ -73,6 +79,8 @@ def getActuationData():
         ffAct = 0
     else:
         ffAct = cursorB["value"]
+    
+    actUpdate()
 
 def pm25indoor(rate):
     global PM2_5in
@@ -88,35 +96,65 @@ def pm25outdoor(rate):
     PM2_5out = PM2_5out + rate
     sleep(0.3)
 
-def dht22Humi():
-    humidity = random.randint(30,50)
+def dht22HumiIN():
+    humidityIN = random.randint(72,87)
 
     dht22SensorHumi = {
-            "value":humidity,
+            "value":humidityIN,
             "type":"humidity",
             "unit":"%",
             "time":timeStamper()
             }
     
-    colHumi.insert_one(dht22SensorHumi)
-    gHumidity.set(humidity)
+    colHumiIN.insert_one(dht22SensorHumi)
+    gHumidityIN.set(humidityIN)
 
-    return humidity
+    return humidityIN
 
-def dht22Temp():
-    temperature = random.randint(34,38)
+def dht22HumiOUT():
+    humidityOUT = random.randint(72,87)
+
+    dht22SensorHumi = {
+            "value":humidityOUT,
+            "type":"humidity",
+            "unit":"%",
+            "time":timeStamper()
+            }
+    
+    colHumiOUT.insert_one(dht22SensorHumi)
+    gHumidityOUT.set(humidityOUT)
+
+    return humidityOUT
+
+def dht22TempIN():
+    temperatureIN = random.randint(25,31)
 
     dht22SensorTemp = {
-            "value":temperature,
+            "value":temperatureIN,
             "type":"temperature",
             "unit":"°C",
             "time":timeStamper()
             }
     
-    colTemp.insert_one(dht22SensorTemp)
-    gTemperature.set(temperature)
+    colTempIN.insert_one(dht22SensorTemp)
+    gTemperatureIN.set(temperatureIN)
 
-    return temperature
+    return temperatureIN
+
+def dht22TempOUT():
+    temperatureOUT = random.randint(25,31)
+
+    dht22SensorTemp = {
+            "value":temperatureOUT,
+            "type":"temperature",
+            "unit":"°C",
+            "time":timeStamper()
+            }
+    
+    colTempOUT.insert_one(dht22SensorTemp)
+    gTemperatureOUT.set(temperatureOUT)
+
+    return temperatureOUT
 
 def PMin():
     global PM2_5in
@@ -183,8 +221,10 @@ def filterfanActuation():
     return ffAct
 
 def sendData():
-    humidity = dht22Humi()
-    temp = dht22Temp()
+    humidityIN = dht22HumiIN()
+    humidityOUT = dht22HumiOUT()
+    tempIN = dht22TempIN()
+    tempOUT = dht22TempOUT()
     pm2_5in = PMin()
     pm2_5out = PMout()
     winActuation = windowActuation()
@@ -194,10 +234,68 @@ def sendData():
     print("sends data")
 
     #logging info for prometheus
-    log.info("Temp:{0:0.1f}*C, Humidity:{1:0.1f}%, PM2.5_in:{2:0.1f}μg/m3, PM2.5_out:{3:0.1f}μg/m3, windowActuation:{4:0.1f}, FilterfanActuation:{5:0.1f}, Time:{6:0.1f}".format(temp, humidity, pm2_5in, pm2_5out,winActuation, ffActuation, timestamp))
+    log.info("Temp_IN:{0:0.1f}*C, Temp_OUT:{1:0.1f}*C, Humidity_IN:{2:0.1f}%, Humidity_OUT:{3:0.1f}%, PM2.5_in:{4:0.1f}μg/m3, PM2.5_out:{5:0.1f}μg/m3, windowActuation:{6:0.1f}, FilterfanActuation:{7:0.1f}, Time:{8:0.1f}".format(tempIN, tempOUT, humidityIN, humidityOUT, pm2_5in, pm2_5out,winActuation, ffActuation, timestamp))
 
     #print
-    print("Temp: ", temp, "Humidity: ", humidity, "PM2.5_in: ", pm2_5in, "PM2.5_out: ", pm2_5out, "windowActuation: ", winActuation, "FilterfanActuation: ", ffActuation, "Time: ", timestamp)
+    print("Temp_IN: ", tempIN, "Temp_OUT: ", tempOUT, "Humidity_IN: ", humidityIN, "Humidity_OUT: ", humidityOUT, "PM2.5_in: ", pm2_5in, "PM2.5_out: ", pm2_5out, "windowActuation: ", winActuation, "FilterfanActuation: ", ffActuation, "Time: ", timestamp)
+
+def idGenerator():
+    newID = ObjectId(generate())
+    #print(newID)
+    return newID
+
+def actUpdate():
+    global winAct
+    global ffAct
+
+    cursorW = colWindow.find_one({}, sort=[('time', -1)])
+    valueBeforeW = cursorW["value"]
+
+    cursorF = colFilter.find_one({}, sort=[('time', -1)])
+    valueBeforeF = cursorF["value"]
+
+    if winAct != valueBeforeW:
+        if cursorW == None:
+            print("No data")
+        else:
+            id = cursorW["_id"]
+            type = cursorW["type"]
+            unit = cursorW["unit"]
+            time = cursorW["time"]
+            newIDW = idGenerator()
+
+            colWindow.delete_one({"_id": id})
+            colWindow.insert_one({"_id": newIDW, "value":winAct, "type":type, "unit":unit, "time":time})
+            #print(id)
+            #print(newID)
+            cursor2W = colWindow.find_one({}, sort=[('time', -1)])
+
+        print("before: ", valueBeforeW, "after: ", cursor2W["value"])
+    else:
+        print("No state change in window actuation")
+
+
+    if ffAct != valueBeforeF:
+        if cursorF == None:
+            print("No data")
+        else:
+            id = cursorF["_id"]
+            type = cursorF["type"]
+            unit = cursorF["unit"]
+            time = cursorF["time"]
+            newIDF = idGenerator()
+
+            colWindow.delete_one({"_id": id})
+            colWindow.insert_one({"_id": newIDF, "value":ffAct, "type":type, "unit":unit, "time":time})
+            #print(id)
+            #print(newID)
+            cursor2F = colWindow.find_one({}, sort=[('time', -1)])
+
+        print("before: ", valueBeforeF, "after: ", cursor2F["value"])
+    else:
+        print("No state change in filterfan actuation")
+
+    #sleep(1)
 
 
 if __name__ == "__main__":
@@ -206,6 +304,7 @@ if __name__ == "__main__":
     print("Serving sensor metrics on :{}".format(metrics_port))
     log.info("Serving sensor metrics on :{}".format(metrics_port))
 
+    #sleep(120)
     winAct = 0
     ffAct = 0
     PM2_5in = 53
@@ -222,7 +321,7 @@ if __name__ == "__main__":
 
     while True:
         while time.time() < timeStart + readInterval:
-            #getActuationData()
+            getActuationData()
             pm25indoor(rateIn)
             pm25outdoor(rateOut)
             print("pmIN: ", PM2_5in, "pmOUT: ", PM2_5out, "winAct: ", winAct, "ffAct: ", ffAct)
@@ -234,27 +333,34 @@ if __name__ == "__main__":
                         ffAct = 0
                         print("window opened")
                         pm25indoor(-40)
+                        actUpdate()
                     else:
                         winAct = 0
                         ffAct = 1
+                        actUpdate()
+
                         #pm25indoor(-10)
                 else:
                     winAct = 0
                     ffAct = 0
+                    actUpdate()
             if ffAct == 1:
                 #actuateTime = 0
                 if PM2_5in >= 80:
                     if PM2_5out < 80:
                         ffAct = 0
                         winAct = 1
+                        actUpdate()
                         #pm25indoor(-10)
                     else:
                         winAct = 0
                         print("ff opened")
                         pm25indoor(-50)
+                        actUpdate()
                 else:
                     winAct = 0
                     ffAct = 0
+                    actUpdate()
             else:
                 if PM2_5in >= 80:
                     print("pls actuate")
@@ -267,6 +373,7 @@ if __name__ == "__main__":
                             winAct = 1
                             ffAct = 1
                             actuateTime = 0
+                            actUpdate()
 
             print("pmIN: ", PM2_5in, "pmOUT: ", PM2_5out, "winAct: ", winAct, "ffAct: ", ffAct)
         sendData()
