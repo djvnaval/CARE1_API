@@ -24,7 +24,7 @@ dbs = []
 
 def generate_py(col, con, db, path): # Sensors
 	f = open("py_template.py", 'r')
-	w = open(f"data/{db}_{col}.py", 'w')
+	w = open(f"data/py/{db}_{col}.py", 'w')
 	w.write(f"col = '{col}'\n")
 	w.write(f"con = '{con}'\n")
 	w.write(f"db = '{db}'\n")
@@ -35,12 +35,12 @@ def generate_py(col, con, db, path): # Sensors
 
 	w.close()
 	f.close()
-	return f"data/{db}_{col}.py"
+	return f"data/py/{db}_{col}.py"
 
 
 def generate_py_actuate(rcon, scol, scon, db, path): # Actuation switches
 	f = open("py_template_0.py", 'r')
-	w = open(f"data/{db}_{scol}.py", 'w')
+	w = open(f"data/py/{db}_{scol}.py", 'w')
 	w.write(f"col = '{scol}'\n")
 	w.write(f"rcon = '{rcon}'\n")
 	w.write(f"con = '{scon}'\n")
@@ -52,7 +52,7 @@ def generate_py_actuate(rcon, scol, scon, db, path): # Actuation switches
 
 	w.close()
 	f.close()
-	return f"data/{db}_{scol}.py"
+	return f"data/py/{db}_{scol}.py"
 
 
 def view_collection(con, database_name, dev_id):

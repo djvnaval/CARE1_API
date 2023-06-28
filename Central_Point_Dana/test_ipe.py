@@ -33,6 +33,7 @@ def actuate(db, col, t, limit):
 	command = f"main_client.{db}.{col}_actuate.insert_one(post)"
 	for i in range(limit):
 		time.sleep(t)
+		r = open(recorder, 'a')
 		val = random.randint(0,1)
 		post = {
 			"value" : val,
@@ -41,8 +42,17 @@ def actuate(db, col, t, limit):
 			"time" : datetime.datetime.now()
 		}
 		eval(command)
+		d = datetime.datetime.now()
+		write = d.strftime('%Y-%m-%d_%H_%M %S.%f') + '\n'
+		r.write(write)
 		print(post)
+		r.close()
 
-actuate("HTTPSmartFarm", "solenoidValve", 1, 5)
-#actuate("oneM2M_HTTP_SmartFarm", "solenoidValve", 5, 100)
+recorder = recorder = f"testipe_{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.txt"
+
+rec = open(recorder, 'w')
+rec.close()
+
+#actuate("HTTPSmartFarm", "solenoidValve", 2, 1)
+actuate("HTTPSmartFarm", "solenoidValve", 5, 100)
 #actuate("oneM2M_MQTT_SmartFarm", "solenoidValve", 5, 100)

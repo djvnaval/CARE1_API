@@ -27,7 +27,7 @@ def maintain_cp():
     print("[0] Clean central point local data (generated bson and py files)")
     sel = input("\nEnter: ")
     if sel == '0':
-        commands = ["rm -r data", "mkdir data", "mkdir data/dump", "mkdir data/py"]
+        commands = ["rm -r data", "mkdir data", "mkdir data/dump", "mkdir data/py", "mkdir data/log"]
         for c in commands:
             dep = subprocess.run(c, shell=True, capture_output=True)
             print(dep.stdout.decode())
@@ -201,14 +201,6 @@ def add_client():
     print("[1] Add Subscribing Client (actuators, monitoring applications, etc.)")
     action = input("\nEnter: ")
     if action == '0':
-        type == "pub"
-    elif action == '1':
-        type == "sub"
-    else:
-        print("\n\nInvalid input!")
-        add_client()
-
-    if type == "pub":
         print("\n\nADD PUBLISHING CLIENT")
         md = open(p_client, 'r')
         t = "pub"
@@ -223,7 +215,7 @@ def add_client():
         else:
             print("\n\nInvalid input!")
             add_client()
-    else:
+    elif action == '1':
         print("\n\nADD SUBSCRIBING CLIENT")
         md = open(s_client, 'r')
         t = "sub"
@@ -238,6 +230,9 @@ def add_client():
         else:
             print("\n\nInvalid input!")
             add_client()
+    else:
+        print("\n\nInvalid input!")
+        add_client()
 
     for line in md:
         print(line.strip('\n'))

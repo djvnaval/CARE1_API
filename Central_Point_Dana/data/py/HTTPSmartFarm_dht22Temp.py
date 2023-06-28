@@ -1,7 +1,7 @@
-col = 'dht22Humi'
+col = 'dht22Temp'
 con = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
-db = 'HTTPAQM'
-path = 'data/dump/HTTPAQM/dht22Humi/'
+db = 'HTTPSmartFarm'
+path = 'data/dump/HTTPSmartFarm/dht22Temp/'
 
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
@@ -14,9 +14,8 @@ import time
 import os
 
 
-def time_int(d): # d=datetime.datetime.now()
-    time.sleep(1)
-    return int(d.strftime("%Y%m%d%H%M%S"))
+# This part is for debugging purposes only
+recorder = f"data/log/{db}_{col}_{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.txt"
 
 
 def dump(collections, conn, db_name, path):
@@ -42,6 +41,9 @@ def restore(path, conn, db_name):
                     if db[coll.split('.')[0]].count_documents(doc) == 0:
                         #doc.update({"_id": time_int(datetime.datetime.now())})
                         db[coll.split('.')[0]].insert_one(doc)
+                        d = datetime.datetime.now()
+                        write = d.strftime('%Y-%m-%d_%H_%M %S.%f') + '\n'
+                        r.write(write)
                         print(doc)
 
 print("START CLIENT CONNECTION")
@@ -53,7 +55,11 @@ main_client = MongoClient(main_connection_string)
 main_db = main_client.CARE1
 
 print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
+rec = open(recorder, 'w')
+rec.close()
 while 1:
+    r = open(recorder, 'a')
     dump([col], con, db, path)
     restore(path, main_connection_string, db)
     print("Connection is ongoing...")
+    r.close()
