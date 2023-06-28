@@ -1,58 +1,31 @@
-def splitter(filename):
-	f1 = open(f"datetime_{filename}", 'w')
-	f2 = open(f"seconds_{filename}", 'w')
-	f1.close()
-	f2.close()
-
-
-	fr = open(filename, 'r')
-	f1w = open(f"datetime_{filename}", 'a')
-	f2w = open(f"seconds_{filename}", 'a')
-
+def splitter(path, filename):
+	arr = []
+	fr = open(f"{path}{filename}", 'r')
 
 	for line in fr:
 		x = line.split()
-		write1 = x[0] + '\n'
-		write2 = x[1] + '\n'
-		f1w.write(write1)
-		f2w.write(write2)
+		arr.append(x[1])
 
-
-	f1w.close()
-	f2w.close()
 	fr.close()
+	return arr
 
-def remove_negative(larger, smaller):
-	out = open(f"pos_{smaller}", 'w')
+
+def remove_negative(path, larger, smaller):
+	out = open(f"{path}pos_{f1}", 'w')
 	out.close()
 
-	large = open(larger, 'r')
-	small = open(smaller, 'r')
-	out = open(f"pos_{smaller}", 'a')
-	largee = []
-	smalll = []
+	out = open(f"{path}pos_{f1}", 'a')
 
-	for line in large:
-		largee.append(float(line))
-
-	for line in small:
-		smalll.append(float(line))
-
-	for i in range(len(largee)):
-		if largee[i] - smalll[i] >= 0:
-			write = str(largee[i] - smalll[i]) + '\n'
+	for i in range(len(larger)):
+		if float(larger[i]) - float(smaller[i]) >= 0:
+			write = str(float(larger[i]) - float(smaller[i])) + '\n'
 			out.write(write)
 
-	large.close()
-	small.close()
 	out.close()
 
-
-
 #remove_negative("post process.txt")
-f1 = "testipe_2023-06-27 12:22:14.txt" # smaller
-f2 = "HTTPSmartFarm_solenoidValve_actuate_2023-06-27 12:21:56.txt" # larger
+f1 = "testipe_2023-06-29 03:37:32.txt" # smaller
+f2 = "HTTPSmartFarm_solenoidValve_actuate_2023-06-29 03:36:45.txt" # larger
+path = "data/log/"
 
-splitter(f1)
-splitter(f2)
-remove_negative(f"seconds_{f2}", f"seconds_{f1}")
+remove_negative(path, splitter(path, f2), splitter(path, f1))

@@ -1,7 +1,9 @@
-col = 'windowSensor'
-con = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
-db = 'HTTPAQM'
-path = 'data/dump/HTTPAQM/windowSensor/'
+col = 'solenoidValve_actuate'
+rcon = 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority'
+con = 'mongodb+srv://jan11backupstorage:47PIN8N6QdVK2afx@actuatoripe.woncb4j.mongodb.net/'
+db = 'oneM2M_HTTP_SmartFarm'
+path = 'data/dump/oneM2M_HTTP_SmartFarm/solenoidValve_actuate/'
+
 
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
@@ -47,13 +49,6 @@ def restore(path, conn, db_name):
                         print(doc)
 
 print("START CLIENT CONNECTION")
-# MongoDB configuration
-load_dotenv(find_dotenv())
-main_password = os.environ.get("MONGODB_PW")
-main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-main_client = MongoClient(main_connection_string)
-main_db = main_client.CARE1
-
 print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
 rec = open(recorder, 'w')
 rec.close()
@@ -62,7 +57,7 @@ while 1:
 
     '''
     dump([col], con, db, path)
-    restore(path, main_connection_string, db)
+    restore(path, rcon, db)
     '''
 
     # Source
@@ -72,7 +67,7 @@ while 1:
     results = coll.find().sort("time", -1).limit(10)
 
     # Destination
-    client1 = MongoClient(main_connection_string)
+    client1 = MongoClient(rcon)
     command = f"client1.{db}"
     db1 = eval(command)
 

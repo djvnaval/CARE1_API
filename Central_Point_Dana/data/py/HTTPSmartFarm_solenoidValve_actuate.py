@@ -1,7 +1,9 @@
 col = 'solenoidValve_actuate'
-con = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
+rcon = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
+con = 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority'
 db = 'HTTPSmartFarm'
 path = 'data/dump/HTTPSmartFarm/solenoidValve_actuate/'
+
 
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
@@ -47,19 +49,35 @@ def restore(path, conn, db_name):
                         print(doc)
 
 print("START CLIENT CONNECTION")
-# MongoDB configuration
-load_dotenv(find_dotenv())
-main_password = os.environ.get("MONGODB_PW")
-main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
-main_client = MongoClient(main_connection_string)
-main_db = main_client.CARE1
-
 print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
 rec = open(recorder, 'w')
 rec.close()
 while 1:
-    r = open(recorder, 'a')
+    rec = open(recorder, 'a')
+
+    '''
     dump([col], con, db, path)
-    restore(path, main_connection_string, db)
+    restore(path, rcon, db)
+    '''
+
+    # Source
+    client = MongoClient(con)
+    command = f"client.{db}.{col}"
+    coll = eval(command)
+    results = coll.find().sort("time", -1).limit(10)
+
+    # Destination
+    client1 = MongoClient(rcon)
+    command = f"client1.{db}"
+    db1 = eval(command)
+
+    for r in results:
+        if db1[col].count_documents(r) == 0:
+            db1[col].insert_one(r)
+            d = datetime.datetime.now()
+            write = d.strftime('%Y-%m-%d_%H_%M %S.%f') + '\n'
+            rec.write(write)
+            print(r)
+
     print("Connection is ongoing...")
-    r.close()
+    rec.close()

@@ -48,11 +48,11 @@ def actuate(db, col, t, limit):
 		print(post)
 		r.close()
 
-recorder = recorder = f"testipe_{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.txt"
+recorder = recorder = f"data/log/testipe_{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.txt"
 
 rec = open(recorder, 'w')
 rec.close()
 
 #actuate("HTTPSmartFarm", "solenoidValve", 2, 1)
-actuate("HTTPSmartFarm", "solenoidValve", 5, 100)
+actuate("HTTPSmartFarm", "solenoidValve", 2, 300)
 #actuate("oneM2M_MQTT_SmartFarm", "solenoidValve", 5, 100)
