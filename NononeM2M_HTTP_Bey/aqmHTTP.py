@@ -6,6 +6,8 @@ import time
 import random
 import datetime
 from inputimeout import inputimeout
+from random_object_id import generate
+from bson import ObjectId
 
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
@@ -73,6 +75,8 @@ def getActuationData():
         ffAct = 0
     else:
         ffAct = cursorB["value"]
+    
+    actUpdate()
 
 def pm25indoor(rate):
     global PM2_5in
@@ -199,6 +203,64 @@ def sendData():
     #print
     print("Temp: ", temp, "Humidity: ", humidity, "PM2.5_in: ", pm2_5in, "PM2.5_out: ", pm2_5out, "windowActuation: ", winActuation, "FilterfanActuation: ", ffActuation, "Time: ", timestamp)
 
+def idGenerator():
+    newID = ObjectId(generate())
+    #print(newID)
+    return newID
+
+def actUpdate():
+    global winAct
+    global ffAct
+
+    cursorW = colWindow.find_one({}, sort=[('time', -1)])
+    valueBeforeW = cursorW["value"]
+
+    cursorF = colFilter.find_one({}, sort=[('time', -1)])
+    valueBeforeF = cursorF["value"]
+
+    if winAct != valueBeforeW:
+        if cursorW == None:
+            print("No data")
+        else:
+            id = cursorW["_id"]
+            type = cursorW["type"]
+            unit = cursorW["unit"]
+            time = cursorW["time"]
+            newIDW = idGenerator()
+
+            colWindow.delete_one({"_id": id})
+            colWindow.insert_one({"_id": newIDW, "value":winAct, "type":type, "unit":unit, "time":time})
+            #print(id)
+            #print(newID)
+            cursor2W = colWindow.find_one({}, sort=[('time', -1)])
+
+        print("before: ", valueBeforeW, "after: ", cursor2W["value"])
+    else:
+        print("No state change in window actuation")
+
+
+    if ffAct != valueBeforeF:
+        if cursorF == None:
+            print("No data")
+        else:
+            id = cursorF["_id"]
+            type = cursorF["type"]
+            unit = cursorF["unit"]
+            time = cursorF["time"]
+            newIDF = idGenerator()
+
+            colWindow.delete_one({"_id": id})
+            colWindow.insert_one({"_id": newIDF, "value":ffAct, "type":type, "unit":unit, "time":time})
+            #print(id)
+            #print(newID)
+            cursor2F = colWindow.find_one({}, sort=[('time', -1)])
+
+        print("before: ", valueBeforeF, "after: ", cursor2F["value"])
+    else:
+        print("No state change in filterfan actuation")
+
+    #sleep(1)
+
 
 if __name__ == "__main__":
     metrics_port = 8000
@@ -206,6 +268,7 @@ if __name__ == "__main__":
     print("Serving sensor metrics on :{}".format(metrics_port))
     log.info("Serving sensor metrics on :{}".format(metrics_port))
 
+    #sleep(120)
     winAct = 0
     ffAct = 0
     PM2_5in = 53
@@ -222,7 +285,7 @@ if __name__ == "__main__":
 
     while True:
         while time.time() < timeStart + readInterval:
-            #getActuationData()
+            getActuationData()
             pm25indoor(rateIn)
             pm25outdoor(rateOut)
             print("pmIN: ", PM2_5in, "pmOUT: ", PM2_5out, "winAct: ", winAct, "ffAct: ", ffAct)
@@ -234,27 +297,34 @@ if __name__ == "__main__":
                         ffAct = 0
                         print("window opened")
                         pm25indoor(-40)
+                        actUpdate()
                     else:
                         winAct = 0
                         ffAct = 1
+                        actUpdate()
+
                         #pm25indoor(-10)
                 else:
                     winAct = 0
                     ffAct = 0
+                    actUpdate()
             if ffAct == 1:
                 #actuateTime = 0
                 if PM2_5in >= 80:
                     if PM2_5out < 80:
                         ffAct = 0
                         winAct = 1
+                        actUpdate()
                         #pm25indoor(-10)
                     else:
                         winAct = 0
                         print("ff opened")
                         pm25indoor(-50)
+                        actUpdate()
                 else:
                     winAct = 0
                     ffAct = 0
+                    actUpdate()
             else:
                 if PM2_5in >= 80:
                     print("pls actuate")
@@ -267,6 +337,7 @@ if __name__ == "__main__":
                             winAct = 1
                             ffAct = 1
                             actuateTime = 0
+                            actUpdate()
 
             print("pmIN: ", PM2_5in, "pmOUT: ", PM2_5out, "winAct: ", winAct, "ffAct: ", ffAct)
         sendData()
