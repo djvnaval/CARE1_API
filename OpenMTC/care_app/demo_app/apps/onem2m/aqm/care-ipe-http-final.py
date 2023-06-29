@@ -4,12 +4,15 @@
 # using MQTT protocol
 
 
-from random import random
+from random import random, randint
 from datetime import datetime
 
 from openmtc_app.onem2m import XAE
 from openmtc_onem2m.model import Container
 from pymongo import MongoClient
+from random_object_id import generate
+from bson import ObjectId
+from inputimeout import inputimeout
 
 import time
 
@@ -19,8 +22,10 @@ class IPE(XAE):
 
     # sensors to create
     sensors = [
-        'Humi',
-        'Temp',
+        'Humi_in',
+        'Humi_out',
+        'Temp_in',
+        'Temp_out',
         'PM2_5_in',
         'PM2_5_out'
     ]
@@ -34,13 +39,13 @@ class IPE(XAE):
     # offset = minimum value
     # range = max - min
 
-    # Humidity: 30% to 60%
+    # Humidity: 60% to 90%
     humi_range = 30
-    humi_offset = 30
+    humi_offset = 60
 
-    # Temperature: 30degC to 40degC
-    temp_range = 10
-    temp_offset = 30
+    # Temperature: 25degC to 40degC
+    temp_range = 15
+    temp_offset = 25
 
     # PM 2.5: starting value
     pm25_in =53
@@ -111,13 +116,34 @@ class IPE(XAE):
         self.windowCol = self.db["Window"]
         self.fanCol = self.db["FilterFan"]
 
+        self.offset_start()
+
         # trigger periodically new data generation
-        # every seconds
-        self.run_forever(5, self.aqm_system)
+        # in Hz
+        self.run_forever(0.2, self.aqm_system)
 
         # log message
         self.logger.debug('registered')
     
+    def offset_start(self):
+        for name in self.sensors:
+            if name.startswith('Humi'):
+                value = self.humi_random_data()
+            elif name.startswith('Temp'):
+                value = self.temp_random_data()
+            elif name.startswith('PM2_5_in'):
+                value = self.pm2_5_in_data()
+            elif name.startswith('PM2_5_out'):
+                value = self.pm2_5_out_data()
+            else:
+                continue
+            
+            current_date_time = datetime.now()
+
+            self.handle_sensor_data(name, value, current_date_time)
+
+            time.sleep(randint(5,20))
+
     def handle_command(self, container, content):
         print('handle_valve...')
         print('container: %s' % container)
@@ -133,6 +159,8 @@ class IPE(XAE):
         else:
             self.window_actuation = window_cursor["value"]
 
+        self.window_update()
+
     def get_fan_data(self):
 
         fan_cursor = self.fan_col.find_one({}, sort=[('time', -1)])
@@ -142,6 +170,20 @@ class IPE(XAE):
         else:
             self.fan_actuation = fan_cursor["value"]
 
+        self.fan_update()
+
+    def change_rate(self, timeover):
+        try:
+            self.rate_in = int(inputimeout(prompt="\nChange PM2.5 rate indoor: ", timeout=timeover))
+        except:
+            print("\nIndoor PM2.5 rate not changed.\n")
+            self.rate_in = 5
+
+        try:
+            self.rate_out = int(inputimeout(prompt="\nChange PM2.5 rate outdoor: ", timeout=timeover))
+        except:
+            print("\nOutdoor PM2.5 rate not changed.\n")
+
     def aqm_system(self):
         self.get_sensor_data()
         self.get_window_data()
@@ -150,7 +192,8 @@ class IPE(XAE):
         self.push_window_data(self.window_actuation)
         self.push_fan_data(self.fan_actuation)
 
-        self.rate_in = 5
+        #self.rate_in = 5
+        self.change_rate(4)
 
         self.get_sensor_data()
 
@@ -166,6 +209,7 @@ class IPE(XAE):
                         print("\Forced actuation: Window closed!\n")
                         
                     self.push_window_data(self.window_actuation)
+                    self.window_update()
 
                 if self.fan_actuation == self.fan_OFF:
                     print("\nPLEASE ACTUATE: Turn on the filter fan\n")
@@ -177,6 +221,7 @@ class IPE(XAE):
                         print("\nForced actuation: Filter fan turned on!\n")
                     
                     self.push_fan_data(self.fan_actuation)
+                    self.fan_update()
 
                 self.rate_in = -50
                 self.pm2_5_in_data()
@@ -192,6 +237,7 @@ class IPE(XAE):
                         print("\nForced actuation: Window opened!\n")
                     
                     self.push_window_data(self.window_actuation)
+                    self.window_update()
                 
                 if self.fan_actuation == self.fan_ON:
                     print("\nPLEASE ACTUATE: Turn off the filter fan\n")
@@ -203,6 +249,7 @@ class IPE(XAE):
                         print("\nForced actuation: Filter fan turned off!\n")
                     
                     self.push_fan_data(self.fan_actuation)
+                    self.fan_update()
 
                 self.rate_in = -40
                 self.pm2_5_in_data()
@@ -218,6 +265,7 @@ class IPE(XAE):
                     print("\nForced actuation: Window closed!\n")
                 
                 self.push_window_data(self.window_actuation)
+                self.window_update()
 
             if self.fan_actuation == self.fan_ON:
                 print("\nPLEASE ACTUATE: Turn off the filter fan\n")
@@ -229,11 +277,12 @@ class IPE(XAE):
                     print("\nForced actuation: Filter fan turned off!\n")
                 
                 self.push_fan_data(self.fan_actuation)
+                self.fan_update()
 
         # just making sure that PM2.5 outdoor value is not always increasing
         if self.pm25_out >= 200:
             self.rate_out = -10
-        elif self.pm25_out <= 70:
+        elif self.pm25_out <= 40:
             self.rate_out = 10
 
     def get_sensor_data(self):
@@ -253,6 +302,8 @@ class IPE(XAE):
             current_date_time = datetime.now()
 
             self.handle_sensor_data(name, value, current_date_time)
+
+            time.sleep(3)
 
     def humi_random_data(self):
         return int(random() * self.humi_range + self.humi_offset)
@@ -320,15 +371,25 @@ class IPE(XAE):
 
         # create measurements container
         labels = []
-        if sensor.startswith('Temp'):
-            labels.append('temperature')
+        if sensor.startswith('Humi_in'):
+            labels.append('humidity indoor')
 
-            self.tempCol = self.db[sensor]
+            self.humiInCol = self.db[sensor]
 
-        elif sensor.startswith('Humi'):
-            labels.append('humidity')
+        elif sensor.startswith('Humi_out'):
+            labels.append('humidity outdoor')
 
-            self.humiCol = self.db[sensor]
+            self.humiOutCol = self.db[sensor]
+        
+        elif sensor.startswith('Temp_in'):
+            labels.append('temperature indoor')
+
+            self.tempInCol = self.db[sensor]
+        
+        elif sensor.startswith('Temp_out'):
+            labels.append('temperature outdoor')
+
+            self.tempOutCol = self.db[sensor]
 
         elif sensor.startswith('PM2_5_in'):
             labels.append('PM2.5 indoor')
@@ -355,25 +416,45 @@ class IPE(XAE):
     def push_sensor_data(self, sensor, value, time):
 
         # build data set with value and metadata
-        if sensor.startswith('Temp'):
+        if sensor.startswith('Humi_in'):
             data = {
                 'value': value,
-                'type': 'temperature',
-                'unit': 'degreeC',
-                'time': time
-            }
-
-            self.tempCol.insert_one(data.copy())
-
-        elif sensor.startswith('Humi'):
-            data = {
-                'value': value,
-                'type': 'humidity',
+                'type': 'humidity indoor',
                 'unit': 'percentage',
                 'time': time
             }
 
-            self.humiCol.insert_one(data.copy())
+            self.humiInCol.insert_one(data.copy())
+
+        elif sensor.startswith('Humi_out'):
+            data = {
+                'value': value,
+                'type': 'humidity outdoor',
+                'unit': 'percentage',
+                'time': time
+            }
+
+            self.humiOutCol.insert_one(data.copy())
+
+        elif sensor.startswith('Temp_in'):
+            data = {
+                'value': value,
+                'type': 'temperature indoor',
+                'unit': 'degreeC',
+                'time': time
+            }
+
+            self.tempInCol.insert_one(data.copy())
+
+        elif sensor.startswith('Temp_out'):
+            data = {
+                'value': value,
+                'type': 'temperature outdoor',
+                'unit': 'degreeC',
+                'time': time
+            }
+
+            self.tempOutCol.insert_one(data.copy())
             
         elif sensor.startswith('PM2_5_in'):
             data = {
@@ -410,6 +491,54 @@ class IPE(XAE):
 
         # finally, push the data set to measurements_container of the sensor
         self.push_content(self._recognized_measurement_containers[sensor], data)
+
+    def window_update(self):
+
+        cursor_window = self.windowCol.find_one({}, sort=[('time', -1)])
+        self.window_before = cursor_window["value"] if cursor_window != None else None
+
+        if self.window_actuation != self.window_before:
+            if cursor_window == None:
+                print("\nWindow update: No data\n")
+            else:
+                id = cursor_window["_id"]
+                type = cursor_window["type"]
+                unit = cursor_window["unit"]
+                time = cursor_window["time"]
+                newID_window = ObjectId(generate())
+
+                self.windowCol.delete_one({"_id": id})
+                self.windowCol.insert_one({"_id": newID_window, "value": self.window_actuation, "type":type, "unit":unit, "time":time})
+
+                cursor_window2 = self.windowCol.find_one({}, sort=[('time', -1)])
+
+                print("\nWindow update: before: ", self.window_before, "after: ", cursor_window2["value"])
+        else:
+            print("\nWindow update: No state change in window actuation\n")
+
+
+    def fan_update(self):
+
+        cursor_fan = self.fanCol.find_one({}, sort=[('time', -1)])
+        self.fan_before = cursor_fan["value"] if cursor_fan != None else None
+
+        if self.fan_actuation != self.fan_before:
+            if cursor_fan == None:
+                print("\nFilter fan update: No data\n")
+            else:
+                id = cursor_fan["_id"]
+                type = cursor_fan["type"]
+                unit = cursor_fan["unit"]
+                time = cursor_fan["time"]
+                newID_fan = ObjectId(generate())
+
+                self.fanCol.delete_one({"_id": id})
+                self.fanCol.insert_one({"_id": newID_fan, "value": self.fan_actuation, "type":type, "unit":unit, "time":time})
+                cursor_fan2 = self.fanCol.find_one({}, sort=[('time', -1)])
+
+                print("\nFilter fan update: before: ", self.fan_before, "after: ", cursor_fan2["value"])
+        else:
+            print("\nFilter fan update: No state change in filterfan actuation\n")
 
 
 if __name__ == "__main__":
