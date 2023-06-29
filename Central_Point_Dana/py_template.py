@@ -27,6 +27,7 @@ rec = open(recorder, 'w')
 rec.close()
 while 1:
     rec = open(recorder, 'a')
+    di = datetime.datetime.now()
 
     # Source
     client = MongoClient(con)
@@ -43,8 +44,9 @@ while 1:
         if db1[col].count_documents(r) == 0:
             db1[col].insert_one(r)
             d = datetime.datetime.now()
-            write = d.strftime('%Y-%m-%d_%H_%M %S.%f') + '\n'
-            rec.write(write)
+            if float(d.strftime('%S.%f')) - float(di.strftime('%S.%f')) >= 0:
+                write = str(float(d.strftime('%S.%f')) - float(di.strftime('%S.%f'))) + '\n'
+                rec.write(write)
             print(r)
 
     print("Connection is ongoing...")
