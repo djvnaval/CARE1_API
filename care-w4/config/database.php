@@ -91,12 +91,6 @@ return [
             'prefix_indexes' => true,
         ],
 
-        'HTTPSmartFarm_actuate' => [
-            'driver' => 'mongodb',
-            'dsn' => 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority',
-            'database' => 'HTTPSmartFarm_actuate',
-        ],
-
         'oneM2M_HTTP_AQM' => [
             'driver' => 'mongodb',
             'dsn' => 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority',
@@ -133,11 +127,6 @@ return [
             'database' => 'Nodes',
         ],
 
-        'HTTPAQM_actuate' => [
-            'driver' => 'mongodb',
-            'dsn' => 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority',
-            'database' => 'HTTPAQM_actuate',
-        ],
         
     ],
 

@@ -12,9 +12,14 @@ module.exports = {
     theme: {
         extend: {
             fontFamily: {
-                sans: ['Figtree', ...defaultTheme.fontFamily.sans],
+                sans: ['Montserrat', ...defaultTheme.fontFamily.sans],
             },
         },
+        colors: {
+            'cream' : '#fff37a',
+            'dark-cream' : '#ffee3f',
+            'grey' : '#24252b'
+        }
     },
 
     plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography'),   require('flowbite/plugin')],

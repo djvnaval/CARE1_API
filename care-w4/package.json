@@ -24,6 +24,7 @@
     "dependencies": {
         "chartjs-adapter-date-fns": "^3.0.0",
         "chartjs-gauge": "^0.3.0",
-        "date-fns": "^2.30.0"
+        "date-fns": "^2.30.0",
+        "jquery": "^3.7.0"
     }
 }
