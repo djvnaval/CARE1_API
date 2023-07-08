@@ -18,6 +18,10 @@ class VerifyCsrfToken extends Middleware
         '/solenoid/current',
         '/filterFanSensor/current',
         '/windowSensor/current',
+        '/FilterFan/actuation/change',
+        '/FilterFan/current',
+        '/Window/current',
+        '/Window/actuation/change',
 
     ];
 }

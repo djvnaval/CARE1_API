@@ -15,6 +15,7 @@ class SolenoidValve_actuateController extends Controller
         $latest = SolenoidValve_actuate::orderBy('_id', 'desc')->first();
         
         $value = $latest->value ? 0 : 1;
+        //$value = !$latest->value;
 
         $data = SolenoidValve_actuate::create([
             'value' => $value, 
