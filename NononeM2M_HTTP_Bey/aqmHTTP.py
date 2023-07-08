@@ -1,7 +1,9 @@
+#for prometheus and logging
 from prometheus_client import Gauge, start_http_server
 from systemd.journal import JournalHandler
-
 import logging 
+
+#for system reference
 import time
 import random
 import datetime
@@ -9,10 +11,11 @@ from inputimeout import inputimeout
 from random_object_id import generate
 from bson import ObjectId
 
+#for mongoDB
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-
+#mongoDB connection string to nonOneM2M project
 uri = "mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority"
 
 # Create a new client and connect to the server
@@ -221,15 +224,28 @@ def filterfanActuation():
     return ffAct
 
 def sendData():
-    humidityIN = dht22HumiIN()
-    humidityOUT = dht22HumiOUT()
-    tempIN = dht22TempIN()
-    tempOUT = dht22TempOUT()
     pm2_5in = PMin()
+    sleep(1)
+    print("PM2.5_IN:", pm2_5in)
+    humidityIN = dht22HumiIN()
+    sleep(1)
     pm2_5out = PMout()
+    sleep(1)
+    print("PM2.5_OUT:", pm2_5out)
+    humidityOUT = dht22HumiOUT()
+    sleep(1)
     winActuation = windowActuation()
+    sleep(1)
+    print("winAct:", winActuation)
+    tempIN = dht22TempIN()
+    sleep(1)
     ffActuation = filterfanActuation()
+    sleep(1)
+    print("ffAct:", ffActuation)
+    tempOUT = dht22TempOUT()
+    sleep(1)
     timestamp = timeStamper()
+    sleep(1)
 
     print("sends data")
 
@@ -249,51 +265,54 @@ def actUpdate():
     global ffAct
 
     cursorW = colWindow.find_one({}, sort=[('time', -1)])
-    valueBeforeW = cursorW["value"]
+    
 
     cursorF = colFilter.find_one({}, sort=[('time', -1)])
-    valueBeforeF = cursorF["value"]
+    
 
-    if winAct != valueBeforeW:
-        if cursorW == None:
-            print("No data")
+    if cursorW != None:
+        valueBeforeW = cursorW["value"]
+        if winAct != valueBeforeW:
+            if cursorW == None:
+                print("No data")
+            else:
+                id = cursorW["_id"]
+                type = cursorW["type"]
+                unit = cursorW["unit"]
+                time = cursorW["time"]
+                newIDW = idGenerator()
+
+                colWindow.delete_one({"_id": id})
+                colWindow.insert_one({"_id": newIDW, "value":winAct, "type":type, "unit":unit, "time":time})
+                #print(id)
+                #print(newID)
+                cursor2W = colWindow.find_one({}, sort=[('time', -1)])
+
+            print("before: ", valueBeforeW, "after: ", cursor2W["value"])
         else:
-            id = cursorW["_id"]
-            type = cursorW["type"]
-            unit = cursorW["unit"]
-            time = cursorW["time"]
-            newIDW = idGenerator()
+            print("No state change in window actuation")
 
-            colWindow.delete_one({"_id": id})
-            colWindow.insert_one({"_id": newIDW, "value":winAct, "type":type, "unit":unit, "time":time})
-            #print(id)
-            #print(newID)
-            cursor2W = colWindow.find_one({}, sort=[('time', -1)])
+    if cursorF != None:
+        valueBeforeF = cursorF["value"]
+        if ffAct != valueBeforeF:
+            if cursorF == None:
+                print("No data")
+            else:
+                id = cursorF["_id"]
+                type = cursorF["type"]
+                unit = cursorF["unit"]
+                time = cursorF["time"]
+                newIDF = idGenerator()
 
-        print("before: ", valueBeforeW, "after: ", cursor2W["value"])
-    else:
-        print("No state change in window actuation")
+                colWindow.delete_one({"_id": id})
+                colWindow.insert_one({"_id": newIDF, "value":ffAct, "type":type, "unit":unit, "time":time})
+                #print(id)
+                #print(newID)
+                cursor2F = colWindow.find_one({}, sort=[('time', -1)])
 
-
-    if ffAct != valueBeforeF:
-        if cursorF == None:
-            print("No data")
+            print("before: ", valueBeforeF, "after: ", cursor2F["value"])
         else:
-            id = cursorF["_id"]
-            type = cursorF["type"]
-            unit = cursorF["unit"]
-            time = cursorF["time"]
-            newIDF = idGenerator()
-
-            colWindow.delete_one({"_id": id})
-            colWindow.insert_one({"_id": newIDF, "value":ffAct, "type":type, "unit":unit, "time":time})
-            #print(id)
-            #print(newID)
-            cursor2F = colWindow.find_one({}, sort=[('time', -1)])
-
-        print("before: ", valueBeforeF, "after: ", cursor2F["value"])
-    else:
-        print("No state change in filterfan actuation")
+            print("No state change in filterfan actuation")
 
     #sleep(1)
 
@@ -310,16 +329,18 @@ if __name__ == "__main__":
     PM2_5in = 53
     PM2_5out = 77
 
-    readInterval = 10
+    readInterval = 5
     timeStart = time.time()
     actuateTime = 0
     sendData()
 
-    rateIn = 5
-    rateOut = 10
+    rateIn = 3
+    rateOut = 5
     getActuationData()
 
-    while True:
+    numberData = 0
+
+    while numberData != 100:
         while time.time() < timeStart + readInterval:
             getActuationData()
             pm25indoor(rateIn)
@@ -397,5 +418,6 @@ if __name__ == "__main__":
             time_over = 'Outdoor Rate not changed'
             print(time_over)
 
+        numberData = numberData + 1
         timeStart = time.time()
             

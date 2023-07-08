@@ -1,7 +1,9 @@
+#for prometheus and logging
 from prometheus_client import Gauge, start_http_server
 from systemd.journal import JournalHandler
-
 import logging 
+
+#for system reference
 import time
 import random
 import datetime
@@ -9,12 +11,11 @@ from inputimeout import inputimeout
 from random_object_id import generate
 from bson import ObjectId
 
-
-
+#for mongoDB
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 
-
+#Connection String to mongoDB project
 uri = "mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority"
 
 
@@ -29,9 +30,10 @@ try:
 except Exception as e:
     print(e)
 
-#Collections/sensors
+#Database
 db = client.HTTPSmartFarm
-#dbActuate = client.HTTPSmartFarm_actuate
+
+#collections for sensor and actuator data
 colHumi = db.dht22Humi
 colTemp = db.dht22Temp
 colpH = db.pHsensor
@@ -41,6 +43,8 @@ colmotorSensor = db.motorSensor
 colflowMeter = db.flowMeter
 coloverflowSensor = db.overflowSensor
 colSolenoidValve = db.solenoidValve
+
+#collection for actuation commands
 colActuation = db.solenoidValve_actuate
 
 # Setup logging to the Systemd Journal
@@ -63,13 +67,15 @@ goverflowSensor = Gauge('overflow_sensor', 'sensor to signal whether reservoir i
 def getActuationData():
     global actuation
     
-    cursor = colActuation.find_one({}, sort=[('time', -1)])
+    cursor = colActuation.find().sort('time', -1).limit(1)
+    #print(type(cursor))
 
+    #cursor = colActuation.find_one({}, sort=[('time', -1)])
     if cursor == None:
         actuation = 0
     else:
-        actuation = cursor["value"]
-    print(cursor["_id"])
+        actuation = cursor[0]["value"]
+    #print(cursor[0]["_id"])
     svUpdate()
 
 
@@ -80,6 +86,9 @@ def flood():
     global motorSensor
     global flowMeter
     global waterDrain
+    global overflowSensor
+
+    overflowSensor = 0
 
     #if gallons == (gallons - idealLoss(instance, set)):
     if flowMeter == 0:
@@ -106,19 +115,18 @@ def drain(leakage):
 
     motorSensor = 0
 
-    if waterDrain >= 0.1078125:
-        gallons = round((gallons + 0.1078125), 7) 
-        waterDrain = round((waterDrain - 0.1078125 - leakage),7)
+    if waterDrain >= 1.078125:
+        gallons = round((gallons + 1.078125), 7) 
+        waterDrain = round((waterDrain - 1.078125 - leakage),7)
         if waterDrain < 0:
             waterDrain = 0
         flowMeter = 1
     else:
         flowMeter = 0
+        waterDrain = 0
     
     #sleep(47/64)
 
-#def leakage(leak):
-#   return leak
 
 def sleep(seconds):
     time.sleep(seconds)
@@ -134,7 +142,7 @@ def refill():
     motorSensor = 0
 
     if flowMeter == 0 and gallons < 50 and actuation == 1:
-        gallons = gallons + 1
+        gallons = gallons + 3
         overflowSensor = 0
 
     if gallons > 60:
@@ -292,16 +300,28 @@ def overflow():
 
 def sendData():
     print("sends Data")
-    humidity = dht22Humi()
-    temp = dht22Temp()
-    pH = pHsensor()
-    EC = ECmeter()
     waterLevel = waterLevel_sensor()
-    waterPump = motor()
-    drainIndicator = flow()
-    overflowIndicator = overflow()
+    print("waterLevel: ", waterLevel)
+    sleep(1)
+    humidity = dht22Humi()
+    sleep(1)
+    temp = dht22Temp()
+    sleep(1)
     solValve = solenoidValve()
+    print("solValve: ", solValve)
+    sleep(1)
+    pH = pHsensor()
+    sleep(1)
+    EC = ECmeter()
+    sleep(1)
+    waterPump = motor()
+    sleep(1)
+    drainIndicator = flow()
+    sleep(1)
+    overflowIndicator = overflow()
+    sleep(1)
     timeStamp = timeStamper()
+    sleep(1)
 
     #logging
     log.info("Temp:{0:0.1f}*C, Humidity:{1:0.1f}%, pHvalue:{2:0.1f}, WaterLevel:{3:0.1f}, EC:{4:0.1f}, waterPump:{5:0.1f},  flowMeter{6:0.1f}, overflowSensor{7:0.1f}, Actuation:{8:0.1f}, Time:{9:0.1f}".format(temp, humidity, pH, waterLevel, EC, waterPump, drainIndicator, overflowIndicator, solValve, timeStamp))
@@ -319,37 +339,39 @@ def svUpdate():
     global actuation
 
     cursor = colSolenoidValve.find_one({}, sort=[('time', -1)])
-    valueBefore = cursor["value"]
+    if cursor != None:
+        valueBefore = cursor["value"]
 
-    if actuation != valueBefore:
-        if cursor == None:
-            print("No data")
+        if actuation != valueBefore:
+            if cursor == None:
+                print("No data")
+            else:
+                id = cursor["_id"]
+                type = cursor["type"]
+                unit = cursor["unit"]
+                time = cursor["time"]
+                newID = idGenerator()
+
+                colSolenoidValve.delete_one({"_id": id})
+                colSolenoidValve.insert_one({"_id": newID, "value":actuation, "type":type, "unit":unit, "time":time})
+                #print(id)
+                #print(newID)
+                cursor2 = colSolenoidValve.find_one({}, sort=[('time', -1)])
+
+            print("before: ", valueBefore, "after: ", cursor2["value"])
         else:
-            id = cursor["_id"]
-            type = cursor["type"]
-            unit = cursor["unit"]
-            time = cursor["time"]
-            newID = idGenerator()
-
-            colSolenoidValve.delete_one({"_id": id})
-            colSolenoidValve.insert_one({"_id": newID, "value":actuation, "type":type, "unit":unit, "time":time})
-            #print(id)
-            #print(newID)
-            cursor2 = colSolenoidValve.find_one({}, sort=[('time', -1)])
-
-        print("before: ", valueBefore, "after: ", cursor2["value"])
-    else:
-        print("no change in actuation state")
+            print("no change in actuation state")
     
     #sleep(1)
 
 if __name__ == "__main__":
+    
+    #start http connection
     metrics_port = 8001
     start_http_server(metrics_port)
     print("Serving sensor metrics on :{}".format(metrics_port))
     log.info("Serving sensor metrics on :{}".format(metrics_port))
     
-    #sleep(120)
     actuation = 0
     getActuationData()
     gallons = 50
@@ -364,17 +386,9 @@ if __name__ == "__main__":
     timeStart = time.time()
     sendData()
 
-    #cursor = colSolenoidValve.find_one({}, sort=[('time', -1)])
 
-    #if cursor == None:
-    #    actuation = 0
-    #else:
-    #    id = cursor["_id"]
-
-    #colSolenoidValve.update_one({"_id": id}, {"$set": {"value": 1}})
-    #print(id)
-
-    while True:
+    numberData = 0
+    while numberData != 100:
         while time.time() < timeStart + readInterval:
             #print(actuation, gallons, waterDrain)
             getActuationData()
@@ -396,11 +410,15 @@ if __name__ == "__main__":
                 refillFlag = 0
                 print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 refill()
+                print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
                 flood()
+                print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
             drain(leakage)
+            print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
             #print(actuation, gallons, waterDrain)
             print('actuation:', actuation, 'waterLevel:', gallons, 'watertoDrain:', waterDrain)
         sendData()
+        
         try:
             leakage = inputimeout(prompt='leakage:', timeout=3)
             leakage = int(leakage)
@@ -408,4 +426,5 @@ if __name__ == "__main__":
             time_over = 'Leakage not changed'
             print(time_over)
 
+        numberData = numberData + 1
         timeStart = time.time()
