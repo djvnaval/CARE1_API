@@ -1,10 +1,8 @@
-col = 'solenoidValve_actuate'
-rcon = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
-con = 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority'
+col = 'solenoidValve'
+con = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
 db = 'HTTPSmartFarm'
-path = 'data/dump/HTTPSmartFarm/solenoidValve_actuate/'
+path = 'data/dump/HTTPSmartFarm/solenoidValve/'
 
-'''
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
 from os.path import exists
@@ -47,16 +45,22 @@ def restore(path, conn, db_name):
                         print(doc)
 
 print("START CLIENT CONNECTION")
+# MongoDB configuration
+load_dotenv(find_dotenv())
+main_password = os.environ.get("MONGODB_PW")
+main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+main_client = MongoClient(main_connection_string)
+main_db = main_client.CARE1
+
 print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
 while 1:
     dump([col], con, db, path)
-    restore(path, rcon, db)
+    restore(path, main_connection_string, db)
     print("Connection is ongoing...")
+
+
+
 '''
-
-
-
-
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
 from os.path import exists
@@ -71,7 +75,15 @@ import os
 # This part is for debugging purposes only
 recorder = f"data/log/{db}_{col}_{datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}.txt"
 
+
 print("START CLIENT CONNECTION")
+# MongoDB configuration
+load_dotenv(find_dotenv())
+main_password = os.environ.get("MONGODB_PW")
+main_connection_string = f"mongodb+srv://care1:{main_password}@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority"
+main_client = MongoClient(main_connection_string)
+main_db = main_client.CARE1
+
 print("\nCONNECTION IS ESTABLISHED SUCCESSFULLY!\n")
 rec = open(recorder, 'w')
 rec.close()
@@ -86,7 +98,7 @@ while 1:
     results = coll.find().sort("time", -1).limit(10)
 
     # Destination
-    client1 = MongoClient(rcon)
+    client1 = MongoClient(main_connection_string)
     command = f"client1.{db}"
     db1 = eval(command)
 
@@ -100,5 +112,4 @@ while 1:
 
     print("Connection is ongoing...")
     rec.close()
-    
-    
+'''

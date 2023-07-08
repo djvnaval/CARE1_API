@@ -24,10 +24,10 @@ ed = 0
 def maintain_cp():
     print("\n\nCENTRAL POINT MAINTENANCE")
     print("\nSelect action:")
-    print("[0] Clean central point local data (generated bson and py files)")
+    print("[0] Clean central point local data (generated txt and py files)")
     sel = input("\nEnter: ")
     if sel == '0':
-        commands = ["rm -r data", "mkdir data", "mkdir data/dump", "mkdir data/py", "mkdir data/log"]
+        commands = ["rm -r data", "mkdir data", "mkdir data/py", "mkdir data/log"]
         for c in commands:
             dep = subprocess.run(c, shell=True, capture_output=True)
             print(dep.stdout.decode())

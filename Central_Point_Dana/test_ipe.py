@@ -23,7 +23,7 @@ def actuate(db, col, t, limit):
 	# central point database check
 	dbnames = main_client.list_database_names()
 	if db in dbnames:
-		print("\n\nCleaning actuation database...")
+		print("\n\nCleaning actuation database...\n\n[DATA SENT]")
 		command = f"main_client.{db}"
 		DB = eval(command)
 		for cc in DB.list_collection_names():
@@ -43,7 +43,10 @@ def actuate(db, col, t, limit):
 		eval(command)
 		print(post)
 
+	print("\n\n")
 
-#actuate("HTTPSmartFarm", "solenoidValve", 2, 1)
-actuate("HTTPSmartFarm", "solenoidValve", 2, 300)
+print("\n\nStarting actuation switch IPE...")
+
+actuate("HTTPSmartFarm", "solenoidValve", 2, 1)
+#actuate("HTTPSmartFarm", "solenoidValve", 2, 300)
 #actuate("oneM2M_MQTT_SmartFarm", "solenoidValve", 5, 100)

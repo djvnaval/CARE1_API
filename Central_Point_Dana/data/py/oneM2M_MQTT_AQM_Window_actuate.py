@@ -1,10 +1,10 @@
-col = 'solenoidValve_actuate'
-rcon = 'mongodb+srv://HTTPSystem:HTTPnonOneM2M@nononem2m.lold0yl.mongodb.net/?retryWrites=true&w=majority'
+col = 'Window_actuate'
+rcon = 'mongodb+srv://onem2mCARE1:onem2mCARE1diliman@onem2m.up2wghs.mongodb.net/?retryWrites=true&w=majority'
 con = 'mongodb+srv://care1:care1project@care1.yf7ltcy.mongodb.net/?retryWrites=true&w=majority'
-db = 'HTTPSmartFarm'
-path = 'data/dump/HTTPSmartFarm/solenoidValve_actuate/'
+db = 'oneM2M_MQTT_AQM'
+path = 'data/dump/oneM2M_MQTT_AQM/Window_actuate/'
 
-'''
+
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
 from os.path import exists
@@ -52,10 +52,10 @@ while 1:
     dump([col], con, db, path)
     restore(path, rcon, db)
     print("Connection is ongoing...")
+
+
+
 '''
-
-
-
 
 from dotenv import load_dotenv, find_dotenv
 from pymongo import MongoClient
@@ -100,5 +100,4 @@ while 1:
 
     print("Connection is ongoing...")
     rec.close()
-    
-    
+    '''
