@@ -2,12 +2,16 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Chart;
-use App\Http\Controllers\HTTPSmartFarm_actuate\SolenoidValve_actuateController;
-use App\Http\Controllers\HTTPAQM_actuate\WindowSensor_actuateController;
-use App\Http\Controllers\HTTPAQM_actuate\FilterFanSensor_actuateController;
+use App\Http\Controllers\HTTPSmartFarm\SolenoidValve_actuateController;
+use App\Http\Controllers\HTTPAQM\WindowSensor_actuateController;
+use App\Http\Controllers\HTTPAQM\FilterFanSensor_actuateController;
 use App\Http\Controllers\HTTPSmartFarm\SolenoidValveController;
 use App\Http\Controllers\HTTPAQM\WindowSensorController;
 use App\Http\Controllers\HTTPAQM\FilterFanSensorController;
+use App\Http\Controllers\oneM2M_MQTT_AQM\Window_actuateController;
+use App\Http\Controllers\oneM2M_MQTT_AQM\FilterFan_actuateController;
+use App\Http\Controllers\oneM2M_MQTT_AQM\WindowController;
+use App\Http\Controllers\oneM2M_MQTT_AQM\FilterFanController;
 
 use App\Models\Node;
 
@@ -39,11 +43,14 @@ Route::get('/{database}/{folder}/{start_date?}/{end_date?}',[Chart::class, 'char
 Route::post('/solenoid/actuation/change', [SolenoidValve_actuateController::class, 'store']);
 Route::post('/filterFanSensor/actuation/change', [FilterFanSensor_actuateController::class, 'store']);
 Route::post('/windowSensor/actuation/change', [WindowSensor_actuateController::class, 'store']);
+Route::post('/FilterFan/actuation/change', [FilterFan_actuateController::class, 'store']);
+Route::post('/Window/actuation/change', [Window_actuateController::class, 'store']);
 
 Route::post('/solenoid/current', [SolenoidValveController::class, 'show']);
 Route::post('/filterFanSensor/current', [FilterFanSensorController::class, 'show']);
 Route::post('/windowSensor/current', [WindowSensorController::class, 'show']);
-
+Route::post('/FilterFan/current', [FilterFanController::class, 'show']);
+Route::post('/Window/current', [WindowController::class, 'show']);
 
 Route::middleware([ 
     'auth:sanctum',

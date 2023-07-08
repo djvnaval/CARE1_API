@@ -18,10 +18,16 @@ use App\Models\HTTPSmartFarm_actuate\SolenoidValve_actuate;
 use App\Models\oneM2M_HTTP_AQM\PM2_5 as PM2_5_HTTP;
 
 use App\Models\oneM2M_MQTT_AQM\PM2_5 as PM2_5_MQTT;
+use App\Models\oneM2M_MQTT_AQM\PM2_5_Out as PM2_5_Out_MQTT_AQM;
+use App\Models\oneM2M_MQTT_AQM\PM2_5_In as PM2_5_In_MQTT_AQM;
 use App\Models\oneM2M_MQTT_AQM\H2S;
 use App\Models\oneM2M_MQTT_AQM\Humidity as Humidity_MQTT_AQM;
+use App\Models\oneM2M_MQTT_AQM\Humidity_In as Humidity_In_MQTT_AQM;
 use App\Models\oneM2M_MQTT_AQM\PM10;
 use App\Models\oneM2M_MQTT_AQM\Temperature as Temperature_MQTT_AQM;
+use App\Models\oneM2M_MQTT_AQM\Temperature_In as Temperature_In_MQTT_AQM;
+use App\Models\oneM2M_MQTT_AQM\FilterFan;
+use App\Models\oneM2M_MQTT_AQM\Window;
 
 use App\Models\oneM2M_MQTT_SmartFarm\ElecConductivity;
 use App\Models\oneM2M_MQTT_SmartFarm\Env_Temp;
