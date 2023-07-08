@@ -4,11 +4,13 @@
 # using MQTT protocol
 
 
-from random import random
+from random import random, randint
 from datetime import datetime
 
 from openmtc_app.onem2m import XAE
 from openmtc_onem2m.model import Container
+from random_object_id import generate
+from bson import ObjectId
 
 import pymongo
 import time
@@ -125,12 +127,41 @@ class IPE(XAE):
                 self.handle_command         # reference of the notification handling function
             )
 
+        self.offset_start()
+
         # trigger periodically new data generation
-        # every seconds
-        self.run_forever(5, self.smartfarm_system)
+        # in Hz
+        self.run_forever(0.2, self.smartfarm_system)
 
         # log message
         self.logger.debug('registered')
+
+    def offset_start(self):
+        for name in self.sensors:
+            if name.startswith('Humi'):
+                value = self.humi_random_data()
+            elif name.startswith('Temp'):
+                value = self.temp_random_data()
+            elif name.startswith('pH'):
+                value = self.ph_random_data()
+            elif name.startswith('WaterLevel'):
+                value = self.water_level
+            elif name.startswith('ElecConductivity'):
+                value = self.ec_random_data()
+            elif name.startswith('MotorSensor'):
+                value = self.motor
+            elif name.startswith('OverflowSensor'):
+                value = self.overflow
+            elif name.startswith('FlowMeter'):
+                value = self.flow
+            else:
+                continue
+
+            current_date_time = str(datetime.now())
+
+            self.handle_sensor_data(name, value, current_date_time)
+
+            time.sleep(randint(5,20))
 
     def handle_command(self, container, content):
         print('handle_valve...')
@@ -147,6 +178,7 @@ class IPE(XAE):
         else:
             actuation = self.valve_ON if cursor["value"] == 1 else self.valve_OFF
 
+        self.valve_update()
         return actuation
     
     def smartfarm_system(self):
@@ -178,6 +210,7 @@ class IPE(XAE):
                 if time.time() >= actuate_time:
                     self.actuation = self.valve_ON
                     self.push_actuator_data(self.actuation)
+                    self.valve_update()
                     
             
             self.refill_flag = 0
@@ -221,6 +254,8 @@ class IPE(XAE):
             current_date_time = str(datetime.now())
 
             self.handle_sensor_data(name, value, current_date_time)
+
+            time.sleep(3)
 
     def push_actuator_data(self, value):
         data = {
@@ -385,6 +420,8 @@ class IPE(XAE):
         else:
             self.overflow = self.overflow_OFF
             self.actuation = self.valve_OFF
+
+        self.valve_update()
         self.push_actuator_data(self.actuation)
 
     def drain(self):
@@ -421,8 +458,33 @@ class IPE(XAE):
                 print("Message: Not enough nutrient solution.")
                 self.motor = self.motor_OFF
                 self.refill_flag = 1
+
+        self.valve_update()
         self.push_actuator_data(self.actuation)
     
+    def valve_update(self):
+        cursor = valveCol.find_one({}, sort=[('time', -1)])
+        self.valve_before = cursor["value"] if cursor != None else None
+
+        if self.actuation != self.valve_before:
+            if cursor == None:
+                print("\nSolenoid valve update: No data\n")
+            else:
+                id = cursor["_id"]
+                type = cursor["type"]
+                unit = cursor["unit"]
+                time = cursor["time"]
+                new_ID = ObjectId(generate())
+
+                valveCol.delete_one({"_id": id})
+                valveCol.insert_one({"_id": new_ID, "value":self.actuation, "type":type, "unit":unit, "time":time})
+
+                cursor2 = valveCol.find_one({}, sort=[('time', -1)])
+            
+                print("\nSolenoid valve update: before: ", self.valve_before, "after: ", cursor2["value"])
+
+        else:
+            print("\nSolenoid valve update: No change in actuation state\n")
 
 
 if __name__ == "__main__":
@@ -434,6 +496,7 @@ if __name__ == "__main__":
 
     db = mongo_client.oneM2M_MQTT_SmartFarm
     col_actuation = db.solenoidValve_actuate
+    valveCol = db["SolenoidValve"]
 
     host = "mqtts://upCARE1_onem2m:updilimanCARE1@29c49bdf585f4e6d8e93e1522dc5e23f.s1.eu.hivemq.cloud:8883#mn-cse-1"
     app = IPE(

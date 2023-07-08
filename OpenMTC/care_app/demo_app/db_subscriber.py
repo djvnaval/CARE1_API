@@ -84,17 +84,11 @@ def on_message(client, userdata, message):
     except:
         pass
 
-def on_publish(client, userdata, mid):
-    # TODO: for transferring actuation data from mongodb to hivemq
-    pass
-
-
 
 # Setup MQTT broker connection
 client = mqtt.Client(client_id='mongodb-subscriber')
 client.on_connect = on_connect
 client.on_message = on_message
-client.on_publish = on_publish
 client.tls_set(tls_version=mqtt.ssl.PROTOCOL_TLS)
 client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
 client.connect(MQTT_HOST, MQTT_PORT)
